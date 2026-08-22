@@ -54,12 +54,13 @@ async function readVariants(store) {
   const variants = await paginate(store, VARIANTS, (x) => x.productVariants, { pageSize: 100 });
 
   const rows = [];
+  const untracked = [];
   for (const v of variants) {
     const sku = v.sku?.trim();
-    if (!sku || !v.inventoryItem?.tracked) continue;
+    if (!sku) continue;
     const level = v.inventoryItem.inventoryLevels.nodes.find((l) => l.location.id === location.id);
     const available = level?.quantities?.find((q) => q.name === 'available')?.quantity ?? null;
-    rows.push({
+    const row = {
       sku,
       variantId: v.id,
       inventoryItemId: v.inventoryItem.id,
@@ -67,9 +68,13 @@ async function readVariants(store) {
       status: v.product.status,
       variantTitle: v.title,
       available,
-    });
+    };
+    // Quantities on an untracked item are inert — Shopify sells regardless — so
+    // these are reported rather than written, and never used as a source value.
+    if (v.inventoryItem?.tracked) rows.push(row);
+    else untracked.push(row);
   }
-  return { location, rows };
+  return { location, rows, untracked };
 }
 
 const SET = `mutation Set($input: InventorySetQuantitiesInput!) {
@@ -135,8 +140,16 @@ for (const store of stores) {
     if (r.available !== want) changes.push({ ...r, want });
   }
 
-  console.log(`=== ${store.toUpperCase()} @ ${target.location.name} — ${target.rows.length} tracked variants`);
+  console.log(`=== ${store.toUpperCase()} @ ${target.location.name} — ${target.rows.length} tracked, ${target.untracked.length} untracked`);
   console.log(`    ${changes.length} to change, ${target.rows.length - changes.length - missing.length} already match, ${missing.length} SKU not on SK`);
+
+  if (target.untracked.length) {
+    // Without tracking these sell without limit, so mirroring numbers onto them
+    // would change nothing a customer can see.
+    const alsoOnSk = target.untracked.filter((r) => sourceQty.has(r.sku));
+    console.log(`    ! ${target.untracked.length} variant(s) have inventory tracking OFF — stock here is not enforced.`);
+    console.log(`      ${alsoOnSk.length} of them exist on SK, so they would need tracking enabled before a mirror means anything.`);
+  }
 
   // Several variants in this store sharing one SKU each get SK's number, which
   // inflates the store's apparent total for that product.
