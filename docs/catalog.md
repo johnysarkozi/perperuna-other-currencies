@@ -86,9 +86,20 @@ hľadanie, filter „len problémy" a tlačidlo na okamžitý sync zo Shopify.
 Farebne označuje záporný sklad, vypredané ACTIVE položky, odchýlku od SK
 a SKU, ktoré v niektorom obchode chýba.
 
-Prihlásenie je cez Supabase Auth (odkaz do e-mailu). Stránka samotná
-neobsahuje žiadne dáta — všetko čítanie ide cez RLS, takže neprihlásený
-nevidí nič.
+### Prístup
+
+Appka nemá vlastné prihlasovanie. Chráni ju **heslo na Netlify**
+(Site configuration → Access control → Password protection).
+
+V RLS má `anon` rola povolené **iba čítanie** katalógových tabuliek. Publishable
+kľúč je v zdrojovom kóde stránky, takže platí: kto ten kľúč získa, prečíta si
+katalóg aj mimo Netlify hesla. Zapisovať cez API sa ním nedá (overené — REST
+zápis vracia 401). Sklady a ceny sú teda chránené „len" tým heslom, nie
+kryptograficky — pre interný nástroj s týmto obsahom je to vedomý kompromis
+za pohodlie.
+
+Ak by to raz malo byť prísnejšie, návrat k Supabase Auth je malá zmena:
+odstrániť tie dve `anon read` politiky a vrátiť prihlasovaciu obrazovku.
 
 ### Hosting
 
@@ -105,14 +116,8 @@ skončil slepou uličkou.
 
 ### Čo treba nastaviť raz
 
-V Supabase → Authentication → URL Configuration pridať medzi **Redirect URLs**
-adresu, na ktorej appka reálne beží, napr.:
-
-```
-https://<nieco>.netlify.app
-```
-
-Bez toho odkaz z e-mailu po kliknutí neprihlási.
+Na Netlify zapnúť ochranu heslom: Site configuration → Access control →
+Password protection. Nič v Supabase nastavovať netreba.
 
 ## Stav a ďalšie fázy
 

@@ -45,11 +45,6 @@
   label.check { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); cursor: pointer; user-select: none; }
   .meta { color: var(--muted); font-size: 12.5px; }
 
-  #gate { max-width: 380px; margin: 14vh auto; padding: 0 20px; }
-  #gate h1 { font-size: 20px; margin-bottom: 6px; }
-  #gate p { color: var(--muted); margin-top: 0; }
-  #gate form { display: flex; gap: 8px; margin-top: 18px; }
-  #gate input { flex: 1; }
 
   .wrap { overflow-x: auto; }
   table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
@@ -83,17 +78,7 @@
 </head>
 <body>
 
-<div id="gate" hidden>
-  <h1>Perperuna — katalóg</h1>
-  <p>Prehľad produktov, cien a skladu naprieč všetkými backendmi.</p>
-  <form id="loginForm">
-    <input type="email" id="email" placeholder="tvoj@email.sk" required autocomplete="email">
-    <button class="primary" type="submit">Poslať odkaz</button>
-  </form>
-  <p class="meta" id="gateMsg" style="margin-top:12px"></p>
-</div>
-
-<div id="app" hidden>
+<div id="app">
   <header>
     <h1>Katalóg</h1>
     <input type="search" id="q" placeholder="Hľadať SKU alebo názov…">
@@ -101,7 +86,6 @@
     <span class="grow"></span>
     <span class="meta" id="stats"></span>
     <button id="sync">Načítať zo Shopify</button>
-    <button id="logout">Odhlásiť</button>
   </header>
   <div class="wrap"><table>
     <thead>
@@ -116,8 +100,9 @@
 <script type="module">
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-// Publishable key: safe in a browser — row level security decides what is
-// readable, and only signed-in users have any access at all.
+// Publishable key. The page has no login of its own — access is controlled by
+// the site password on Netlify. Row level security grants anon read only, so
+// this key can never be used to change anything.
 const SUPABASE_URL = 'https://jtxewgjpdmmbctbfvlaj.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_FouaxIl0WZt_haIW7yT7mg_AcTWx4p0';
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -135,26 +120,6 @@ function toast(text, ms = 3200) {
   document.body.appendChild(el);
   setTimeout(() => el.remove(), ms);
 }
-
-// ---- auth ----------------------------------------------------------------
-
-$('loginForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = $('email').value.trim();
-  $('gateMsg').textContent = 'Posielam…';
-  const { error } = await sb.auth.signInWithOtp({
-    email,
-    options: { emailRedirectTo: location.href.split('#')[0] },
-  });
-  $('gateMsg').textContent = error
-    ? `Nepodarilo sa: ${error.message}`
-    : `Odkaz na prihlásenie je v e-maile (${email}). Otvor ho na tomto zariadení.`;
-});
-
-$('logout').addEventListener('click', async () => {
-  await sb.auth.signOut();
-  location.reload();
-});
 
 // ---- data ----------------------------------------------------------------
 
@@ -264,10 +229,9 @@ $('sync').addEventListener('click', async () => {
   btn.disabled = true;
   btn.textContent = 'Načítavam…';
   try {
-    const { data: { session } } = await sb.auth.getSession();
     const res = await fetch(`${SUPABASE_URL}/functions/v1/catalog-sync`, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
+      headers: { Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ stores: STORES }),
     });
     const out = await res.json();
@@ -284,23 +248,8 @@ $('sync').addEventListener('click', async () => {
 
 // ---- boot ----------------------------------------------------------------
 
-async function boot() {
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    $('gate').hidden = true;
-    $('app').hidden = false;
-    header();
-    await load();
-  } else {
-    $('app').hidden = true;
-    $('gate').hidden = false;
-  }
-}
-
-sb.auth.onAuthStateChange((event) => {
-  if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') boot();
-});
-boot();
+header();
+load();
 </script>
 </body>
 </html>
