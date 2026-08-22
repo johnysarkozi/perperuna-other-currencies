@@ -78,39 +78,41 @@ Bežný sync rob cez Edge Function, nie týmto.
 
 ## Appka
 
-**https://jtxewgjpdmmbctbfvlaj.supabase.co/functions/v1/catalog-ui**
+Celá appka je jeden statický súbor: [`app/index.html`](../app/index.html).
+Žiadny build krok, žiadne závislosti okrem Supabase JS z CDN.
 
 Matica SKU × obchod — cena a sklad všetkých piatich backendov vedľa seba,
 hľadanie, filter „len problémy" a tlačidlo na okamžitý sync zo Shopify.
 Farebne označuje záporný sklad, vypredané ACTIVE položky, odchýlku od SK
 a SKU, ktoré v niektorom obchode chýba.
 
-Prihlásenie je cez Supabase Auth (odkaz do e-mailu). Stránka samotná je
-verejná, ale neobsahuje žiadne dáta — všetko čítanie ide cez RLS, takže
-neprihlásený nevidí nič.
+Prihlásenie je cez Supabase Auth (odkaz do e-mailu). Stránka samotná
+neobsahuje žiadne dáta — všetko čítanie ide cez RLS, takže neprihlásený
+nevidí nič.
 
-Zdroj stránky je [`app/index.html`](../app/index.html). Edge Function
-`catalog-ui` ju servíruje ako base64 v `index.ts`, lebo deploy pipeline
-priloží len entrypoint — statický súbor vedľa neho v runtime neexistuje.
-Po zmene `app/index.html` treba base64 pregenerovať:
+### Hosting
 
-```
-base64 -w0 app/index.html
-```
+Nasadzuje sa na **Netlify** ako statická stránka (drag & drop súboru na
+<https://app.netlify.com/drop>, alebo napojenie repa s publish adresárom
+`app/`).
+
+**Edge Function na hosting HTML nefunguje** — Supabase gateway prepisuje
+odpoveď na `content-type: text/plain` a pridáva
+`content-security-policy: default-src 'none'; sandbox`. Stránka sa zobrazí
+ako holý text a skripty sa nespustia. Je to zámerné opatrenie Supabase, nedá
+sa obísť z kódu funkcie. Prvý pokus (`supabase/functions/catalog-ui/`) preto
+skončil slepou uličkou.
 
 ### Čo treba nastaviť raz
 
-V Supabase → Authentication → URL Configuration pridať medzi **Redirect URLs**:
+V Supabase → Authentication → URL Configuration pridať medzi **Redirect URLs**
+adresu, na ktorej appka reálne beží, napr.:
 
 ```
-https://jtxewgjpdmmbctbfvlaj.supabase.co/functions/v1/catalog-ui
+https://<nieco>.netlify.app
 ```
 
 Bez toho odkaz z e-mailu po kliknutí neprihlási.
-
-Hosting je zatiaľ Edge Function, lebo Netlify API cez MCP opakovane vracalo
-502. Na Netlify (a vlastnú doménu) sa to dá presunúť kedykoľvek — je to jeden
-statický súbor.
 
 ## Stav a ďalšie fázy
 
