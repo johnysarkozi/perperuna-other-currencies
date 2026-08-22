@@ -104,9 +104,19 @@ odstrániť tie dve `anon read` politiky a vrátiť prihlasovaciu obrazovku.
 
 ### Hosting
 
-Nasadzuje sa na **Netlify** ako statická stránka (drag & drop súboru na
-<https://app.netlify.com/drop>, alebo napojenie repa s publish adresárom
-`app/`).
+Netlify projekt **multistore-manage-perperuna**
+(<https://multistore-manage-perperuna.netlify.app/>), site id
+`9b190647-11b7-4b7a-9eeb-454856bed7e5`, tím `martinmrva`.
+
+Publish adresár je `app/`, build command žiadny — nastavené v
+[`netlify.toml`](../netlify.toml).
+
+Najlepšie je mať projekt **napojený na GitHub repo** (Site configuration →
+Build & deploy → Link repository), potom sa každý push nasadí sám.
+
+Ad-hoc deploy z tohto prostredia sa dá vyvolať cez Netlify MCP
+(`deploy-site` vráti `npx @netlify/mcp …` príkaz s dočasným proxy tokenom,
+ktorý sa spustí v koreni repa).
 
 **Edge Function na hosting HTML nefunguje** — Supabase gateway prepisuje
 odpoveď na `content-type: text/plain` a pridáva
@@ -119,6 +129,10 @@ skončil slepou uličkou.
 
 Na Netlify zapnúť ochranu heslom: Site configuration → Access control →
 Password protection. Nič v Supabase nastavovať netreba.
+
+> Overiť sa to dá cez Netlify MCP `get-project` — v `projectAccessControls`
+> musí byť `requiresPassword: true`. Kým je `false`, appka je verejná
+> a ktokoľvek s odkazom vidí sklady a ceny všetkých obchodov.
 
 ## Zrkadlenie skladov zo SK
 
