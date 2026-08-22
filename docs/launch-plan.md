@@ -129,6 +129,24 @@ Market má web presence `perperuna.hu`, ale `primaryDomain` obchodu je stále
   produkt, takže zákazník ju nevidí — ale v okamihu, keď na ňu nejaký produkt
   prepneš, začne sa zobrazovať slovenský text. Buď doplniť vetvy pre ro/pl/hu,
   alebo prepísať fallback na miestny jazyk.
+- **Mena v košíkovom JS (RO, HU)** — `sections/main-cart.liquid` vykreslí ceny
+  Liquidom správne, ale skript sekcie ich hneď po načítaní prepočíta a prepíše
+  vlastným formátovačom `mon()`, ktorý mal menu zapísanú natvrdo zo SK témy.
+  Zákazník tak v súhrne košíka, na riadkoch a na progress baroch (doprava
+  zdarma, darček) videl **€ namiesto miestnej meny**, kým staticky vykreslené
+  ceny služieb zostali správne — čísla boli pritom v miestnej mene, len
+  označené eurom. **PL opravené 22.8.** (`mon()` si formát berie zo
+  `shop.money_format`), RO a HU majú stále pôvodnú verziu:
+
+  ```
+  node scripts/fix-cart-money-format.mjs ro hu          # dry-run
+  node scripts/fix-cart-money-format.mjs ro hu --apply  # oprava + záložná téma
+  ```
+
+  CZ má vlastnú variantu `mon()`, ktorá zaokrúhľuje na celé Kč, no
+  `shop.money_format` na CZ je s desatinnými miestami (bez desatinných je len
+  `money_with_currency_format`). Oprava by tam teda pridala haliere — pred
+  spustením skriptu na CZ najprv zjednotiť formát v nastaveniach obchodu.
 - **Vypredané produkty** — PL má 2 aktívne produkty vypredané a bez povolenia
   objednávky na sklad, CZ jeden. Pred spustením buď doskladniť, alebo stiahnuť
   z ponuky.
