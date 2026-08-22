@@ -84,6 +84,34 @@
     padding: 9px 16px; box-shadow: 0 6px 24px rgba(0,0,0,.18); max-width: 80vw;
   }
   .toast.bad { border-color: var(--bad); color: var(--bad); }
+
+  dialog {
+    border: 1px solid var(--line); border-radius: 12px; padding: 0;
+    background: var(--bg); color: var(--text);
+    max-width: 780px; width: calc(100vw - 40px); max-height: 84vh;
+  }
+  dialog::backdrop { background: rgba(0,0,0,.5); }
+  .sheet { padding: 22px 26px 26px; overflow-y: auto; max-height: 84vh; }
+  .sheet h2 { font-size: 17px; margin: 0 0 2px; letter-spacing: -0.01em; }
+  .sheet h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+              color: var(--muted); margin: 22px 0 8px; }
+  .sheet p { margin: 0 0 10px; color: var(--muted); }
+  .sheet table { font-size: 13px; margin-bottom: 4px; }
+  .sheet td, .sheet th { padding: 4px 10px 4px 0; border-bottom: 1px solid var(--line); white-space: normal; }
+  .sheet code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; }
+  .sheet ol { margin: 0; padding-left: 20px; color: var(--muted); }
+  .sheet ol li { margin-bottom: 5px; }
+  .shape {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 16px; margin: 4px 0 6px; overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px; line-height: 1.7; white-space: pre;
+  }
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+  @media (max-width: 620px) { .cols2 { grid-template-columns: 1fr; } }
+  .sheet .warn-list li { color: var(--warn); }
+  .sheet .warn-list li span { color: var(--muted); }
+  .closebar { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 </style>
 </head>
 <body>
@@ -96,6 +124,7 @@
     <label class="check"><input type="checkbox" id="onlyProblems"> len problémy</label>
     <span class="grow"></span>
     <span class="meta" id="stats"></span>
+    <button id="skuHelp" title="Ako sa tvoria SKU kódy">SKU kľúč</button>
     <button id="mirror" title="Prepíše sklady na CZ/RO/PL/HU podľa SK">Zrkadliť zo SK</button>
     <button id="sync">Načítať zo Shopify</button>
   </header>
@@ -108,6 +137,112 @@
   </table></div>
   <div class="empty" id="empty" hidden>Nič nesedí s filtrom.</div>
 </div>
+
+<dialog id="skuDialog"><div class="sheet">
+  <div class="closebar">
+    <h2>Kľúč k SKU kódom</h2>
+    <button id="skuClose">Zavrieť</button>
+  </div>
+  <p>Odvodené z SKU, ktoré reálne existujú v obchodoch. Plná verzia je
+     v repe v <code>docs/sku.md</code>.</p>
+
+  <h3>Základný tvar</h3>
+  <div class="shape">PP-CUBE-BALA-003
+│   │    │    └── poradové číslo produktu (3 číslice)
+│   │    └─────── variant — vôňa, farba alebo názov rituálu
+│   └──────────── kategória produktu
+└──────────────── prefix značky, vždy rovnaký</div>
+
+  <h3>Kategórie</h3>
+  <div class="cols2">
+    <table>
+      <tr><td class="mono">CUBE</td><td>Sprchová aromatická kocka</td></tr>
+      <tr><td class="mono">NUBE</td><td>Nedokonalá kocka (2. akosť)</td></tr>
+      <tr><td class="mono">BALL</td><td>Sprchové guľôčky (5 ks)</td></tr>
+      <tr><td class="mono">BATE</td><td>Čaj do kúpeľa (<em>bath tea</em>)</td></tr>
+    </table>
+    <table>
+      <tr><td class="mono">ACCS</td><td>Príslušenstvo</td></tr>
+      <tr><td class="mono">ESET</td><td>Essential set — s vrecúškom</td></tr>
+      <tr><td class="mono">RSET</td><td>Ritual set — s kamennou miskou</td></tr>
+      <tr><td class="mono">BUND</td><td>Balík z iných produktov</td></tr>
+    </table>
+  </div>
+
+  <h3>Varianty — vône a rituály</h3>
+  <p>Prvé štyri písmená názvu.</p>
+  <div class="cols2">
+    <table>
+      <tr><td class="mono">BALA</td><td>Balance</td></tr>
+      <tr><td class="mono">BREA</td><td>Breathe</td></tr>
+      <tr><td class="mono">CALM</td><td>Calm</td></tr>
+      <tr><td class="mono">UPLI</td><td>Uplift</td></tr>
+      <tr><td class="mono">LOVE</td><td>Love</td></tr>
+      <tr><td class="mono">REFR</td><td>Refresh</td></tr>
+      <tr><td class="mono">GING</td><td>Gingerbread</td></tr>
+      <tr><td class="mono">GDNT</td><td>Good Night</td></tr>
+    </table>
+    <table>
+      <tr><td class="mono">CHOC</td><td>Mount Chocolate</td></tr>
+      <tr><td class="mono">DREA</td><td>Dream Valley</td></tr>
+      <tr><td class="mono">HERB</td><td>Herbal Spring</td></tr>
+      <tr><td class="mono">NORD</td><td>Nordic Forest</td></tr>
+      <tr><td class="mono">SECR</td><td>Secret Garden</td></tr>
+      <tr><td class="mono">RSHI</td><td>Rise &amp; Shine</td></tr>
+      <tr><td class="mono">SWDR</td><td>Sweet Dreams</td></tr>
+      <tr><td class="mono">RITL</td><td>The Ritual (aj <span class="mono">RITU</span>)</td></tr>
+    </table>
+  </div>
+
+  <h3>Varianty — príslušenstvo</h3>
+  <div class="cols2">
+    <table>
+      <tr><td class="mono">BWLW</td><td>Kamenná miska — biela</td></tr>
+      <tr><td class="mono">BWLB</td><td>Kamenná miska — čierna</td></tr>
+      <tr><td class="mono">BWLP</td><td>Kamenná miska — ružová</td></tr>
+    </table>
+    <table>
+      <tr><td class="mono">SPOU</td><td>Bavlnené vrecúško</td></tr>
+      <tr><td class="mono">BRUS</td><td>Kefa na suché kefovanie</td></tr>
+      <tr><td class="mono">NEDO</td><td>Balenie nedokonalých kociek (mix)</td></tr>
+    </table>
+  </div>
+
+  <h3>Číslo</h3>
+  <p>Poradové číslo produktu, vzostupne naprieč <strong>celým</strong> katalógom
+     (<span class="mono">001</span>–<span class="mono">034</span>), nie v rámci
+     kategórie. Nový produkt dostane najvyššie použité + 1.</p>
+
+  <h3>Balíky</h3>
+  <p>Namiesto variantu majú čísla produktov, ktoré obsahujú:</p>
+  <div class="shape">PP-BUND-010-009-008
+        │   │   └── 008 = Rise &amp; Shine
+        │   └────── 009 = Sweet Dreams
+        └────────── 010 = The Ritual</div>
+
+  <h3>Prípony</h3>
+  <table>
+    <tr><td class="mono">-FREE</td><td>Darčekový variant, cena 0</td></tr>
+    <tr><td class="mono">-SET</td><td>Variant priložený k inému setu</td></tr>
+  </table>
+  <p>Ten istý fyzický produkt, len iný režim predaja — <span class="mono">011</span>,
+     <span class="mono">011-FREE</span> aj <span class="mono">011-SET</span> je to isté
+     vrecúško. Sklad sa im však vedie samostatne.</p>
+
+  <h3>Mimo konvencie</h3>
+  <table>
+    <tr><td class="mono">FEE-*</td><td>Doplnkové služby (expres, darčekové balenie, poplatky) — nie tovar, sklad sa nesleduje</td></tr>
+    <tr><td class="mono">BUNDLE-1/2/3</td><td>Staršie cenové hladiny „Výhodná sada kociek"</td></tr>
+  </table>
+
+  <h3>Známe nezrovnalosti</h3>
+  <ol class="warn-list">
+    <li><span class="mono">PP-ACCS-BRUS-32</span> <span>— dvojmiestne číslo namiesto trojmiestneho; <span class="mono">032</span> by kolidovalo s <span class="mono">PP-BATE-BUND-032</span>.</span></li>
+    <li><span>Čísla nie sú unikátne: <span class="mono">020</span>, <span class="mono">021</span> aj <span class="mono">025</span> nesú vždy dva rôzne produkty. Jedinečný je až celý SKU.</span></li>
+    <li><span>The Ritual má dva kódy — <span class="mono">RITL</span> aj <span class="mono">RITU</span>.</span></li>
+    <li><span class="mono">PP-NUBE-NEDO-021</span> <span>— existuje len na CZ.</span></li>
+  </ol>
+</div></dialog>
 
 <script type="module">
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
@@ -394,6 +529,15 @@ $('mirror').addEventListener('click', () => {
   if (!confirm('Prepísať sklady na CZ, RO, PL a HU podľa SK?')) return;
   return runFunction('mirror', 'inventory-mirror', {}, 'Zrkadlím…', (out) =>
     out.written ? `Zrkadlené: ${out.written} variantov upravených` : 'Všetky sklady už sedeli so SK');
+});
+
+// ---- SKU key -------------------------------------------------------------
+
+$('skuHelp').addEventListener('click', () => $('skuDialog').showModal());
+$('skuClose').addEventListener('click', () => $('skuDialog').close());
+// Clicking the backdrop closes it; clicks inside the sheet must not.
+$('skuDialog').addEventListener('click', (e) => {
+  if (e.target === $('skuDialog')) $('skuDialog').close();
 });
 
 // ---- boot ----------------------------------------------------------------

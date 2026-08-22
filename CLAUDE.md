@@ -77,6 +77,7 @@ scripts/inventory-mirror.mjs   lokálne zrkadlenie skladov (dry-run, --apply)
 docs/credentials.md            ako sa nastavujú prístupy
 docs/launch-plan.md            plán spustenia RO/PL/HU
 docs/catalog.md                cross-backend katalóg — dátový model, stav, ďalšie fázy
+docs/sku.md                    kľúč k SKU kódom (aj ako modál v appke)
 docs/shop-context.json         posledný snapshot
 docs/launch-audit.json         posledný audit
 ```

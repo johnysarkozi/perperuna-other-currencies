@@ -91,6 +91,8 @@ a SKU, ktoré v niektorom obchode chýba.
 - **filter „len problémy"** — nechá len riadky s nejakým príznakom
 - **zoradenie** kliknutím na hlavičku ktoréhokoľvek stĺpca (druhý klik otočí smer)
 - **úprava SK skladu** priamo v tabuľke, viď nižšie
+- tlačidlo **SKU kľúč** — modál s vysvetlením, ako sa tvoria SKU kódy
+  (obsah zrkadlí [`docs/sku.md`](sku.md); pri zmene uprav oboje)
 - tlačidlá **Zrkadliť zo SK** a **Načítať zo Shopify**
 
 ### Prístup
