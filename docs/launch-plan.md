@@ -45,12 +45,46 @@ Pre každý obchod:
 1. Vytvoriť domácu zónu pre cieľovú krajinu (RO / PL / HU).
 2. Sadzby zadať **v mene obchodu** — RON / PLN / HUF. Sadzba v EUR na
    nie-eurovom obchode je zdroj chýb v prepočte aj v účtovníctve.
-3. Doplniť lokálneho dopravcu a odberné miesta, ako to má CZ s Packetou —
-   pre PL a HU je Packeta/Zásilkovna dostupná, pre RO overiť pokrytie
-   (alternatívy: Sameday easybox, Cargus).
+3. Doplniť lokálneho dopravcu a odberné miesta — konkrétny výber a ceny nižšie.
 4. Zvážiť prah pre dopravu zadarmo v miestnej mene.
 5. Zo zóny „International" vyňať krajinu, ktorá dostala vlastnú domácu zónu,
    nech nevznikne dvojaká sadzba.
+
+#### Výber dopravcov a ceny (podľa Packeta ceníka z 22.8.2026 + benchmark Notino v danej krajine)
+
+Packeta fakturuje vždy v EUR bez ohľadu na krajinu doručenia — sumy nižšie sú
+skutočný náklad na zásielku do 1 kg (Perperuna produkty sú ľahké, do 5 kg sa
+cena takmer nemení), prepočet do miestnej meny je len orientačný pre porovnanie
+s predajnou cenou.
+
+| Krajina | Kuriér | Cost (kuriér) | Box/výdajné miesto | Cost (box) | Notino v tej krajine |
+|---|---|---|---|---|---|
+| PL | **DPD** | 3,90 € (~17 zł) | **InPost Paczkomat** | 3,80 € (~16 zł) | DPD 12,90 zł / Paczkomat 9,90 zł |
+| RO | **FAN Courier** | 4,09 € (~20 RON) | **Packeta Z-Box** | ~2,99 € (~15 RON) | FAN Courier 14 lei / Packeta 10–13 lei |
+| HU | **Express One** | 4,31 € (~1 700 Ft) | **FoxPost** | ~3,14 € (~1 240 Ft) | Express One 990 Ft / FoxPost 850 Ft |
+
+Notino má vyjednané veľkoobjemové sadzby nižšie než tento cenník — jeho ceny sú
+orientačný trhový benchmark, nie cieľ, ktorý treba nákladovo dorovnať.
+
+Odporúčaná predajná cena (bez ohľadu na maržu, len trhová primeranosť):
+
+- **PL**: Paczkomat 14,90 zł, DPD kuriér 17,90 zł, doprava zdarma nad 150 zł.
+- **RO**: Z-Box 14,90 RON, FAN Courier 19,90 RON, doprava zdarma nad 200 RON.
+  RO trh očakáva dobierku (ramburs) — všetky tri RO možnosti (FAN Courier,
+  Cargus, Z-Box) ju v Packeta ceníku podporujú.
+- **HU**: FoxPost 990 Ft, Express One 1 490 Ft, doprava zdarma nad 15 000 Ft.
+
+Alternatíva pre RO box: **Sameday easybox** (~4,18 €, ~21 RON) — drahšia než
+Z-Box o cca 40 %, ale „easybox" je v Rumunsku extrémne rozpoznaná značka
+(podobne ako Paczkomat v PL). Stojí za A/B test, ak Z-Box konvertuje slabo.
+
+Pomenovania metód v checkoute musia byť lokálne rozpoznateľné značky
+(„FoxPost", „InPost Paczkomat", „FAN Courier"), nie generické „Kuriér" —
+zákazník v danej krajine tú značku pozná a dôveruje jej.
+
+Fulfillment: overiť, či je na tieto tri obchody nainštalovaná Packeta appka
+v Shopify na generovanie štítkov, alebo sa štítky riešia manuálne cez Packeta
+klient zónu — z Admin API to nebolo vidieť.
 
 ### 2. Platobná brána (všetky tri)
 
