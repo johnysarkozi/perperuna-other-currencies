@@ -1,9 +1,8 @@
 # Kľúč k SKU kódom
 
-> Odvodené spätne z 57 SKU, ktoré reálne existujú v obchodoch (stav
-> 2026-08-22). Nie je to prevzatý firemný štandard — je to popis toho, čo
-> v dátach je. Ak sa niekde moje čítanie rozchádza s tým, ako to bolo myslené,
-> uprav tento dokument, on je odteraz referencia.
+> Odvodené z 57 SKU, ktoré reálne existujú v obchodoch (stav 2026-08-22),
+> a upresnené podľa toho, ako bola konvencia myslená. Tento dokument je
+> referencia — ak sa niečo zmení, uprav ho.
 
 ## Základný tvar
 
@@ -65,9 +64,18 @@ PP-CUBE-BALA-003
 
 ## Číslo
 
-Trojmiestne poradové číslo produktu, priraďované vzostupne naprieč celým
-katalógom (`001` až `034`), **nie** samostatne v rámci kategórie. Preto
-`PP-CUBE-UPLI-001` a `PP-BATE-CHOC-030` nesúvisia inak než poradím vzniku.
+Trojmiestne číslo, ktoré **odlišuje produkty v rámci tej istej kategórie**.
+Musí byť jedinečné iba tam — naprieč kategóriami sa pokojne opakuje a nič to
+neznamená. `PP-CUBE-LOVE-020` a `PP-NUBE-NEDO-020` sú dva úplne odlišné
+produkty, nesúvisia.
+
+Overené na dátach: v každej kategórii je každé číslo použité raz. Jediná
+výnimka je `011` v `ACCS`, ktoré nesú tri SKU — ale to je ten istý produkt
+s príponami (`SPOU-011`, `-011-FREE`, `-011-SET`), teda zámer, nie kolízia.
+
+Historicky boli čísla prideľované vzostupne podľa poradia vzniku, takže naprieč
+katalógom idú zhruba od `001` po `034`. To je ale len pozostatok — pravidlo
+je „jedinečné v kategórii", nie „jedinečné všade".
 
 ## Balíky (BUND)
 
@@ -109,28 +117,34 @@ produkty, lebo tak sú vedené v Shopify. Sklad sa im nesleduje.
 
 ## Nezrovnalosti v súčasných dátach
 
-Toto sú reálne odchýlky od pravidiel vyššie. Nie sú kritické, ale ak sa má
-konvencia dodržiavať, treba ich buď opraviť, alebo pravidlo upraviť.
-
-1. **`PP-ACCS-BRUS-32`** má dvojmiestne číslo namiesto trojmiestneho.
-   Malo by byť `032` — lenže to koliduje s `PP-BATE-BUND-032`.
-2. **Čísla nie sú unikátne.** Rovnaké číslo nesú:
-   - `020` → `PP-CUBE-LOVE-020` aj `PP-NUBE-NEDO-020`
-   - `021` → `PP-RSET-LOVE-021` aj `PP-NUBE-NEDO-021`
-   - `025` → `PP-ESET-RITU-025` aj `PP-NUBE-LOVE-025`
-
-   Ak má číslo identifikovať produkt, malo by byť jedinečné. Zatiaľ je
-   jedinečný až celý SKU.
-3. **Dva kódy pre ten istý rituál** — `RITL` (`PP-RSET-RITL-010`) aj `RITU`
+1. **`PP-ACCS-BRUS-32`** má dvojmiestne číslo namiesto trojmiestneho. Malo by
+   byť `PP-ACCS-BRUS-032` — a keďže sa jedinečnosť rieši len v rámci kategórie,
+   `032` je v `ACCS` voľné (to druhé `032` je v `BATE`, čo nevadí). Oprava je
+   teda bezpečná.
+2. **Dva kódy pre ten istý rituál** — `RITL` (`PP-RSET-RITL-010`) aj `RITU`
    (`PP-ESET-RITU-025`) znamenajú The Ritual.
-4. **`PP-NUBE-NEDO-021` existuje len na CZ**, na SK ani inde nie je.
+3. **`PP-NUBE-NEDO-021` existuje len na CZ**, na SK ani inde nie je. To nie je
+   chyba pomenovania, ale diera v katalógu.
 
 ## Pravidlá pre nové SKU
 
 1. Prefix je vždy `PP-`.
-2. Kategória zo zoznamu vyššie; nová kategória len ak naozaj nejde zaradiť.
+2. Kategória zo zoznamu vyššie; nová kategória len ak sa produkt naozaj nedá
+   zaradiť.
 3. Variant = prvé 4 písmená názvu vône/rituálu, alebo skratka predmetu.
-4. Číslo = najvyššie doteraz použité **+1**, trojmiestne. Aktuálne najvyššie
-   je `034`, takže ďalší nový produkt dostane `035`.
+4. Číslo = akékoľvek trojmiestne, ktoré **v tej kategórii ešte nie je**.
+   Najjednoduchšie najvyššie v danej kategórii + 1:
+
+   | Kategória | Najvyššie použité | Ďalšie voľné |
+   |-----------|-------------------|--------------|
+   | `CUBE` | 033 | **034** |
+   | `NUBE` | 034 | **035** |
+   | `BALL` | 007 | **008** |
+   | `BATE` | 032 | **033** |
+   | `ACCS` | 032 | **033** |
+   | `ESET` | 025 | **026** |
+   | `RSET` | 024 | **025** |
+
 5. Balík dostane `BUND` a čísla svojich súčastí namiesto variantu.
-6. Ten istý fyzický produkt v inom režime predaja → prípona, nie nové číslo.
+6. Ten istý fyzický produkt v inom režime predaja → prípona (`-FREE`, `-SET`),
+   nie nové číslo.
