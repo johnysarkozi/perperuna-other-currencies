@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T12:37:42.350Z",
+  "generatedAt": "2026-08-22T13:06:49.107Z",
   "results": [
     {
       "key": "pl",
@@ -11,8 +11,8 @@
       "theme": "PERPERUNA.PL – živá 18.8.",
       "stats": {
         "products": 50,
-        "active": 31,
-        "drafts": 5,
+        "active": 29,
+        "drafts": 7,
         "collections": 8,
         "pages": 9,
         "menus": 5,
@@ -21,20 +21,18 @@
         "shipsTo": [
           "PL"
         ],
-        "wallets": [],
+        "wallets": [
+          "APPLE_PAY",
+          "GOOGLE_PAY"
+        ],
         "taxesIncluded": true,
         "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
       },
       "findings": [
         {
-          "sev": "blocker",
-          "area": "payments",
-          "msg": "Žiadne digitálne peňaženky — pravdepodobne nie je aktivovaná platobná brána; over v Settings → Payments"
-        },
-        {
           "sev": "info",
           "area": "catalog",
-          "msg": "5 produktov v DRAFT stave"
+          "msg": "7 produktov v DRAFT stave"
         },
         {
           "sev": "warn",
@@ -43,17 +41,6 @@
           "detail": {
             "varianty": [
               "bawelniana-saszetka-do-rytualu [Prezent]"
-            ]
-          }
-        },
-        {
-          "sev": "blocker",
-          "area": "catalog",
-          "msg": "2 produktov je vypredaných a nedovoľuje objednávku",
-          "detail": {
-            "priklady": [
-              "kulki-pod-prysznic-gingerbread",
-              "kompletna-kolekcja-the-ritual-sweet-dreams-rise-shine"
             ]
           }
         },
