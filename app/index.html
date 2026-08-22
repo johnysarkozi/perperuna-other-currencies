@@ -124,6 +124,7 @@
     <label class="check"><input type="checkbox" id="onlyProblems"> len problémy</label>
     <span class="grow"></span>
     <span class="meta" id="stats"></span>
+    <button id="howHelp" title="Ako to celé funguje">Ako to funguje</button>
     <button id="skuHelp" title="Ako sa tvoria SKU kódy">SKU kľúč</button>
     <button id="mirror" title="Prepíše sklady na CZ/RO/PL/HU podľa SK">Zrkadliť zo SK</button>
     <button id="sync">Načítať zo Shopify</button>
@@ -137,6 +138,69 @@
   </table></div>
   <div class="empty" id="empty" hidden>Nič nesedí s filtrom.</div>
 </div>
+
+<dialog id="howDialog"><div class="sheet">
+  <div class="closebar">
+    <h2>Ako to funguje</h2>
+    <button id="howClose">Zavrieť</button>
+  </div>
+
+  <h3>Odkiaľ sa berú sklady</h3>
+  <p><strong>SK je zdroj pravdy.</strong> Ostatné obchody sa naň dorovnávajú —
+     nie naopak. Sklad sa preto mení <em>len na SK</em>; zmena priamo v CZ, RO,
+     PL alebo HU sa pri najbližšom zrkadlení prepíše späť.</p>
+
+  <h3>Ako často</h3>
+  <table>
+    <tr><td><strong>Zrkadlenie skladov</strong><br><span class="meta">SK → CZ, RO, PL, HU</span></td>
+        <td>každých <strong>15 minút</strong><br><span class="meta">:00 · :15 · :30 · :45</span></td></tr>
+    <tr><td><strong>Načítanie do tejto tabuľky</strong><br><span class="meta">Shopify → katalóg</span></td>
+        <td>štyrikrát za hodinu<br><span class="meta">:05 · :20 · :35 · :50</span></td></tr>
+  </table>
+  <p>Čísla v tabuľke teda môžu byť až ~15 minút staré. Ak potrebuješ aktuálny
+     stav hneď, klikni <strong>Načítať zo Shopify</strong>.</p>
+
+  <h3>Keď prepíšeš sklad</h3>
+  <p>Zmena v stĺpci <strong>SK sklad</strong> <em>nečaká</em> na ďalšie
+     zrkadlenie — zapíše sa okamžite na SK aj do všetkých ostatných obchodov.
+     Pýta si heslo, lebo mení produkčný sklad na piatich obchodoch naraz.</p>
+
+  <h3>Tlačidlá</h3>
+  <table>
+    <tr><td><strong>Zrkadliť zo SK</strong></td>
+        <td>Spustí zrkadlenie hneď, nečaká na ďalších 15 minút.</td></tr>
+    <tr><td><strong>Načítať zo Shopify</strong></td>
+        <td>Osvieži čísla v tejto tabuľke. Nič v obchodoch nemení.</td></tr>
+  </table>
+
+  <h3>Čo znamenajú farby</h3>
+  <table>
+    <tr><td><span class="stock bad">červená</span></td>
+        <td>Záporný sklad, alebo aktívny produkt na nule, ktorý nedovoľuje objednávku — zákazník ho nekúpi.</td></tr>
+    <tr><td><span class="stock drift">oranžová</span></td>
+        <td>Sklad sa líši od SK. Krátko po predaji je to normálne; ak to tak zostane, zrkadlenie neprebehlo.</td></tr>
+    <tr><td><span class="chip warn">chýba XX</span></td>
+        <td>SKU v tom obchode vôbec nie je založené.</td></tr>
+    <tr><td><span class="status">draft / archived</span></td>
+        <td>Stav produktu, ak nie je ACTIVE. Pod cenou.</td></tr>
+  </table>
+
+  <h3>Filtre</h3>
+  <table>
+    <tr><td><strong>len aktívne</strong></td>
+        <td>Zapnuté defaultne. Skryje draft, archived a unlisted produkty.</td></tr>
+    <tr><td><strong>len problémy</strong></td>
+        <td>Nechá riadky, kde má aspoň jeden obchod niektorý z príznakov vyššie.</td></tr>
+  </table>
+  <p>Zoradiť sa dá kliknutím na hlavičku ktoréhokoľvek stĺpca, druhý klik
+     otočí smer.</p>
+
+  <h3>Na čo si dať pozor</h3>
+  <p>Zrkadlenie je <strong>kópia v čase, nie zdieľaný sklad</strong>. Medzi
+     behmi sa čísla rozchádzajú — predaj na PL neodpočíta sklad na CZ. Pri
+     bežnej prevádzke je rozdiel malý, ale keď sa na dvoch trhoch naraz
+     dopredávajú posledné kusy, dá sa predať viac, než je fyzicky na sklade.</p>
+</div></dialog>
 
 <dialog id="skuDialog"><div class="sheet">
   <div class="closebar">
@@ -546,14 +610,18 @@ $('mirror').addEventListener('click', () => {
     out.written ? `Zrkadlené: ${out.written} variantov upravených` : 'Všetky sklady už sedeli so SK');
 });
 
-// ---- SKU key -------------------------------------------------------------
+// ---- reference sheets ----------------------------------------------------
 
-$('skuHelp').addEventListener('click', () => $('skuDialog').showModal());
-$('skuClose').addEventListener('click', () => $('skuDialog').close());
-// Clicking the backdrop closes it; clicks inside the sheet must not.
-$('skuDialog').addEventListener('click', (e) => {
-  if (e.target === $('skuDialog')) $('skuDialog').close();
-});
+function wireDialog(openId, dialogId, closeId) {
+  const dialog = $(dialogId);
+  $(openId).addEventListener('click', () => dialog.showModal());
+  $(closeId).addEventListener('click', () => dialog.close());
+  // Clicking the backdrop closes it; clicks inside the sheet must not.
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+}
+
+wireDialog('howHelp', 'howDialog', 'howClose');
+wireDialog('skuHelp', 'skuDialog', 'skuClose');
 
 // ---- boot ----------------------------------------------------------------
 

@@ -91,6 +91,8 @@ a SKU, ktoré v niektorom obchode chýba.
 - **filter „len problémy"** — nechá len riadky s nejakým príznakom
 - **zoradenie** kliknutím na hlavičku ktoréhokoľvek stĺpca (druhý klik otočí smer)
 - **úprava SK skladu** priamo v tabuľke, viď nižšie
+- tlačidlo **Ako to funguje** — modál s pravidlami: odkiaľ sa berú sklady,
+  ako často sa zrkadlia, čo znamenajú farby a čo robia tlačidlá
 - tlačidlo **SKU kľúč** — modál s vysvetlením, ako sa tvoria SKU kódy
   (obsah zrkadlí [`docs/sku.md`](sku.md); pri zmene uprav oboje)
 - tlačidlá **Zrkadliť zo SK** a **Načítať zo Shopify**
@@ -175,6 +177,15 @@ where key = 'edit_password_sha256';
 ```
 
 (vyžaduje `pgcrypto`; inak si hash vyrob mimo databázy)
+
+### CORS
+
+Všetky tri funkcie posielajú CORS hlavičky a odpovedajú na `OPTIONS`. Bez toho
+prehliadač request vôbec neodošle — preflight zlyhá a v appke sa to prejaví
+len ako `Failed to fetch`. Cez `curl` sa to neodhalí, ten preflight nerobí.
+
+Povolený origin je `*.netlify.app`, inak primárna adresa appky. Pri presune na
+vlastnú doménu treba `PRIMARY_ORIGIN` vo funkciách upraviť.
 
 ### Poistky
 

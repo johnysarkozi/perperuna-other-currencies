@@ -38,6 +38,22 @@ function envValue(name: string): string | undefined {
   return raw.startsWith(prefix) ? raw.slice(prefix.length).trim() : raw;
 }
 
+// The dashboard calls this from a browser, which sends a preflight before any
+// POST carrying an Authorization header. Without these the request never
+// leaves the browser and surfaces only as "Failed to fetch".
+const PRIMARY_ORIGIN = 'https://multistore-manage-perperuna.netlify.app';
+
+function cors(req: Request): Record<string, string> {
+  const origin = req.headers.get('origin') ?? '';
+  return {
+    'Access-Control-Allow-Origin': origin.endsWith('.netlify.app') ? origin : PRIMARY_ORIGIN,
+    'Access-Control-Allow-Headers': 'authorization, content-type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Max-Age': '86400',
+    Vary: 'Origin',
+  };
+}
+
 function shopEnv(store: string, suffix: string): string {
   const name = `SHOPIFY_${store.toUpperCase()}_${suffix}`;
   const value = envValue(name);
@@ -155,6 +171,8 @@ async function logChanges(rows: unknown[]) {
 }
 
 Deno.serve(async (req) => {
+  const headers = cors(req);
+  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers });
   try {
     const body = req.headers.get('content-type')?.includes('json') ? await req.json() : {};
     const dryRun = body.dryRun === true;
@@ -234,8 +252,8 @@ Deno.serve(async (req) => {
       source: { skus: truth.size, variants: source.rows.length },
       stores: report,
       written: totalWritten,
-    });
+    }, { headers });
   } catch (err) {
-    return Response.json({ ok: false, error: String(err) }, { status: 500 });
+    return Response.json({ ok: false, error: String(err) }, { status: 500, headers });
   }
 });

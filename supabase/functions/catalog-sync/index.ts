@@ -47,6 +47,22 @@ function envValue(name: string): string | undefined {
   return raw.startsWith(prefix) ? raw.slice(prefix.length).trim() : raw;
 }
 
+// The dashboard calls this from a browser, which sends a preflight before any
+// POST carrying an Authorization header. Without these the request never
+// leaves the browser and surfaces only as "Failed to fetch".
+const PRIMARY_ORIGIN = 'https://multistore-manage-perperuna.netlify.app';
+
+function cors(req: Request): Record<string, string> {
+  const origin = req.headers.get('origin') ?? '';
+  return {
+    'Access-Control-Allow-Origin': origin.endsWith('.netlify.app') ? origin : PRIMARY_ORIGIN,
+    'Access-Control-Allow-Headers': 'authorization, content-type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Max-Age': '86400',
+    Vary: 'Origin',
+  };
+}
+
 function shopEnv(store: string, suffix: string): string {
   const name = `SHOPIFY_${store.toUpperCase()}_${suffix}`;
   const value = envValue(name);
@@ -167,6 +183,8 @@ async function upsert(table: string, rows: unknown[], onConflict: string, key: s
 }
 
 Deno.serve(async (req) => {
+  const headers = cors(req);
+  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers });
   try {
     const body = req.headers.get('content-type')?.includes('json') ? await req.json() : {};
     const configured = (envValue('SHOPIFY_SHOPS') ?? 'cz,ro,pl,hu')
@@ -185,7 +203,7 @@ Deno.serve(async (req) => {
           present[name] = !!envValue(name);
         }
       }
-      return Response.json({ ok: true, parsedStores: configured, secretsPresent: present });
+      return Response.json({ ok: true, parsedStores: configured, secretsPresent: present }, { headers });
     }
 
     const stores: string[] = body.stores?.length ? body.stores : configured.filter((s) => s !== 'sk');
@@ -203,8 +221,8 @@ Deno.serve(async (req) => {
     await upsert('catalog_products', skus.map((sku) => ({ sku })), 'sku', key);
     await upsert('catalog_listings', all, 'store,shopify_variant_id', key);
 
-    return Response.json({ ok: true, stores: perStore, skus: skus.length, listings: all.length });
+    return Response.json({ ok: true, stores: perStore, skus: skus.length, listings: all.length }, { headers });
   } catch (err) {
-    return Response.json({ ok: false, error: String(err) }, { status: 500 });
+    return Response.json({ ok: false, error: String(err) }, { status: 500, headers });
   }
 });

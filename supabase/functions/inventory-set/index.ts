@@ -35,6 +35,22 @@ function envValue(name: string): string | undefined {
   return raw.startsWith(prefix) ? raw.slice(prefix.length).trim() : raw;
 }
 
+// The dashboard calls this from a browser, which sends a preflight before any
+// POST carrying an Authorization header. Without these the request never
+// leaves the browser and surfaces only as "Failed to fetch".
+const PRIMARY_ORIGIN = 'https://multistore-manage-perperuna.netlify.app';
+
+function cors(req: Request): Record<string, string> {
+  const origin = req.headers.get('origin') ?? '';
+  return {
+    'Access-Control-Allow-Origin': origin.endsWith('.netlify.app') ? origin : PRIMARY_ORIGIN,
+    'Access-Control-Allow-Headers': 'authorization, content-type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Max-Age': '86400',
+    Vary: 'Origin',
+  };
+}
+
 function shopEnv(store: string, suffix: string): string {
   const name = `SHOPIFY_${store.toUpperCase()}_${suffix}`;
   const value = envValue(name);
@@ -146,6 +162,8 @@ async function setInStore(store: string, sku: string, quantity: number) {
 }
 
 Deno.serve(async (req) => {
+  const headers = cors(req);
+  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers });
   try {
     const body = await req.json();
     const sku = String(body.sku ?? '').trim();
@@ -161,7 +179,7 @@ Deno.serve(async (req) => {
     const expected = rows?.[0]?.value;
     if (!expected) throw new Error('edit password is not configured');
     if (await sha256Hex(password) !== expected) {
-      return Response.json({ ok: false, error: 'Nesprávne heslo' }, { status: 403 });
+      return Response.json({ ok: false, error: 'Nesprávne heslo' }, { status: 403, headers });
     }
 
     // The SKU has to already exist in the catalog — this endpoint adjusts
@@ -199,8 +217,8 @@ Deno.serve(async (req) => {
       headers: { Prefer: 'return=minimal' },
     });
 
-    return Response.json({ ok: true, sku, quantity, stores: results });
+    return Response.json({ ok: true, sku, quantity, stores: results }, { headers });
   } catch (err) {
-    return Response.json({ ok: false, error: String(err) }, { status: 500 });
+    return Response.json({ ok: false, error: String(err) }, { status: 500, headers });
   }
 });
