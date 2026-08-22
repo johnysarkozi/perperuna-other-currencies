@@ -82,10 +82,16 @@ Bežný sync rob cez Edge Function, nie týmto.
 Celá appka je jeden statický súbor: [`app/index.html`](../app/index.html).
 Žiadny build krok, žiadne závislosti okrem Supabase JS z CDN.
 
-Matica SKU × obchod — cena a sklad všetkých piatich backendov vedľa seba,
-hľadanie, filter „len problémy" a tlačidlo na okamžitý sync zo Shopify.
+Matica SKU × obchod — cena a sklad všetkých piatich backendov vedľa seba.
 Farebne označuje záporný sklad, vypredané ACTIVE položky, odchýlku od SK
 a SKU, ktoré v niektorom obchode chýba.
+
+- **hľadanie** podľa SKU alebo názvu
+- **filter „len aktívne"** (zapnutý defaultne) — skryje DRAFT/ARCHIVED/UNLISTED
+- **filter „len problémy"** — nechá len riadky s nejakým príznakom
+- **zoradenie** kliknutím na hlavičku ktoréhokoľvek stĺpca (druhý klik otočí smer)
+- **úprava SK skladu** priamo v tabuľke, viď nižšie
+- tlačidlá **Zrkadliť zo SK** a **Načítať zo Shopify**
 
 ### Prístup
 
@@ -133,6 +139,47 @@ Password protection. Nič v Supabase nastavovať netreba.
 > Overiť sa to dá cez Netlify MCP `get-project` — v `projectAccessControls`
 > musí byť `requiresPassword: true`. Kým je `false`, appka je verejná
 > a ktokoľvek s odkazom vidí sklady a ceny všetkých obchodov.
+
+## Úprava skladu z appky
+
+V stĺpci **SK sklad** sa dá číslo prepísať priamo v tabuľke. Po potvrdení sa
+nastaví na SK *aj vo všetkých ostatných obchodoch naraz* — Edge Function
+**`inventory-set`**.
+
+```
+POST /functions/v1/inventory-set
+{ "sku": "PP-CUBE-CALM-004", "quantity": 120, "password": "…" }
+```
+
+Editovateľný je zámerne len SK. Zmena na CZ/RO/PL/HU by nemala zmysel —
+najbližší mirror by ju prepísala.
+
+### Prečo pýta heslo
+
+Stránka komunikuje so Supabase publishable kľúčom, ktorý je viditeľný v jej
+zdrojovom kóde. Na čítanie katalógu to stačí, ale tento endpoint mení
+**produkčný sklad na piatich obchodoch**, takže by ho nemal odomykať kľúč,
+ktorý sa dá zo stránky vytiahnuť. Heslo je uložené ako SHA-256 v tabuľke
+`catalog_settings`, ktorá nemá žiadnu RLS politiku — teda ju anon kľúč
+neprečíta, vidia ju len Edge Functions cez secret kľúč.
+
+Prehliadač si heslo pamätá v `sessionStorage` (do zatvorenia karty), takže sa
+pýta raz. Zmena hesla:
+
+```sql
+update public.catalog_settings
+set value = encode(digest('nove-heslo', 'sha256'), 'hex'), updated_at = now()
+where key = 'edit_password_sha256';
+```
+
+(vyžaduje `pgcrypto`; inak si hash vyrob mimo databázy)
+
+### Poistky
+
+- SKU musí už existovať v katalógu — endpoint sklad upravuje, nezakladá produkty.
+- Množstvo musí byť celé číslo 0 – 1 000 000.
+- SK sa zapisuje ako prvé; ak zlyhá, ostatné obchody sa nechajú tak.
+- Každá zmena ide do `catalog_sync_log` s `actor = 'inventory-set'`.
 
 ## Zrkadlenie skladov zo SK
 
@@ -182,8 +229,7 @@ prepíše.
 3. ✅ **Cron** — `pg_cron` + `pg_net`, mirror každých 15 min, sync po ňom.
 4. ✅ **Zrkadlenie skladov** — Edge Function `inventory-mirror`, s logom.
 5. ✅ **UI** — dashboard na Netlify, matica SKU × obchod + obe tlačidlá.
-6. ⏳ **Úprava skladu na SK z appky** — teraz sa sklad mení len v Shopify
-   admine SK; z katalógu sa zatiaľ nedá zapisovať.
+6. ✅ **Úprava skladu z appky** — Edge Function `inventory-set`, chránená heslom.
 7. ⏳ **Ceny** — katalóg ich ukazuje, ale nemení. Zrkadlenie cien nedáva
    zmysel priamo (iné meny), chcelo by to prepočet cez kurz + pravidlá
    zaokrúhlenia.

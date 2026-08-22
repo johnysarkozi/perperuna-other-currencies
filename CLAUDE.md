@@ -72,6 +72,7 @@ scripts/catalog-pull.mjs       lokálny náhľad katalógu (vypíše SQL, nič n
 app/index.html               dashboard katalógu (matica SKU × obchod)
 supabase/functions/catalog-sync/     Edge Function — sync Shopify → katalóg
 supabase/functions/inventory-mirror/ Edge Function — zrkadlí sklady zo SK (cron á 15 min)
+supabase/functions/inventory-set/    Edge Function — nastaví sklad SKU vo všetkých obchodoch
 scripts/inventory-mirror.mjs   lokálne zrkadlenie skladov (dry-run, --apply)
 docs/credentials.md            ako sa nastavujú prístupy
 docs/launch-plan.md            plán spustenia RO/PL/HU

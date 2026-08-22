@@ -8,15 +8,15 @@
   :root {
     --bg: #ffffff; --panel: #f6f7f9; --line: #e3e6ea;
     --text: #14181d; --muted: #667085; --faint: #98a2b3;
-    --accent: #7a5af8; --ok: #12805c; --warn: #b54708; --bad: #b42318;
-    --bad-bg: #fef3f2; --warn-bg: #fffaeb; --ok-bg: #ecfdf3;
+    --accent: #7a5af8; --warn: #b54708; --bad: #b42318; --ok: #12805c;
+    --bad-bg: #fef3f2; --warn-bg: #fffaeb; --edit-bg: #f4f1ff;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #0e1116; --panel: #161a21; --line: #262c36;
       --text: #e6e9ef; --muted: #98a2b3; --faint: #667085;
-      --accent: #9b8afb; --ok: #4ade80; --warn: #fdb022; --bad: #f97066;
-      --bad-bg: #2a1614; --warn-bg: #2a2114; --ok-bg: #10241c;
+      --accent: #9b8afb; --warn: #fdb022; --bad: #f97066; --ok: #4ade80;
+      --bad-bg: #2a1614; --warn-bg: #2a2114; --edit-bg: #1c1a2b;
     }
   }
   * { box-sizing: border-box; }
@@ -25,13 +25,13 @@
     font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   header {
-    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
     padding: 12px 20px; border-bottom: 1px solid var(--line);
     position: sticky; top: 0; background: var(--bg); z-index: 10;
   }
   h1 { font-size: 15px; margin: 0; font-weight: 650; letter-spacing: -0.01em; }
   .grow { flex: 1; }
-  input[type=search], input[type=email] {
+  input[type=search] {
     padding: 7px 11px; border: 1px solid var(--line); border-radius: 7px;
     background: var(--panel); color: var(--text); font: inherit; min-width: 200px;
   }
@@ -41,39 +41,49 @@
   }
   button:hover:not(:disabled) { border-color: var(--accent); }
   button:disabled { opacity: .5; cursor: default; }
-  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
   label.check { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); cursor: pointer; user-select: none; }
   .meta { color: var(--muted); font-size: 12.5px; }
-
 
   .wrap { overflow-x: auto; }
   table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
   th, td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
   thead th {
-    position: sticky; top: 53px; background: var(--bg); z-index: 5;
+    position: sticky; background: var(--bg); z-index: 5;
     font-weight: 600; font-size: 11.5px; text-transform: uppercase;
     letter-spacing: .04em; color: var(--muted);
   }
   thead tr.groups th { top: 53px; text-align: center; border-bottom: none; padding-bottom: 2px; }
-  thead tr.cols th { top: 76px; padding-top: 2px; }
+  thead tr.cols th { top: 76px; padding-top: 2px; cursor: pointer; user-select: none; }
+  thead tr.cols th:hover { color: var(--text); }
+  th .arrow { opacity: .55; font-size: 9px; }
   th.sep, td.sep { border-left: 1px solid var(--line); }
   tbody tr:hover td { background: var(--panel); }
   td.sku { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; }
-  td.title { max-width: 320px; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+  td.title { max-width: 300px; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
   td.num { text-align: right; }
   .absent { color: var(--faint); }
   .chip { display: inline-block; padding: 0 5px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-  .chip.bad { background: var(--bad-bg); color: var(--bad); }
   .chip.warn { background: var(--warn-bg); color: var(--warn); }
   .stock.bad { color: var(--bad); font-weight: 650; }
   .stock.drift { color: var(--warn); font-weight: 650; }
   .status { font-size: 10.5px; color: var(--faint); text-transform: lowercase; }
+  input.qty {
+    width: 82px; padding: 3px 6px; text-align: right; font: inherit;
+    font-variant-numeric: tabular-nums;
+    border: 1px solid transparent; border-radius: 5px;
+    background: var(--edit-bg); color: var(--text);
+  }
+  input.qty:hover { border-color: var(--line); }
+  input.qty:focus { border-color: var(--accent); outline: none; }
+  input.qty:disabled { background: none; color: var(--faint); }
+  input.qty.saving { opacity: .5; }
   .empty { padding: 40px 20px; text-align: center; color: var(--muted); }
   .toast {
     position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
     background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
-    padding: 9px 16px; box-shadow: 0 6px 24px rgba(0,0,0,.18);
+    padding: 9px 16px; box-shadow: 0 6px 24px rgba(0,0,0,.18); max-width: 80vw;
   }
+  .toast.bad { border-color: var(--bad); color: var(--bad); }
 </style>
 </head>
 <body>
@@ -82,10 +92,11 @@
   <header>
     <h1>Katalóg</h1>
     <input type="search" id="q" placeholder="Hľadať SKU alebo názov…">
+    <label class="check"><input type="checkbox" id="onlyActive" checked> len aktívne</label>
     <label class="check"><input type="checkbox" id="onlyProblems"> len problémy</label>
     <span class="grow"></span>
     <span class="meta" id="stats"></span>
-    <button id="mirror" title="Prepíše sklady na CZ/RO/PL/HU podľa SK">Zrkadliť sklady zo SK</button>
+    <button id="mirror" title="Prepíše sklady na CZ/RO/PL/HU podľa SK">Zrkadliť zo SK</button>
     <button id="sync">Načítať zo Shopify</button>
   </header>
   <div class="wrap"><table>
@@ -102,8 +113,8 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 // Publishable key. The page has no login of its own — access is controlled by
-// the site password on Netlify. Row level security grants anon read only, so
-// this key can never be used to change anything.
+// the site password on Netlify. Row level security grants anon read only;
+// changing stock goes through inventory-set, which asks for its own password.
 const SUPABASE_URL = 'https://jtxewgjpdmmbctbfvlaj.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_FouaxIl0WZt_haIW7yT7mg_AcTWx4p0';
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -113,13 +124,14 @@ const TRUTH = 'sk';
 
 const $ = (id) => document.getElementById(id);
 let listings = [];
+let sort = { key: 'sku', dir: 1 };
 
-function toast(text, ms = 3200) {
+function toast(text, bad = false, ms = 3600) {
   const el = document.createElement('div');
-  el.className = 'toast';
+  el.className = bad ? 'toast bad' : 'toast';
   el.textContent = text;
   document.body.appendChild(el);
-  setTimeout(() => el.remove(), ms);
+  setTimeout(() => el.remove(), bad ? 7000 : ms);
 }
 
 // ---- data ----------------------------------------------------------------
@@ -128,7 +140,7 @@ async function load() {
   const { data, error } = await sb
     .from('catalog_listings')
     .select('sku, store, title, variant_title, status, currency, price, inventory_quantity, inventory_policy, synced_at');
-  if (error) { toast(`Chyba načítania: ${error.message}`); return; }
+  if (error) { toast(`Chyba načítania: ${error.message}`, true); return; }
   listings = data ?? [];
   render();
 }
@@ -147,7 +159,7 @@ function pivot() {
     if (better) row.stores[l.store] = l;
     if (!row.title || l.store === TRUTH) row.title = l.title;
   }
-  return [...bySku.values()].sort((a, b) => a.sku.localeCompare(b.sku));
+  return [...bySku.values()];
 }
 
 /** Flag a cell when it would surprise someone managing the catalog. */
@@ -173,46 +185,101 @@ const money = (v, cur) => v === null || v === undefined
       maximumFractionDigits: cur === 'HUF' ? 0 : 2,
     }).format(v);
 
+// ---- sorting -------------------------------------------------------------
+
+/** Value a row sorts by for the given column key. */
+function sortValue(row, key) {
+  if (key === 'sku') return row.sku;
+  if (key === 'title') return (row.title ?? '').toLowerCase();
+  const [store, field] = key.split(':');
+  const cell = row.stores[store];
+  if (!cell) return null;
+  return field === 'price' ? cell.price : cell.inventory_quantity;
+}
+
+function compare(a, b) {
+  const x = sortValue(a, sort.key);
+  const y = sortValue(b, sort.key);
+  // Rows with nothing in the sorted column sink to the bottom either way,
+  // so a descending sort does not fill the top with blanks.
+  if (x === null || x === undefined) return y === null || y === undefined ? 0 : 1;
+  if (y === null || y === undefined) return -1;
+  if (typeof x === 'string') return x.localeCompare(y) * sort.dir;
+  return (x - y) * sort.dir;
+}
+
+function setSort(key) {
+  sort = sort.key === key ? { key, dir: -sort.dir } : { key, dir: 1 };
+  render();
+}
+
 // ---- render --------------------------------------------------------------
 
-function header() {
+function buildHeader() {
   $('groupRow').innerHTML =
     '<th colspan="2"></th>' +
     STORES.map((s) => `<th colspan="2" class="sep">${s.toUpperCase()}${s === TRUTH ? ' ·&nbsp;pravda' : ''}</th>`).join('');
+
+  const col = (key, label, cls = '') =>
+    `<th class="${cls}" data-sort="${key}">${label}<span class="arrow"></span></th>`;
+
   $('colRow').innerHTML =
-    '<th>SKU</th><th>Názov</th>' +
-    STORES.map(() => '<th class="num sep">cena</th><th class="num">sklad</th>').join('');
+    col('sku', 'SKU') + col('title', 'Názov') +
+    STORES.map((s) => col(`${s}:price`, 'cena', 'num sep') + col(`${s}:stock`, 'sklad', 'num')).join('');
+
+  for (const th of $('colRow').querySelectorAll('th[data-sort]')) {
+    th.addEventListener('click', () => setSort(th.dataset.sort));
+  }
+}
+
+function paintSortArrows() {
+  for (const th of $('colRow').querySelectorAll('th[data-sort]')) {
+    th.querySelector('.arrow').textContent =
+      th.dataset.sort === sort.key ? (sort.dir === 1 ? ' ▲' : ' ▼') : '';
+  }
 }
 
 function render() {
   const q = $('q').value.trim().toLowerCase();
+  const onlyActive = $('onlyActive').checked;
   const onlyProblems = $('onlyProblems').checked;
 
   const rows = pivot().filter((row) => {
     if (q && !row.sku.toLowerCase().includes(q) && !(row.title ?? '').toLowerCase().includes(q)) return false;
+    if (onlyActive && !STORES.some((s) => row.stores[s]?.status === 'ACTIVE')) return false;
     if (onlyProblems && !STORES.some((s) => cellFlags(row, s).length)) return false;
     return true;
-  });
+  }).sort(compare);
 
   $('rows').innerHTML = rows.map((row) => {
     const cells = STORES.map((store) => {
       const cell = row.stores[store];
       const flags = cellFlags(row, store);
       if (!cell) return '<td class="sep absent">—</td><td class="num absent">—</td>';
+
       const qty = cell.inventory_quantity;
       const cls = flags.includes('negative') || flags.includes('sold-out') ? 'bad'
         : flags.includes('drift') ? 'drift' : '';
       const status = cell.status === 'ACTIVE' ? '' : `<div class="status">${cell.status.toLowerCase()}</div>`;
-      return `<td class="num sep">${money(cell.price, cell.currency)}${status}</td>` +
-             `<td class="num"><span class="stock ${cls}">${qty ?? '—'}</span></td>`;
+      const price = `<td class="num sep">${money(cell.price, cell.currency)}${status}</td>`;
+
+      // Stock is edited on SK only; the rest follow from the mirror, so an edit
+      // there would just be overwritten.
+      const stock = store === TRUTH
+        ? `<td class="num"><input class="qty" type="number" step="1" min="0"
+             value="${qty ?? ''}" data-sku="${row.sku}" data-was="${qty ?? ''}"></td>`
+        : `<td class="num"><span class="stock ${cls}">${qty ?? '—'}</span></td>`;
+      return price + stock;
     }).join('');
 
     const missing = STORES.filter((s) => cellFlags(row, s).includes('missing'));
     const badge = missing.length ? ` <span class="chip warn">chýba ${missing.join(' ')}</span>` : '';
-    return `<tr><td class="sku">${row.sku}${badge}</td><td class="title" title="${(row.title ?? '').replace(/"/g, '&quot;')}">${row.title ?? ''}</td>${cells}</tr>`;
+    const title = (row.title ?? '').replace(/"/g, '&quot;');
+    return `<tr><td class="sku">${row.sku}${badge}</td><td class="title" title="${title}">${row.title ?? ''}</td>${cells}</tr>`;
   }).join('');
 
   $('empty').hidden = rows.length > 0;
+  paintSortArrows();
 
   const synced = listings.reduce((max, l) => (l.synced_at > max ? l.synced_at : max), '');
   $('stats').textContent =
@@ -221,11 +288,81 @@ function render() {
 }
 
 $('q').addEventListener('input', render);
+$('onlyActive').addEventListener('change', render);
 $('onlyProblems').addEventListener('change', render);
+
+// ---- editing stock -------------------------------------------------------
+
+/** Kept for the tab only, so the password is not written to disk. */
+function editPassword() {
+  let pw = sessionStorage.getItem('editpw');
+  if (!pw) {
+    pw = prompt('Heslo na úpravu skladu:');
+    if (pw) sessionStorage.setItem('editpw', pw);
+  }
+  return pw;
+}
+
+async function saveQuantity(input) {
+  const sku = input.dataset.sku;
+  const was = input.dataset.was === '' ? null : Number(input.dataset.was);
+  const value = input.value.trim();
+
+  if (value === '' || Number(value) === was) { input.value = was ?? ''; return; }
+  const quantity = Number(value);
+  if (!Number.isInteger(quantity) || quantity < 0) {
+    toast('Sklad musí byť celé nezáporné číslo', true);
+    input.value = was ?? '';
+    return;
+  }
+  if (!confirm(`Nastaviť ${sku} na ${quantity} ks na SK a rozposlať do ostatných obchodov?`)) {
+    input.value = was ?? '';
+    return;
+  }
+
+  const password = editPassword();
+  if (!password) { input.value = was ?? ''; return; }
+
+  input.disabled = true;
+  input.classList.add('saving');
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/inventory-set`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sku, quantity, password }),
+    });
+    const out = await res.json();
+    if (!out.ok) {
+      if (res.status === 403) sessionStorage.removeItem('editpw');
+      throw new Error(out.error ?? 'zápis zlyhal');
+    }
+    // The catalog copy only refreshes on the next sync, so reflect the value we
+    // just wrote rather than showing a stale number until then.
+    for (const l of listings) if (l.sku === sku) l.inventory_quantity = quantity;
+    toast(`${sku} nastavené na ${quantity} ks vo všetkých obchodoch`);
+    render();
+  } catch (err) {
+    toast(`Chyba: ${err.message}`, true);
+    input.value = was ?? '';
+  } finally {
+    input.disabled = false;
+    input.classList.remove('saving');
+  }
+}
+
+$('rows').addEventListener('change', (e) => {
+  if (e.target.classList.contains('qty')) saveQuantity(e.target);
+});
+$('rows').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && e.target.classList.contains('qty')) e.target.blur();
+  if (e.key === 'Escape' && e.target.classList.contains('qty')) {
+    e.target.value = e.target.dataset.was;
+    e.target.blur();
+  }
+});
 
 // ---- actions -------------------------------------------------------------
 
-/** Run one of the edge functions, then refresh the table from the result. */
 async function runFunction(btnId, fn, payload, busyLabel, describe) {
   const btn = $(btnId);
   const label = btn.textContent;
@@ -242,7 +379,7 @@ async function runFunction(btnId, fn, payload, busyLabel, describe) {
     toast(describe(out));
     await load();
   } catch (err) {
-    toast(`Chyba: ${err.message}`, 6000);
+    toast(`Chyba: ${err.message}`, true);
   } finally {
     btn.disabled = false;
     btn.textContent = label;
@@ -255,16 +392,13 @@ $('sync').addEventListener('click', () =>
 
 $('mirror').addEventListener('click', () => {
   if (!confirm('Prepísať sklady na CZ, RO, PL a HU podľa SK?')) return;
-  // The mirror only touches the other backends; SK is read, never written.
   return runFunction('mirror', 'inventory-mirror', {}, 'Zrkadlím…', (out) =>
-    out.written
-      ? `Zrkadlené: ${out.written} variantov upravených`
-      : 'Všetky sklady už sedeli so SK');
+    out.written ? `Zrkadlené: ${out.written} variantov upravených` : 'Všetky sklady už sedeli so SK');
 });
 
 // ---- boot ----------------------------------------------------------------
 
-header();
+buildHeader();
 load();
 </script>
 </body>
