@@ -69,7 +69,9 @@ scripts/check-credentials.mjs  overenie prístupov
 scripts/dump-context.mjs       read-only snapshot obchodov → docs/shop-context.json
 scripts/audit-launch.mjs       audit pripravenosti → docs/launch-audit.json
 scripts/catalog-pull.mjs       lokálny náhľad katalógu (vypíše SQL, nič nezapisuje)
+app/index.html               dashboard katalógu (matica SKU × obchod)
 supabase/functions/catalog-sync/  Edge Function — sync Shopify → katalóg (beží serverovo)
+supabase/functions/catalog-ui/    Edge Function — servíruje dashboard
 docs/credentials.md            ako sa nastavujú prístupy
 docs/launch-plan.md            plán spustenia RO/PL/HU
 docs/catalog.md                cross-backend katalóg — dátový model, stav, ďalšie fázy

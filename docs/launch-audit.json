@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T14:03:54.000Z",
+  "generatedAt": "2026-08-22T14:06:03.448Z",
   "results": [
     {
       "key": "pl",
@@ -11,8 +11,8 @@
       "theme": "PERPERUNA.PL – živá 18.8.",
       "stats": {
         "products": 50,
-        "active": 29,
-        "drafts": 7,
+        "active": 27,
+        "drafts": 9,
         "collections": 8,
         "pages": 9,
         "menus": 5,
@@ -32,7 +32,7 @@
         {
           "sev": "info",
           "area": "catalog",
-          "msg": "7 produktov v DRAFT stave"
+          "msg": "9 produktov v DRAFT stave"
         },
         {
           "sev": "warn",
@@ -41,17 +41,6 @@
           "detail": {
             "varianty": [
               "bawelniana-saszetka-do-rytualu [Prezent]"
-            ]
-          }
-        },
-        {
-          "sev": "blocker",
-          "area": "catalog",
-          "msg": "2 produktov je vypredaných a nedovoľuje objednávku",
-          "detail": {
-            "priklady": [
-              "edycja-limitowana-czarna-miska",
-              "kostka-pod-prysznic-love"
             ]
           }
         },

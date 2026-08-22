@@ -76,6 +76,42 @@ node scripts/catalog-pull.mjs cz pl      # len vybrané
 
 Bežný sync rob cez Edge Function, nie týmto.
 
+## Appka
+
+**https://jtxewgjpdmmbctbfvlaj.supabase.co/functions/v1/catalog-ui**
+
+Matica SKU × obchod — cena a sklad všetkých piatich backendov vedľa seba,
+hľadanie, filter „len problémy" a tlačidlo na okamžitý sync zo Shopify.
+Farebne označuje záporný sklad, vypredané ACTIVE položky, odchýlku od SK
+a SKU, ktoré v niektorom obchode chýba.
+
+Prihlásenie je cez Supabase Auth (odkaz do e-mailu). Stránka samotná je
+verejná, ale neobsahuje žiadne dáta — všetko čítanie ide cez RLS, takže
+neprihlásený nevidí nič.
+
+Zdroj stránky je [`app/index.html`](../app/index.html). Edge Function
+`catalog-ui` ju servíruje ako base64 v `index.ts`, lebo deploy pipeline
+priloží len entrypoint — statický súbor vedľa neho v runtime neexistuje.
+Po zmene `app/index.html` treba base64 pregenerovať:
+
+```
+base64 -w0 app/index.html
+```
+
+### Čo treba nastaviť raz
+
+V Supabase → Authentication → URL Configuration pridať medzi **Redirect URLs**:
+
+```
+https://jtxewgjpdmmbctbfvlaj.supabase.co/functions/v1/catalog-ui
+```
+
+Bez toho odkaz z e-mailu po kliknutí neprihlási.
+
+Hosting je zatiaľ Edge Function, lebo Netlify API cez MCP opakovane vracalo
+502. Na Netlify (a vlastnú doménu) sa to dá presunúť kedykoľvek — je to jeden
+statický súbor.
+
 ## Stav a ďalšie fázy
 
 1. ✅ **Schéma** — `catalog_products` / `catalog_listings` / `catalog_sync_log`,

@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perperuna — katalóg</title>
+<style>
+  :root {
+    --bg: #ffffff; --panel: #f6f7f9; --line: #e3e6ea;
+    --text: #14181d; --muted: #667085; --faint: #98a2b3;
+    --accent: #7a5af8; --ok: #12805c; --warn: #b54708; --bad: #b42318;
+    --bad-bg: #fef3f2; --warn-bg: #fffaeb; --ok-bg: #ecfdf3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1116; --panel: #161a21; --line: #262c36;
+      --text: #e6e9ef; --muted: #98a2b3; --faint: #667085;
+      --accent: #9b8afb; --ok: #4ade80; --warn: #fdb022; --bad: #f97066;
+      --bad-bg: #2a1614; --warn-bg: #2a2114; --ok-bg: #10241c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  header {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    padding: 12px 20px; border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; background: var(--bg); z-index: 10;
+  }
+  h1 { font-size: 15px; margin: 0; font-weight: 650; letter-spacing: -0.01em; }
+  .grow { flex: 1; }
+  input[type=search], input[type=email] {
+    padding: 7px 11px; border: 1px solid var(--line); border-radius: 7px;
+    background: var(--panel); color: var(--text); font: inherit; min-width: 200px;
+  }
+  button {
+    padding: 7px 13px; border: 1px solid var(--line); border-radius: 7px;
+    background: var(--panel); color: var(--text); font: inherit; cursor: pointer;
+  }
+  button:hover:not(:disabled) { border-color: var(--accent); }
+  button:disabled { opacity: .5; cursor: default; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  label.check { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); cursor: pointer; user-select: none; }
+  .meta { color: var(--muted); font-size: 12.5px; }
+
+  #gate { max-width: 380px; margin: 14vh auto; padding: 0 20px; }
+  #gate h1 { font-size: 20px; margin-bottom: 6px; }
+  #gate p { color: var(--muted); margin-top: 0; }
+  #gate form { display: flex; gap: 8px; margin-top: 18px; }
+  #gate input { flex: 1; }
+
+  .wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  th, td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  thead th {
+    position: sticky; top: 53px; background: var(--bg); z-index: 5;
+    font-weight: 600; font-size: 11.5px; text-transform: uppercase;
+    letter-spacing: .04em; color: var(--muted);
+  }
+  thead tr.groups th { top: 53px; text-align: center; border-bottom: none; padding-bottom: 2px; }
+  thead tr.cols th { top: 76px; padding-top: 2px; }
+  th.sep, td.sep { border-left: 1px solid var(--line); }
+  tbody tr:hover td { background: var(--panel); }
+  td.sku { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; }
+  td.title { max-width: 320px; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+  td.num { text-align: right; }
+  .absent { color: var(--faint); }
+  .chip { display: inline-block; padding: 0 5px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .chip.bad { background: var(--bad-bg); color: var(--bad); }
+  .chip.warn { background: var(--warn-bg); color: var(--warn); }
+  .stock.bad { color: var(--bad); font-weight: 650; }
+  .stock.drift { color: var(--warn); font-weight: 650; }
+  .status { font-size: 10.5px; color: var(--faint); text-transform: lowercase; }
+  .empty { padding: 40px 20px; text-align: center; color: var(--muted); }
+  .toast {
+    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 9px 16px; box-shadow: 0 6px 24px rgba(0,0,0,.18);
+  }
+</style>
+</head>
+<body>
+
+<div id="gate" hidden>
+  <h1>Perperuna — katalóg</h1>
+  <p>Prehľad produktov, cien a skladu naprieč všetkými backendmi.</p>
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="tvoj@email.sk" required autocomplete="email">
+    <button class="primary" type="submit">Poslať odkaz</button>
+  </form>
+  <p class="meta" id="gateMsg" style="margin-top:12px"></p>
+</div>
+
+<div id="app" hidden>
+  <header>
+    <h1>Katalóg</h1>
+    <input type="search" id="q" placeholder="Hľadať SKU alebo názov…">
+    <label class="check"><input type="checkbox" id="onlyProblems"> len problémy</label>
+    <span class="grow"></span>
+    <span class="meta" id="stats"></span>
+    <button id="sync">Načítať zo Shopify</button>
+    <button id="logout">Odhlásiť</button>
+  </header>
+  <div class="wrap"><table>
+    <thead>
+      <tr class="groups" id="groupRow"></tr>
+      <tr class="cols" id="colRow"></tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+  <div class="empty" id="empty" hidden>Nič nesedí s filtrom.</div>
+</div>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+// Publishable key: safe in a browser — row level security decides what is
+// readable, and only signed-in users have any access at all.
+const SUPABASE_URL = 'https://jtxewgjpdmmbctbfvlaj.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_FouaxIl0WZt_haIW7yT7mg_AcTWx4p0';
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const STORES = ['sk', 'cz', 'pl', 'ro', 'hu'];
+const TRUTH = 'sk';
+
+const $ = (id) => document.getElementById(id);
+let listings = [];
+
+function toast(text, ms = 3200) {
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = text;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), ms);
+}
+
+// ---- auth ----------------------------------------------------------------
+
+$('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = $('email').value.trim();
+  $('gateMsg').textContent = 'Posielam…';
+  const { error } = await sb.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: location.href.split('#')[0] },
+  });
+  $('gateMsg').textContent = error
+    ? `Nepodarilo sa: ${error.message}`
+    : `Odkaz na prihlásenie je v e-maile (${email}). Otvor ho na tomto zariadení.`;
+});
+
+$('logout').addEventListener('click', async () => {
+  await sb.auth.signOut();
+  location.reload();
+});
+
+// ---- data ----------------------------------------------------------------
+
+async function load() {
+  const { data, error } = await sb
+    .from('catalog_listings')
+    .select('sku, store, title, variant_title, status, currency, price, inventory_quantity, inventory_policy, synced_at');
+  if (error) { toast(`Chyba načítania: ${error.message}`); return; }
+  listings = data ?? [];
+  render();
+}
+
+/** One entry per SKU per store, preferring the ACTIVE listing when a SKU
+ *  appears on more than one product in the same store. */
+function pivot() {
+  const bySku = new Map();
+  for (const l of listings) {
+    let row = bySku.get(l.sku);
+    if (!row) { row = { sku: l.sku, title: null, stores: {} }; bySku.set(l.sku, row); }
+    const current = row.stores[l.store];
+    const better = !current
+      || (l.status === 'ACTIVE' && current.status !== 'ACTIVE')
+      || (l.status === current.status && (l.price ?? 0) > (current.price ?? 0));
+    if (better) row.stores[l.store] = l;
+    if (!row.title || l.store === TRUTH) row.title = l.title;
+  }
+  return [...bySku.values()].sort((a, b) => a.sku.localeCompare(b.sku));
+}
+
+/** Flag a cell when it would surprise someone managing the catalog. */
+function cellFlags(row, store) {
+  const cell = row.stores[store];
+  const truth = row.stores[TRUTH];
+  const flags = [];
+  if (!cell) {
+    if (Object.keys(row.stores).length) flags.push('missing');
+    return flags;
+  }
+  const qty = cell.inventory_quantity;
+  if (qty !== null && qty < 0) flags.push('negative');
+  else if (cell.status === 'ACTIVE' && qty !== null && qty <= 0 && cell.inventory_policy === 'DENY') flags.push('sold-out');
+  if (truth && store !== TRUTH && cell.inventory_quantity !== truth.inventory_quantity) flags.push('drift');
+  return flags;
+}
+
+const money = (v, cur) => v === null || v === undefined
+  ? '—'
+  : new Intl.NumberFormat('sk-SK', {
+      style: 'currency', currency: cur || 'EUR',
+      maximumFractionDigits: cur === 'HUF' ? 0 : 2,
+    }).format(v);
+
+// ---- render --------------------------------------------------------------
+
+function header() {
+  $('groupRow').innerHTML =
+    '<th colspan="2"></th>' +
+    STORES.map((s) => `<th colspan="2" class="sep">${s.toUpperCase()}${s === TRUTH ? ' ·&nbsp;pravda' : ''}</th>`).join('');
+  $('colRow').innerHTML =
+    '<th>SKU</th><th>Názov</th>' +
+    STORES.map(() => '<th class="num sep">cena</th><th class="num">sklad</th>').join('');
+}
+
+function render() {
+  const q = $('q').value.trim().toLowerCase();
+  const onlyProblems = $('onlyProblems').checked;
+
+  const rows = pivot().filter((row) => {
+    if (q && !row.sku.toLowerCase().includes(q) && !(row.title ?? '').toLowerCase().includes(q)) return false;
+    if (onlyProblems && !STORES.some((s) => cellFlags(row, s).length)) return false;
+    return true;
+  });
+
+  $('rows').innerHTML = rows.map((row) => {
+    const cells = STORES.map((store) => {
+      const cell = row.stores[store];
+      const flags = cellFlags(row, store);
+      if (!cell) return '<td class="sep absent">—</td><td class="num absent">—</td>';
+      const qty = cell.inventory_quantity;
+      const cls = flags.includes('negative') || flags.includes('sold-out') ? 'bad'
+        : flags.includes('drift') ? 'drift' : '';
+      const status = cell.status === 'ACTIVE' ? '' : `<div class="status">${cell.status.toLowerCase()}</div>`;
+      return `<td class="num sep">${money(cell.price, cell.currency)}${status}</td>` +
+             `<td class="num"><span class="stock ${cls}">${qty ?? '—'}</span></td>`;
+    }).join('');
+
+    const missing = STORES.filter((s) => cellFlags(row, s).includes('missing'));
+    const badge = missing.length ? ` <span class="chip warn">chýba ${missing.join(' ')}</span>` : '';
+    return `<tr><td class="sku">${row.sku}${badge}</td><td class="title" title="${(row.title ?? '').replace(/"/g, '&quot;')}">${row.title ?? ''}</td>${cells}</tr>`;
+  }).join('');
+
+  $('empty').hidden = rows.length > 0;
+
+  const synced = listings.reduce((max, l) => (l.synced_at > max ? l.synced_at : max), '');
+  $('stats').textContent =
+    `${rows.length} SKU · ${listings.length} listingov` +
+    (synced ? ` · sync ${new Date(synced).toLocaleString('sk-SK', { dateStyle: 'short', timeStyle: 'short' })}` : '');
+}
+
+$('q').addEventListener('input', render);
+$('onlyProblems').addEventListener('change', render);
+
+// ---- sync ----------------------------------------------------------------
+
+$('sync').addEventListener('click', async () => {
+  const btn = $('sync');
+  btn.disabled = true;
+  btn.textContent = 'Načítavam…';
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/catalog-sync`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ stores: STORES }),
+    });
+    const out = await res.json();
+    if (!out.ok) throw new Error(out.error ?? 'sync zlyhal');
+    toast(`Načítané: ${out.listings} listingov, ${out.skus} SKU`);
+    await load();
+  } catch (err) {
+    toast(`Chyba: ${err.message}`, 6000);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Načítať zo Shopify';
+  }
+});
+
+// ---- boot ----------------------------------------------------------------
+
+async function boot() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    $('gate').hidden = true;
+    $('app').hidden = false;
+    header();
+    await load();
+  } else {
+    $('app').hidden = true;
+    $('gate').hidden = false;
+  }
+}
+
+sb.auth.onAuthStateChange((event) => {
+  if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') boot();
+});
+boot();
+</script>
+</body>
+</html>
