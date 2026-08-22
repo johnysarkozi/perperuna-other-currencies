@@ -16,7 +16,23 @@ const PAGE_SIZE = 50;
 const UPSERT_CHUNK = 100;
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
-const SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+
+/**
+ * The key that bypasses RLS, under either naming scheme: projects on the newer
+ * API keys expose SUPABASE_SECRET_KEYS (a JSON dictionary), older ones expose
+ * SUPABASE_SERVICE_ROLE_KEY directly.
+ */
+function secretKey(): string {
+  const dict = Deno.env.get('SUPABASE_SECRET_KEYS');
+  if (dict) {
+    const keys = JSON.parse(dict);
+    const value = keys.default ?? Object.values(keys)[0];
+    if (value) return value as string;
+  }
+  const legacy = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  if (legacy) return legacy;
+  throw new Error('no secret key available (checked SUPABASE_SECRET_KEYS and SUPABASE_SERVICE_ROLE_KEY)');
+}
 
 type Listing = Record<string, unknown>;
 
@@ -120,15 +136,15 @@ async function readStore(store: string): Promise<Listing[]> {
   return listings;
 }
 
-async function upsert(table: string, rows: unknown[], onConflict: string) {
+async function upsert(table: string, rows: unknown[], onConflict: string, key: string) {
   for (let i = 0; i < rows.length; i += UPSERT_CHUNK) {
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/${table}?on_conflict=${encodeURIComponent(onConflict)}`,
       {
         method: 'POST',
         headers: {
-          apikey: SERVICE_KEY,
-          Authorization: `Bearer ${SERVICE_KEY}`,
+          apikey: key,
+          Authorization: `Bearer ${key}`,
           'Content-Type': 'application/json',
           Prefer: 'resolution=merge-duplicates,return=minimal',
         },
@@ -154,9 +170,10 @@ Deno.serve(async (req) => {
       all.push(...rows);
     }
 
+    const key = secretKey();
     const skus = [...new Set(all.map((r) => r.sku as string))];
-    await upsert('catalog_products', skus.map((sku) => ({ sku })), 'sku');
-    await upsert('catalog_listings', all, 'store,shopify_variant_id');
+    await upsert('catalog_products', skus.map((sku) => ({ sku })), 'sku', key);
+    await upsert('catalog_listings', all, 'store,shopify_variant_id', key);
 
     return Response.json({ ok: true, stores: perStore, skus: skus.length, listings: all.length });
   } catch (err) {
