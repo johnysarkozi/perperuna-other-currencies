@@ -240,6 +240,15 @@ async function audit(key) {
   const noStock = active.filter((p) =>
     p.tracksInventory && (p.totalInventory ?? 0) <= 0 &&
     p.variants.nodes.every((v) => v.inventoryPolicy === 'DENY'));
+  // On a multi-variant product the total stays positive while an individual
+  // variant is out of stock and refuses orders, so it has to be checked per
+  // variant — the customer picks that colour and cannot buy it.
+  const deadVariants = active
+    .filter((p) => p.variants.nodes.length > 1)
+    .flatMap((p) =>
+      p.variants.nodes
+        .filter((v) => v.inventoryPolicy === 'DENY' && (v.inventoryQuantity ?? 0) <= 0)
+        .map((v) => `${p.handle} [${v.title}] = ${v.inventoryQuantity}`));
   // Only physical goods need a weight; digital items legitimately have none.
   const noWeight = active.filter((p) =>
     p.variants.nodes.some((v) =>
@@ -256,6 +265,9 @@ async function audit(key) {
     { varianty: zeroPrice.slice(0, 6) }));
   if (noStock.length) push(finding('blocker', 'catalog', `${noStock.length} produktov je vypredaných a nedovoľuje objednávku`,
     { priklady: noStock.slice(0, 5).map((p) => p.handle) }));
+  if (deadVariants.length) push(finding('blocker', 'catalog',
+    `${deadVariants.length} variantov je vypredaných a nedovoľuje objednávku (produkt inak skladom)`,
+    { varianty: deadVariants.slice(0, 6) }));
   if (noMedia.length) push(finding('blocker', 'catalog', `${noMedia.length} aktívnych produktov nemá hlavný obrázok`,
     { priklady: noMedia.slice(0, 5).map((p) => p.handle) }));
   if (noDesc.length) push(finding('warn', 'catalog', `${noDesc.length} aktívnych produktov nemá popis (<50 znakov)`,
