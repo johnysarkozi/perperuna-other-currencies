@@ -24,7 +24,7 @@ const VARIANTS = `query V($first: Int!, $after: String) {
     pageInfo { hasNextPage endCursor }
     nodes {
       id sku title
-      product { handle status }
+      product { id handle status }
       inventoryItem {
         id
         tracked
@@ -63,6 +63,7 @@ async function readVariants(store) {
     const row = {
       sku,
       variantId: v.id,
+      productId: v.product.id,
       inventoryItemId: v.inventoryItem.id,
       handle: v.product.handle,
       status: v.product.status,
@@ -84,8 +85,18 @@ const SET = `mutation Set($input: InventorySetQuantitiesInput!) {
   }
 }`;
 
+const TRACK = `mutation T($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
+  productVariantsBulkUpdate(productId: $productId, variants: $variants) {
+    productVariants { id }
+    userErrors { field message }
+  }
+}`;
+
 const args = process.argv.slice(2);
 const apply = args.includes('--apply');
+// Stock numbers are inert on an untracked item, so mirroring onto a store with
+// tracking off does nothing until this is turned on.
+const enableTracking = args.includes('--enable-tracking');
 const targets = args.filter((a) => !a.startsWith('--')).map((a) => a.toLowerCase());
 const stores = (targets.length ? targets : shopKeys().filter((k) => k !== SOURCE))
   .filter((k) => k !== SOURCE);
@@ -125,9 +136,34 @@ for (const [sku, rows] of Object.entries(bySourceSku)) {
 console.log(`SK: ${source.rows.length} tracked variants, ${sourceQty.size} distinct SKUs @ ${source.location.name}\n`);
 
 let totalChanges = 0;
+let totalWritten = 0;
 
 for (const store of stores) {
-  const target = await readVariants(store);
+  let target = await readVariants(store);
+
+  // Turn tracking on first, for variants SK itself tracks, then re-read so the
+  // mirror below sees them.
+  if (enableTracking) {
+    const toTrack = target.untracked.filter((r) => sourceQty.has(r.sku));
+    if (toTrack.length) {
+      console.log(`=== ${store.toUpperCase()} — enabling tracking on ${toTrack.length} variant(s)${apply ? '' : ' (dry run)'}`);
+      if (apply) {
+        const byProduct = {};
+        for (const r of toTrack) (byProduct[r.productId] ??= []).push(r);
+        for (const [productId, rows] of Object.entries(byProduct)) {
+          const res = await graphql(store, TRACK, {
+            productId,
+            variants: rows.map((r) => ({ id: r.variantId, inventoryItem: { tracked: true } })),
+          });
+          const errs = res.productVariantsBulkUpdate.userErrors;
+          if (errs.length) console.log(`    ✗ ${rows[0].handle}: ${JSON.stringify(errs).slice(0, 300)}`);
+        }
+        target = await readVariants(store);
+        console.log(`    now ${target.rows.length} tracked, ${target.untracked.length} untracked`);
+      }
+    }
+  }
+
   const changes = [];
   const missing = [];
 
@@ -174,6 +210,7 @@ for (const store of stores) {
   totalChanges += changes.length;
 
   if (apply && changes.length) {
+    let written = 0;
     const stamp = new Date().toISOString();
     for (let i = 0; i < changes.length; i += BATCH) {
       const slice = changes.slice(i, i + BATCH);
@@ -182,6 +219,9 @@ for (const store of stores) {
           reason: 'correction',
           name: 'available',
           referenceDocumentUri: `gid://perperuna-catalog/InventoryMirror/${stamp}`,
+          // SK is the source of truth here, so skip the compare-and-swap guard
+          // rather than pinning every write to a quantity read moments earlier.
+          ignoreCompareQuantity: true,
           quantities: slice.map((c) => ({
             inventoryItemId: c.inventoryItemId,
             locationId: target.location.id,
@@ -193,13 +233,19 @@ for (const store of stores) {
       if (errs.length) {
         console.log(`    ✗ batch ${i / BATCH + 1}: ${JSON.stringify(errs).slice(0, 400)}`);
       } else {
+        written += slice.length;
         console.log(`    ✓ batch ${i / BATCH + 1}: ${slice.length} variants set`);
       }
+    }
+    totalWritten += written;
+    if (written < changes.length) {
+      console.log(`    ! only ${written}/${changes.length} written for ${store.toUpperCase()}`);
     }
   }
   console.log();
 }
 
 console.log(apply
-  ? `Done. ${totalChanges} variant(s) written.`
+  ? `Done. ${totalWritten}/${totalChanges} variant(s) written.`
   : `Dry run complete. ${totalChanges} variant(s) would change. Re-run with --apply to write.`);
+if (apply && totalWritten < totalChanges) process.exit(1);
