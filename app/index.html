@@ -85,6 +85,7 @@
     <label class="check"><input type="checkbox" id="onlyProblems"> len problémy</label>
     <span class="grow"></span>
     <span class="meta" id="stats"></span>
+    <button id="mirror" title="Prepíše sklady na CZ/RO/PL/HU podľa SK">Zrkadliť sklady zo SK</button>
     <button id="sync">Načítať zo Shopify</button>
   </header>
   <div class="wrap"><table>
@@ -222,28 +223,43 @@ function render() {
 $('q').addEventListener('input', render);
 $('onlyProblems').addEventListener('change', render);
 
-// ---- sync ----------------------------------------------------------------
+// ---- actions -------------------------------------------------------------
 
-$('sync').addEventListener('click', async () => {
-  const btn = $('sync');
+/** Run one of the edge functions, then refresh the table from the result. */
+async function runFunction(btnId, fn, payload, busyLabel, describe) {
+  const btn = $(btnId);
+  const label = btn.textContent;
   btn.disabled = true;
-  btn.textContent = 'Načítavam…';
+  btn.textContent = busyLabel;
   try {
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/catalog-sync`, {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/${fn}`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ stores: STORES }),
+      body: JSON.stringify(payload),
     });
     const out = await res.json();
-    if (!out.ok) throw new Error(out.error ?? 'sync zlyhal');
-    toast(`Načítané: ${out.listings} listingov, ${out.skus} SKU`);
+    if (!out.ok) throw new Error(out.error ?? `${fn} zlyhal`);
+    toast(describe(out));
     await load();
   } catch (err) {
     toast(`Chyba: ${err.message}`, 6000);
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Načítať zo Shopify';
+    btn.textContent = label;
   }
+}
+
+$('sync').addEventListener('click', () =>
+  runFunction('sync', 'catalog-sync', { stores: STORES }, 'Načítavam…',
+    (out) => `Načítané: ${out.listings} listingov, ${out.skus} SKU`));
+
+$('mirror').addEventListener('click', () => {
+  if (!confirm('Prepísať sklady na CZ, RO, PL a HU podľa SK?')) return;
+  // The mirror only touches the other backends; SK is read, never written.
+  return runFunction('mirror', 'inventory-mirror', {}, 'Zrkadlím…', (out) =>
+    out.written
+      ? `Zrkadlené: ${out.written} variantov upravených`
+      : 'Všetky sklady už sedeli so SK');
 });
 
 // ---- boot ----------------------------------------------------------------

@@ -25,8 +25,9 @@ backendmi (`PP-XXXX-YYY-NNN`), 57 SKU celkovo, 238 listingov.
   `(store, shopify_variant_id)`.
 - `catalog_sync_log` — audit trail pre budúce zápisy späť do Shopify.
 
-RLS je zapnuté na všetkých troch tabuľkách, prístup má len `authenticated`
-role — anon (verejný) kľúč nevidí nič.
+RLS je zapnuté na všetkých troch tabuľkách. `anon` rola (appka v prehliadači)
+má povolené **iba čítanie** `catalog_products` a `catalog_listings`; zapisovať
+môžu len Edge Functions cez secret kľúč. Podrobnosti nižšie v *Prístup*.
 
 ## Ako beží sync
 
@@ -119,21 +120,61 @@ skončil slepou uličkou.
 Na Netlify zapnúť ochranu heslom: Site configuration → Access control →
 Password protection. Nič v Supabase nastavovať netreba.
 
+## Zrkadlenie skladov zo SK
+
+SK je zdroj pravdy pre sklad. Ostatné backendy sa naň dorovnávajú podľa SKU —
+Edge Function **`inventory-mirror`**.
+
+```
+POST /functions/v1/inventory-mirror
+{}                      -> všetky backendy okrem sk
+{ "stores": ["pl"] }    -> len vybrané
+{ "dryRun": true }      -> vypíše, čo by zmenil, nezapíše nič
+```
+
+Zapisuje len tam, kde sa číslo líši, a každý zápis zaloguje do
+`catalog_sync_log` (staré → nové), takže sa dá spätne dohľadať, čo sa menilo.
+
+Rovnaká logika sa dá pustiť aj lokálne cez
+`node scripts/inventory-mirror.mjs [--enable-tracking] [--apply]` — hodí sa na
+jednorazové zásahy, lebo vypisuje jednotlivé varianty.
+
+### Cron
+
+```
+inventory-mirror   */15 * * * *          každých 15 min
+catalog-sync       5,20,35,50 * * * *    pár minút po mirrore
+```
+
+Naplánované cez `pg_cron` + `pg_net`. Stav: `select * from cron.job;`,
+história behov: `select * from cron.job_run_details order by start_time desc;`.
+
+### Čo zrkadlenie nerieši
+
+Je to **jednosmerná kópia v čase, nie zdieľaný sklad**. Medzi behmi sa čísla
+rozchádzajú — predaj na PL neodpočíta CZ. Pri 15-minútovom intervale je
+rozdiel malý, ale pri súbežnom dopredaji posledných kusov na dvoch trhoch sa
+dá predať viac, než je fyzicky na sklade. Skutočné riešenie by bol jeden
+zdieľaný sklad (napr. cez Shopify webhooky na `inventory_levels/update`
+namiesto pollovania) — to zatiaľ postavené nie je.
+
+Sklad sa mení **len na SK**. Úpravy priamo na CZ/RO/PL/HU najbližší beh
+prepíše.
+
 ## Stav a ďalšie fázy
 
-1. ✅ **Schéma** — `catalog_products` / `catalog_listings` / `catalog_sync_log`,
-   RLS zapnuté.
-2. ✅ **Sync** — Edge Function `catalog-sync` nasadená. Čaká na doplnenie
-   Shopify secrets, potom je katalóg živý.
-3. ⏳ **Cron** — naplánovať pravidelné spúšťanie (`pg_cron` +
-   `net.http_post`, alebo Supabase Scheduled Functions).
-4. ⏳ **Zápis späť** — meniť cenu/sklad z katalógu a rozposlať do konkrétneho
-   backendu, s logom do `catalog_sync_log`.
-5. ⏳ **UI** — dashboard (Netlify) s maticou SKU × obchod, editáciou a
-   tlačidlom „pushni do obchodu X".
-
-Do dokončenia fázy 4 je katalóg **read-only prehľad** — úpravy stále treba
-robiť v jednotlivých Shopify adminoch.
+1. ✅ **Schéma** — `catalog_products` / `catalog_listings` / `catalog_sync_log`.
+2. ✅ **Sync** — Edge Function `catalog-sync`.
+3. ✅ **Cron** — `pg_cron` + `pg_net`, mirror každých 15 min, sync po ňom.
+4. ✅ **Zrkadlenie skladov** — Edge Function `inventory-mirror`, s logom.
+5. ✅ **UI** — dashboard na Netlify, matica SKU × obchod + obe tlačidlá.
+6. ⏳ **Úprava skladu na SK z appky** — teraz sa sklad mení len v Shopify
+   admine SK; z katalógu sa zatiaľ nedá zapisovať.
+7. ⏳ **Ceny** — katalóg ich ukazuje, ale nemení. Zrkadlenie cien nedáva
+   zmysel priamo (iné meny), chcelo by to prepočet cez kurz + pravidlá
+   zaokrúhlenia.
+8. ⏳ **Zdieľaný sklad namiesto kópie** — webhooky `inventory_levels/update`
+   zo SK namiesto pollovania.
 
 ## Poznámky z prvého behu
 
