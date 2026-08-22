@@ -1,0 +1,555 @@
+{
+  "generatedAt": "2026-08-22T11:59:33.894Z",
+  "results": [
+    {
+      "key": "cz",
+      "locale": "cs",
+      "country": "CZ",
+      "shop": "PERPERUNA.CZ",
+      "domain": "cz.perperuna.com",
+      "marketDomain": "cz.perperuna.com",
+      "theme": "PERPERUNA.CZ – živá 18.8. (jazyk)",
+      "stats": {
+        "products": 57,
+        "active": 27,
+        "drafts": 6,
+        "collections": 7,
+        "pages": 9,
+        "menus": 5,
+        "shippingZones": 1,
+        "activeRates": 3,
+        "shipsTo": [
+          "CZ"
+        ],
+        "wallets": [
+          "APPLE_PAY",
+          "GOOGLE_PAY"
+        ],
+        "taxesIncluded": true,
+        "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
+      },
+      "findings": [
+        {
+          "sev": "blocker",
+          "area": "policy",
+          "msg": "Doprava: len 159 znakov — pravdepodobne prázdne"
+        },
+        {
+          "sev": "info",
+          "area": "catalog",
+          "msg": "6 produktov v DRAFT stave"
+        },
+        {
+          "sev": "blocker",
+          "area": "catalog",
+          "msg": "1 produktov je vypredaných a nedovoľuje objednávku",
+          "detail": {
+            "priklady": [
+              "love-sprchova-aromaticka-kostka"
+            ]
+          }
+        },
+        {
+          "sev": "warn",
+          "area": "catalog",
+          "msg": "1 aktívnych produktov nemá popis (<50 znakov)",
+          "detail": {
+            "priklady": [
+              "nedokonale-sprchove-aromaticke-kostky"
+            ]
+          }
+        },
+        {
+          "sev": "info",
+          "area": "collection",
+          "msg": "Kolekcia „Home page\" nemá popis"
+        },
+        {
+          "sev": "warn",
+          "area": "page",
+          "msg": "Stránka „Kontakt\" nie je publikovaná"
+        }
+      ]
+    },
+    {
+      "key": "ro",
+      "locale": "ro",
+      "country": "RO",
+      "shop": "PERPERUNA.RO",
+      "domain": "perperuna.ro",
+      "marketDomain": "perperuna.ro",
+      "theme": "PERPERUNA.RO – živá 18.8.",
+      "stats": {
+        "products": 50,
+        "active": 27,
+        "drafts": 9,
+        "collections": 7,
+        "pages": 9,
+        "menus": 5,
+        "shippingZones": 2,
+        "activeRates": 3,
+        "shipsTo": [
+          "SK",
+          "AE",
+          "AT",
+          "AU",
+          "BE",
+          "CA",
+          "CH",
+          "CZ",
+          "DE",
+          "DK",
+          "ES",
+          "FI",
+          "FR",
+          "GB",
+          "HK",
+          "IE",
+          "IL",
+          "IT",
+          "JP",
+          "KR",
+          "MY",
+          "NL",
+          "NO",
+          "NZ",
+          "PL",
+          "PT",
+          "SE",
+          "SG",
+          "US"
+        ],
+        "wallets": [],
+        "taxesIncluded": true,
+        "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
+      },
+      "findings": [
+        {
+          "sev": "blocker",
+          "area": "shipping",
+          "msg": "Cieľová krajina RO nie je v žiadnej dopravnej zóne — zákazník neprejde checkoutom",
+          "detail": {
+            "zonyPokryvaju": [
+              "SK",
+              "AE",
+              "AT",
+              "AU",
+              "BE",
+              "CA",
+              "CH",
+              "CZ",
+              "DE",
+              "DK",
+              "ES",
+              "FI",
+              "FR",
+              "GB",
+              "HK",
+              "IE",
+              "IL",
+              "IT",
+              "JP",
+              "KR",
+              "MY",
+              "NL",
+              "NO",
+              "NZ",
+              "PL",
+              "PT",
+              "SE",
+              "SG",
+              "US"
+            ]
+          }
+        },
+        {
+          "sev": "blocker",
+          "area": "shipping",
+          "msg": "3 dopravných sadzieb je v inej mene než obchod (RON)",
+          "detail": {
+            "sadzby": [
+              "Štandardná: 3.99 EUR",
+              "Expresná: 6.99 EUR",
+              "International: 16.0 EUR"
+            ]
+          }
+        },
+        {
+          "sev": "blocker",
+          "area": "payments",
+          "msg": "Žiadne digitálne peňaženky — pravdepodobne nie je aktivovaná platobná brána; over v Settings → Payments"
+        },
+        {
+          "sev": "info",
+          "area": "catalog",
+          "msg": "9 produktov v DRAFT stave"
+        },
+        {
+          "sev": "warn",
+          "area": "catalog",
+          "msg": "1 variantov s nulovou cenou — over, či je to zámer (darček) alebo chyba",
+          "detail": {
+            "varianty": [
+              "saculet-din-bumbac-pentru-ritual [Cadou]"
+            ]
+          }
+        },
+        {
+          "sev": "warn",
+          "area": "catalog",
+          "msg": "1 aktívnych produktov nemá popis (<50 znakov)",
+          "detail": {
+            "priklady": [
+              "cuburi-imperfecte-pentru-dus"
+            ]
+          }
+        },
+        {
+          "sev": "warn",
+          "area": "catalog",
+          "msg": "27 produktov nemá váhu — dopravné sadzby podľa hmotnosti zlyhajú",
+          "detail": {
+            "priklady": [
+              "cub-pentru-dus-uplift",
+              "cub-pentru-dus-breathe",
+              "cub-pentru-dus-balance",
+              "cub-pentru-dus-calm",
+              "bile-pentru-dus-refresh"
+            ]
+          }
+        },
+        {
+          "sev": "info",
+          "area": "collection",
+          "msg": "Kolekcia „PERPERUNA\" nemá popis"
+        },
+        {
+          "sev": "warn",
+          "area": "theme",
+          "msg": "1× text v téme vyzerá ako SK namiesto RO — šablónu nepoužíva žiadny aktívny produkt",
+          "detail": {
+            "subory": [
+              "templates/product.sety-a-doypacky.json"
+            ],
+            "ukazky": [
+              "pp-inline-info\"> i След всеки душ остави торбичката да изсъхне свободно. {%- endcapture -%}{%- else -%}{%- capture b -%}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "pl",
+      "locale": "pl",
+      "country": "PL",
+      "shop": "PERPERUNA.PL",
+      "domain": "www.perperuna.pl",
+      "marketDomain": "www.perperuna.pl",
+      "theme": "PERPERUNA.PL – živá 18.8.",
+      "stats": {
+        "products": 50,
+        "active": 31,
+        "drafts": 5,
+        "collections": 8,
+        "pages": 9,
+        "menus": 5,
+        "shippingZones": 2,
+        "activeRates": 3,
+        "shipsTo": [
+          "SK",
+          "AE",
+          "AT",
+          "AU",
+          "BE",
+          "CA",
+          "CH",
+          "CZ",
+          "DE",
+          "DK",
+          "ES",
+          "FI",
+          "FR",
+          "GB",
+          "HK",
+          "IE",
+          "IL",
+          "IT",
+          "JP",
+          "KR",
+          "MY",
+          "NL",
+          "NO",
+          "NZ",
+          "PL",
+          "PT",
+          "SE",
+          "SG",
+          "US"
+        ],
+        "wallets": [],
+        "taxesIncluded": true,
+        "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
+      },
+      "findings": [
+        {
+          "sev": "blocker",
+          "area": "shipping",
+          "msg": "PL je pokrytá len zbernou zónou „International\" (28 krajín) — nemá vlastnú domácu zónu",
+          "detail": {
+            "sadzby": [
+              "International 17.0 EUR"
+            ]
+          }
+        },
+        {
+          "sev": "blocker",
+          "area": "shipping",
+          "msg": "3 dopravných sadzieb je v inej mene než obchod (PLN)",
+          "detail": {
+            "sadzby": [
+              "Štandardná: 3.99 EUR",
+              "Expresná: 6.99 EUR",
+              "International: 17.0 EUR"
+            ]
+          }
+        },
+        {
+          "sev": "blocker",
+          "area": "payments",
+          "msg": "Žiadne digitálne peňaženky — pravdepodobne nie je aktivovaná platobná brána; over v Settings → Payments"
+        },
+        {
+          "sev": "info",
+          "area": "catalog",
+          "msg": "5 produktov v DRAFT stave"
+        },
+        {
+          "sev": "warn",
+          "area": "catalog",
+          "msg": "1 variantov s nulovou cenou — over, či je to zámer (darček) alebo chyba",
+          "detail": {
+            "varianty": [
+              "bawelniana-saszetka-do-rytualu [Prezent]"
+            ]
+          }
+        },
+        {
+          "sev": "blocker",
+          "area": "catalog",
+          "msg": "2 produktov je vypredaných a nedovoľuje objednávku",
+          "detail": {
+            "priklady": [
+              "kulki-pod-prysznic-gingerbread",
+              "kompletna-kolekcja-the-ritual-sweet-dreams-rise-shine"
+            ]
+          }
+        },
+        {
+          "sev": "warn",
+          "area": "catalog",
+          "msg": "1 aktívnych produktov nemá popis (<50 znakov)",
+          "detail": {
+            "priklady": [
+              "niedoskonale-kostki-pod-prysznic"
+            ]
+          }
+        },
+        {
+          "sev": "warn",
+          "area": "catalog",
+          "msg": "3 produktov nemá váhu — dopravné sadzby podľa hmotnosti zlyhajú",
+          "detail": {
+            "priklady": [
+              "rise-and-shine-poranny-rytual",
+              "sweet-dreams-wieczorny-rytual",
+              "sweet-dreams-rise-shine-miska-gratis"
+            ]
+          }
+        },
+        {
+          "sev": "info",
+          "area": "collection",
+          "msg": "Kolekcia „Miska\" nemá popis"
+        },
+        {
+          "sev": "warn",
+          "area": "theme",
+          "msg": "1× text v téme vyzerá ako SK namiesto PL — šablónu nepoužíva žiadny aktívny produkt",
+          "detail": {
+            "subory": [
+              "templates/product.sety-a-doypacky.json"
+            ],
+            "ukazky": [
+              "pp-inline-info\"> i След всеки душ остави торбичката да изсъхне свободно. {%- endcapture -%}{%- else -%}{%- capture b -%}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "hu",
+      "locale": "hu",
+      "country": "HU",
+      "shop": "PERPERUNA.HU",
+      "domain": "perperuna-hu.myshopify.com",
+      "marketDomain": "perperuna.hu",
+      "theme": "PERPERUNA.HU – živá 18.8. (jazyk)",
+      "stats": {
+        "products": 50,
+        "active": 28,
+        "drafts": 8,
+        "collections": 9,
+        "pages": 9,
+        "menus": 5,
+        "shippingZones": 2,
+        "activeRates": 3,
+        "shipsTo": [
+          "SK",
+          "AE",
+          "AT",
+          "AU",
+          "BE",
+          "CA",
+          "CH",
+          "CZ",
+          "DE",
+          "DK",
+          "ES",
+          "FI",
+          "FR",
+          "GB",
+          "HK",
+          "IE",
+          "IL",
+          "IT",
+          "JP",
+          "KR",
+          "MY",
+          "NL",
+          "NO",
+          "NZ",
+          "PL",
+          "PT",
+          "SE",
+          "SG",
+          "US"
+        ],
+        "wallets": [],
+        "taxesIncluded": true,
+        "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
+      },
+      "findings": [
+        {
+          "sev": "blocker",
+          "area": "domain",
+          "msg": "Primárna doména je stále perperuna-hu.myshopify.com — vlastná doména nie je dokončená",
+          "detail": {
+            "marketDomain": "perperuna.hu"
+          }
+        },
+        {
+          "sev": "blocker",
+          "area": "shipping",
+          "msg": "Cieľová krajina HU nie je v žiadnej dopravnej zóne — zákazník neprejde checkoutom",
+          "detail": {
+            "zonyPokryvaju": [
+              "SK",
+              "AE",
+              "AT",
+              "AU",
+              "BE",
+              "CA",
+              "CH",
+              "CZ",
+              "DE",
+              "DK",
+              "ES",
+              "FI",
+              "FR",
+              "GB",
+              "HK",
+              "IE",
+              "IL",
+              "IT",
+              "JP",
+              "KR",
+              "MY",
+              "NL",
+              "NO",
+              "NZ",
+              "PL",
+              "PT",
+              "SE",
+              "SG",
+              "US"
+            ]
+          }
+        },
+        {
+          "sev": "blocker",
+          "area": "shipping",
+          "msg": "3 dopravných sadzieb je v inej mene než obchod (HUF)",
+          "detail": {
+            "sadzby": [
+              "Štandardná: 3.99 EUR",
+              "Expresná: 6.99 EUR",
+              "International: 16.0 EUR"
+            ]
+          }
+        },
+        {
+          "sev": "blocker",
+          "area": "payments",
+          "msg": "Žiadne digitálne peňaženky — pravdepodobne nie je aktivovaná platobná brána; over v Settings → Payments"
+        },
+        {
+          "sev": "info",
+          "area": "catalog",
+          "msg": "8 produktov v DRAFT stave"
+        },
+        {
+          "sev": "blocker",
+          "area": "catalog",
+          "msg": "28 aktívnych produktov nemá hlavný obrázok",
+          "detail": {
+            "priklady": [
+              "zuhanykocka-uplift",
+              "zuhanykocka-breathe",
+              "zuhanykocka-balance",
+              "zuhanykocka-calm",
+              "zuhanygolyok-refresh"
+            ]
+          }
+        },
+        {
+          "sev": "warn",
+          "area": "catalog",
+          "msg": "1 aktívnych produktov nemá popis (<50 znakov)",
+          "detail": {
+            "priklady": [
+              "tokeletlen-zuhanykockak"
+            ]
+          }
+        },
+        {
+          "sev": "info",
+          "area": "collection",
+          "msg": "Kolekcia „Home page\" nemá popis"
+        },
+        {
+          "sev": "warn",
+          "area": "theme",
+          "msg": "1× text v téme vyzerá ako SK namiesto HU — šablónu nepoužíva žiadny aktívny produkt",
+          "detail": {
+            "subory": [
+              "templates/product.sety-a-doypacky.json"
+            ],
+            "ukazky": [
+              "pp-inline-info\"> i След всеки душ остави торбичката да изсъхне свободно. {%- endcapture -%}{%- else -%}{%- capture b -%}"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

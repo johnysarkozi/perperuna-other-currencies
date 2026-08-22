@@ -17,7 +17,15 @@ client ID ani secret do kódu, commitu, ani do chatu.
 ```
 node scripts/check-credentials.mjs      # over pripojenie na všetky backendy
 node scripts/dump-context.mjs           # osviež snapshot obchodov
+node scripts/audit-launch.mjs ro pl hu  # kontrola pripravenosti na spustenie
 ```
+
+## Pripravenosť na spustenie
+
+RO/PL/HU zatiaľ nie sú spustiteľné — plán a zoznam blockerov je
+v [`docs/launch-plan.md`](docs/launch-plan.md). Preklady sú v poriadku;
+blokuje doprava (zóny a sadzby skopírované zo SK v EUR), platobná brána
+a na HU chýbajúce obrázky produktov a nedokončená doména.
 
 ## Prehľad backendov
 
@@ -56,10 +64,14 @@ za posledných 90 dní nula objednávok.
 
 ```
 lib/shopify.mjs             multi-backend Admin API klient (token cache, retry, pagination)
+lib/lang.mjs                detekcia jazyka — odhalí nepreložený text medzi backendmi
 scripts/check-credentials.mjs  overenie prístupov
 scripts/dump-context.mjs       read-only snapshot obchodov → docs/shop-context.json
+scripts/audit-launch.mjs       audit pripravenosti → docs/launch-audit.json
 docs/credentials.md            ako sa nastavujú prístupy
+docs/launch-plan.md            plán spustenia RO/PL/HU
 docs/shop-context.json         posledný snapshot
+docs/launch-audit.json         posledný audit
 ```
 
 ## Konvencie
