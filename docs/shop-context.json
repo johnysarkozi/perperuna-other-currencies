@@ -1,0 +1,1688 @@
+{
+  "generatedAt": "2026-08-22T11:38:29.951Z",
+  "ordersWindowSince": "2026-05-24",
+  "results": [
+    {
+      "key": "cz",
+      "ok": true,
+      "value": {
+        "shop": {
+          "name": "PERPERUNA.CZ",
+          "myshopifyDomain": "kabfbu-0r.myshopify.com",
+          "email": "info@perperuna.sk",
+          "contactEmail": "info@perperuna.sk",
+          "currencyCode": "CZK",
+          "ianaTimezone": "Europe/Bratislava",
+          "weightUnit": "KILOGRAMS",
+          "plan": {
+            "displayName": "Shopify",
+            "partnerDevelopment": false,
+            "shopifyPlus": false
+          },
+          "primaryDomain": {
+            "host": "cz.perperuna.com",
+            "url": "https://cz.perperuna.com"
+          },
+          "billingAddress": {
+            "country": "Slovakia",
+            "countryCodeV2": "SK",
+            "city": ""
+          },
+          "currencyFormats": {
+            "moneyFormat": "{{amount_with_comma_separator}} Kč",
+            "moneyWithCurrencyFormat": "{{amount_no_decimals_with_comma_separator}} Kč"
+          },
+          "resourceLimits": {
+            "maxProductVariants": 2048
+          }
+        },
+        "shopLocales": [
+          {
+            "locale": "cs",
+            "name": "Czech",
+            "primary": true,
+            "published": true
+          }
+        ],
+        "markets": {
+          "nodes": [
+            {
+              "name": "Česko",
+              "handle": "cesko",
+              "status": "ACTIVE",
+              "currencySettings": null,
+              "webPresences": {
+                "nodes": [
+                  {
+                    "domain": {
+                      "host": "cz.perperuna.com"
+                    },
+                    "subfolderSuffix": null,
+                    "defaultLocale": {
+                      "locale": "cs"
+                    },
+                    "alternateLocales": []
+                  }
+                ]
+              },
+              "catalogsCount": {
+                "count": 0
+              }
+            }
+          ]
+        },
+        "productsCount": {
+          "count": 57
+        },
+        "ordersCount": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Order/12887943053699"
+            }
+          ]
+        },
+        "collections": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Collection/697793675651",
+              "title": "Home page",
+              "handle": "frontpage",
+              "productsCount": {
+                "count": 13
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/697805504899",
+              "title": "Sprchová aromaterapie",
+              "handle": "sprhove-kostky",
+              "productsCount": {
+                "count": 51
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/700309864835",
+              "title": "Upsell",
+              "handle": "upsell",
+              "productsCount": {
+                "count": 8
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/702446666115",
+              "title": "Kostky",
+              "handle": "kostky",
+              "productsCount": {
+                "count": 21
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/703412011395",
+              "title": "Aromatické kostky",
+              "handle": "aromaticke-kostky",
+              "productsCount": {
+                "count": 10
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/703536398723",
+              "title": "Aromatické kocky 2",
+              "handle": "aromaticke-kocky-2",
+              "productsCount": {
+                "count": 9
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/706194669955",
+              "title": "Aromatické čaje do koupele",
+              "handle": "aromaticke-caje-do-koupele",
+              "productsCount": {
+                "count": 7
+              }
+            }
+          ]
+        },
+        "publications": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Publication/330289512835",
+              "name": "Online Store",
+              "supportsFuturePublishing": true
+            },
+            {
+              "id": "gid://shopify/Publication/330289545603",
+              "name": "Point of Sale",
+              "supportsFuturePublishing": false
+            },
+            {
+              "id": "gid://shopify/Publication/330458988931",
+              "name": "Facebook & Instagram",
+              "supportsFuturePublishing": false
+            },
+            {
+              "id": "gid://shopify/Publication/337877598595",
+              "name": "Inbox",
+              "supportsFuturePublishing": false
+            },
+            {
+              "id": "gid://shopify/Publication/345035538819",
+              "name": "Google & YouTube",
+              "supportsFuturePublishing": true
+            }
+          ]
+        },
+        "locations": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Location/116695564675",
+              "name": "Shop location",
+              "isActive": true,
+              "fulfillsOnlineOrders": true,
+              "address": {
+                "country": "Slovakia",
+                "countryCode": "SK",
+                "city": null
+              }
+            }
+          ]
+        },
+        "themes": {
+          "nodes": [
+            {
+              "id": "gid://shopify/OnlineStoreTheme/192718438787",
+              "name": "ROLLBACK – pred-Claude živá (cz 111)",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/3",
+              "processing": false,
+              "themeStoreId": null
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/199288553859",
+              "name": "ROLLBACK 15.8. – pred opravou fontu",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/7",
+              "processing": false,
+              "themeStoreId": null
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/199289602435",
+              "name": "ROLLBACK 18.8. – karty natvrdo v téme",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/8",
+              "processing": false,
+              "themeStoreId": null
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/199319585155",
+              "name": "ROLLBACK 18.8. – slovenské handle produktov",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/9",
+              "processing": false,
+              "themeStoreId": null
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/199319847299",
+              "name": "ROLLBACK 18.8. – pred jazykovou očistou",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/10",
+              "processing": false,
+              "themeStoreId": null
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/199320404355",
+              "name": "PERPERUNA.CZ – živá 18.8. (jazyk)",
+              "role": "MAIN",
+              "prefix": "/t/11",
+              "processing": false,
+              "themeStoreId": null
+            }
+          ]
+        },
+        "metafieldDefinitions": {
+          "nodes": [
+            {
+              "key": "rating",
+              "namespace": "reviews",
+              "name": "Product rating",
+              "type": {
+                "name": "rating"
+              }
+            },
+            {
+              "key": "rating_count",
+              "namespace": "reviews",
+              "name": "Product rating count",
+              "type": {
+                "name": "number_integer"
+              }
+            },
+            {
+              "key": "color-pattern",
+              "namespace": "shopify",
+              "name": "Color",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "skin-care-effect",
+              "namespace": "shopify",
+              "name": "Skin care effect",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "custom_product",
+              "namespace": "mm-google-shopping",
+              "name": "Google: Custom Product",
+              "type": {
+                "name": "boolean"
+              }
+            },
+            {
+              "key": "zlozenie",
+              "namespace": "custom",
+              "name": "Složení",
+              "type": {
+                "name": "multi_line_text_field"
+              }
+            },
+            {
+              "key": "hero_label",
+              "namespace": "custom",
+              "name": "Hero label",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "hero_label_bottom",
+              "namespace": "custom",
+              "name": "hero_label_bottom",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "promo",
+              "namespace": "custom",
+              "name": "hero_label_bottom",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "benefity",
+              "namespace": "custom",
+              "name": "Benefity (odkaz na vůně)",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "navod",
+              "namespace": "custom",
+              "name": "Návod (odkaz)",
+              "type": {
+                "name": "metaobject_reference"
+              }
+            },
+            {
+              "key": "faq",
+              "namespace": "custom",
+              "name": "FAQ (odkaz na položky)",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "recenzie",
+              "namespace": "custom",
+              "name": "Recenze",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            }
+          ]
+        },
+        "metaobjectDefinitions": {
+          "nodes": [
+            {
+              "type": "shopify--color-pattern",
+              "name": "Color",
+              "fieldDefinitions": [
+                {
+                  "key": "label",
+                  "name": "Label"
+                },
+                {
+                  "key": "color",
+                  "name": "Color"
+                },
+                {
+                  "key": "image",
+                  "name": "Image"
+                },
+                {
+                  "key": "color_taxonomy_reference",
+                  "name": "Base color"
+                },
+                {
+                  "key": "pattern_taxonomy_reference",
+                  "name": "Base pattern"
+                }
+              ]
+            },
+            {
+              "type": "shopify--skin-care-effect",
+              "name": "Skin care effect",
+              "fieldDefinitions": [
+                {
+                  "key": "label",
+                  "name": "Label"
+                },
+                {
+                  "key": "taxonomy_reference",
+                  "name": "Base skin care effect"
+                }
+              ]
+            },
+            {
+              "type": "benefit_vone",
+              "name": "Benefity vůně",
+              "fieldDefinitions": [
+                {
+                  "key": "nazov",
+                  "name": "Název"
+                },
+                {
+                  "key": "benefity",
+                  "name": "Benefity"
+                }
+              ]
+            },
+            {
+              "type": "navod",
+              "name": "Návod k použití",
+              "fieldDefinitions": [
+                {
+                  "key": "nazov",
+                  "name": "Název"
+                },
+                {
+                  "key": "text",
+                  "name": "Text"
+                }
+              ]
+            },
+            {
+              "type": "faq_polozka",
+              "name": "FAQ položka",
+              "fieldDefinitions": [
+                {
+                  "key": "otazka",
+                  "name": "Otázka"
+                },
+                {
+                  "key": "odpoved",
+                  "name": "Odpověď"
+                }
+              ]
+            },
+            {
+              "type": "recenzia",
+              "name": "Recenze",
+              "fieldDefinitions": [
+                {
+                  "key": "headline",
+                  "name": "Headline"
+                },
+                {
+                  "key": "text",
+                  "name": "Text"
+                },
+                {
+                  "key": "meno",
+                  "name": "Jméno"
+                },
+                {
+                  "key": "hviezdy",
+                  "name": "Hvězdy"
+                },
+                {
+                  "key": "datum",
+                  "name": "Datum"
+                }
+              ]
+            }
+          ]
+        },
+        "ordersLast90d": {
+          "count": 1576,
+          "precision": "EXACT"
+        },
+        "recentOrders": [
+          {
+            "name": "204110",
+            "createdAt": "2026-08-22T11:04:03Z",
+            "displayFinancialStatus": "PAID",
+            "displayFulfillmentStatus": "UNFULFILLED",
+            "currentTotalPriceSet": {
+              "shopMoney": {
+                "amount": "543.0",
+                "currencyCode": "CZK"
+              }
+            }
+          },
+          {
+            "name": "204109",
+            "createdAt": "2026-08-22T10:40:59Z",
+            "displayFinancialStatus": "PENDING",
+            "displayFulfillmentStatus": "UNFULFILLED",
+            "currentTotalPriceSet": {
+              "shopMoney": {
+                "amount": "415.5",
+                "currencyCode": "CZK"
+              }
+            }
+          },
+          {
+            "name": "204108",
+            "createdAt": "2026-08-22T10:08:27Z",
+            "displayFinancialStatus": "PAID",
+            "displayFulfillmentStatus": "UNFULFILLED",
+            "currentTotalPriceSet": {
+              "shopMoney": {
+                "amount": "1538.4",
+                "currencyCode": "CZK"
+              }
+            }
+          },
+          {
+            "name": "204107",
+            "createdAt": "2026-08-22T09:55:04Z",
+            "displayFinancialStatus": "PAID",
+            "displayFulfillmentStatus": "UNFULFILLED",
+            "currentTotalPriceSet": {
+              "shopMoney": {
+                "amount": "1042.0",
+                "currencyCode": "CZK"
+              }
+            }
+          },
+          {
+            "name": "204106",
+            "createdAt": "2026-08-22T09:43:49Z",
+            "displayFinancialStatus": "PAID",
+            "displayFulfillmentStatus": "UNFULFILLED",
+            "currentTotalPriceSet": {
+              "shopMoney": {
+                "amount": "609.96",
+                "currencyCode": "CZK"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "ro",
+      "ok": true,
+      "value": {
+        "shop": {
+          "name": "PERPERUNA.RO",
+          "myshopifyDomain": "dkk73s-jc.myshopify.com",
+          "email": "sarkozi.jan@gmail.com",
+          "contactEmail": "sarkozi.jan@gmail.com",
+          "currencyCode": "RON",
+          "ianaTimezone": "Europe/Bratislava",
+          "weightUnit": "KILOGRAMS",
+          "plan": {
+            "displayName": "Shopify",
+            "partnerDevelopment": false,
+            "shopifyPlus": false
+          },
+          "primaryDomain": {
+            "host": "perperuna.ro",
+            "url": "https://perperuna.ro"
+          },
+          "billingAddress": {
+            "country": "Slovakia",
+            "countryCodeV2": "SK",
+            "city": "Bratislava"
+          },
+          "currencyFormats": {
+            "moneyFormat": "{{amount_with_comma_separator}} lei",
+            "moneyWithCurrencyFormat": "{{amount_with_comma_separator}} RON"
+          },
+          "resourceLimits": {
+            "maxProductVariants": 2048
+          }
+        },
+        "shopLocales": [
+          {
+            "locale": "ro",
+            "name": "Romanian",
+            "primary": true,
+            "published": true
+          }
+        ],
+        "markets": {
+          "nodes": [
+            {
+              "name": "Romania",
+              "handle": "romania",
+              "status": "ACTIVE",
+              "currencySettings": null,
+              "webPresences": {
+                "nodes": [
+                  {
+                    "domain": {
+                      "host": "perperuna.ro"
+                    },
+                    "subfolderSuffix": null,
+                    "defaultLocale": {
+                      "locale": "ro"
+                    },
+                    "alternateLocales": []
+                  }
+                ]
+              },
+              "catalogsCount": {
+                "count": 0
+              }
+            }
+          ]
+        },
+        "productsCount": {
+          "count": 50
+        },
+        "ordersCount": {
+          "nodes": []
+        },
+        "collections": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Collection/669359014216",
+              "title": "PERPERUNA",
+              "handle": "frontpage",
+              "productsCount": {
+                "count": 41
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/669378019656",
+              "title": "Ceaiuri aromatice de baie",
+              "handle": "ceaiuri-de-baie",
+              "productsCount": {
+                "count": 8
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/669378052424",
+              "title": "Cuburi",
+              "handle": "cuburi",
+              "productsCount": {
+                "count": 8
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/669378085192",
+              "title": "Bile",
+              "handle": "bile",
+              "productsCount": {
+                "count": 4
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/669378117960",
+              "title": "Săculeț",
+              "handle": "saculet",
+              "productsCount": {
+                "count": 1
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/669378150728",
+              "title": "Bol",
+              "handle": "bol",
+              "productsCount": {
+                "count": 2
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/669378249032",
+              "title": "Ritualuri aromatice pentru duș și baie",
+              "handle": "ritualuri-aromatice",
+              "productsCount": {
+                "count": 42
+              }
+            }
+          ]
+        },
+        "publications": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Publication/297444016456",
+              "name": "Online Store",
+              "supportsFuturePublishing": true
+            },
+            {
+              "id": "gid://shopify/Publication/297444049224",
+              "name": "Point of Sale",
+              "supportsFuturePublishing": false
+            }
+          ]
+        },
+        "locations": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Location/111443902792",
+              "name": "Mlynarovičova 5",
+              "isActive": true,
+              "fulfillsOnlineOrders": true,
+              "address": {
+                "country": "Slovakia",
+                "countryCode": "SK",
+                "city": "Bratislava"
+              }
+            }
+          ]
+        },
+        "themes": {
+          "nodes": [
+            {
+              "id": "gid://shopify/OnlineStoreTheme/188320088392",
+              "name": "ROLLBACK 15.8. – pred opravou fontu",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/2",
+              "processing": false,
+              "themeStoreId": null
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/188356591944",
+              "name": "ROLLBACK 18.8. – pred jazykovou očistou",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/3",
+              "processing": false,
+              "themeStoreId": null
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/188461089096",
+              "name": "PERPERUNA.RO – živá 18.8.",
+              "role": "MAIN",
+              "prefix": "/t/4",
+              "processing": false,
+              "themeStoreId": null
+            }
+          ]
+        },
+        "metafieldDefinitions": {
+          "nodes": [
+            {
+              "key": "zlozenie",
+              "namespace": "custom",
+              "name": "Zlozenie",
+              "type": {
+                "name": "multi_line_text_field"
+              }
+            },
+            {
+              "key": "hero_label",
+              "namespace": "custom",
+              "name": "Hero label",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "hero_label_bottom",
+              "namespace": "custom",
+              "name": "Hero label bottom",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "promo",
+              "namespace": "custom",
+              "name": "Promo",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "badges",
+              "namespace": "custom",
+              "name": "Badges",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "benefity",
+              "namespace": "custom",
+              "name": "Benefity",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "navod",
+              "namespace": "custom",
+              "name": "Navod",
+              "type": {
+                "name": "metaobject_reference"
+              }
+            },
+            {
+              "key": "faq",
+              "namespace": "custom",
+              "name": "FAQ",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "recenzie",
+              "namespace": "custom",
+              "name": "Recenzie",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "rating",
+              "namespace": "reviews",
+              "name": "Product rating",
+              "type": {
+                "name": "rating"
+              }
+            },
+            {
+              "key": "rating_count",
+              "namespace": "reviews",
+              "name": "Product rating count",
+              "type": {
+                "name": "number_integer"
+              }
+            }
+          ]
+        },
+        "metaobjectDefinitions": {
+          "nodes": [
+            {
+              "type": "recenzia",
+              "name": "Recenzia",
+              "fieldDefinitions": [
+                {
+                  "key": "headline",
+                  "name": "Headline"
+                },
+                {
+                  "key": "text",
+                  "name": "Text"
+                },
+                {
+                  "key": "meno",
+                  "name": "Meno"
+                },
+                {
+                  "key": "hviezdy",
+                  "name": "Hviezdy"
+                },
+                {
+                  "key": "datum",
+                  "name": "Datum"
+                }
+              ]
+            },
+            {
+              "type": "navod",
+              "name": "Navod",
+              "fieldDefinitions": [
+                {
+                  "key": "nazov",
+                  "name": "Nazov"
+                },
+                {
+                  "key": "text",
+                  "name": "Text"
+                }
+              ]
+            },
+            {
+              "type": "faq_polozka",
+              "name": "FAQ polozka",
+              "fieldDefinitions": [
+                {
+                  "key": "otazka",
+                  "name": "Otazka"
+                },
+                {
+                  "key": "odpoved",
+                  "name": "Odpoved"
+                }
+              ]
+            },
+            {
+              "type": "benefit_vone",
+              "name": "Benefit vone",
+              "fieldDefinitions": [
+                {
+                  "key": "nazov",
+                  "name": "Nazov"
+                },
+                {
+                  "key": "benefity",
+                  "name": "Benefity"
+                }
+              ]
+            }
+          ]
+        },
+        "ordersLast90d": {
+          "count": 0,
+          "precision": "EXACT"
+        },
+        "recentOrders": []
+      }
+    },
+    {
+      "key": "pl",
+      "ok": true,
+      "value": {
+        "shop": {
+          "name": "PERPERUNA.PL",
+          "myshopifyDomain": "ji1wuj-91.myshopify.com",
+          "email": "info@perperuna.sk",
+          "contactEmail": "info@perperuna.sk",
+          "currencyCode": "PLN",
+          "ianaTimezone": "Europe/Bratislava",
+          "weightUnit": "KILOGRAMS",
+          "plan": {
+            "displayName": "Shopify",
+            "partnerDevelopment": false,
+            "shopifyPlus": false
+          },
+          "primaryDomain": {
+            "host": "www.perperuna.pl",
+            "url": "https://www.perperuna.pl"
+          },
+          "billingAddress": {
+            "country": "Slovakia",
+            "countryCodeV2": "SK",
+            "city": "Bratislava"
+          },
+          "currencyFormats": {
+            "moneyFormat": "{{amount_with_comma_separator}} zł",
+            "moneyWithCurrencyFormat": "{{amount_with_comma_separator}} PLN"
+          },
+          "resourceLimits": {
+            "maxProductVariants": 2048
+          }
+        },
+        "shopLocales": [
+          {
+            "locale": "pl",
+            "name": "Polish",
+            "primary": true,
+            "published": true
+          }
+        ],
+        "markets": {
+          "nodes": [
+            {
+              "name": "Poland",
+              "handle": "poland",
+              "status": "ACTIVE",
+              "currencySettings": null,
+              "webPresences": {
+                "nodes": [
+                  {
+                    "domain": {
+                      "host": "www.perperuna.pl"
+                    },
+                    "subfolderSuffix": null,
+                    "defaultLocale": {
+                      "locale": "pl"
+                    },
+                    "alternateLocales": []
+                  }
+                ]
+              },
+              "catalogsCount": {
+                "count": 0
+              }
+            }
+          ]
+        },
+        "productsCount": {
+          "count": 50
+        },
+        "ordersCount": {
+          "nodes": []
+        },
+        "collections": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Collection/696920408395",
+              "title": "Aromatyczne herbatki do kąpieli",
+              "handle": "herbatki-do-kapieli",
+              "productsCount": {
+                "count": 8
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/696920473931",
+              "title": "Miska",
+              "handle": "miska",
+              "productsCount": {
+                "count": 2
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/696920572235",
+              "title": "Saszetka",
+              "handle": "saszetka",
+              "productsCount": {
+                "count": 1
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/696920670539",
+              "title": "Kulki",
+              "handle": "kulki",
+              "productsCount": {
+                "count": 4
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/700266774859",
+              "title": "Kostki",
+              "handle": "kostki",
+              "productsCount": {
+                "count": 8
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/700266807627",
+              "title": "Aromatyczne rytuały pod prysznic i do kąpieli",
+              "handle": "aromatyczne-rytualy",
+              "productsCount": {
+                "count": 42
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/700266840395",
+              "title": "PERPERUNA",
+              "handle": "frontpage",
+              "productsCount": {
+                "count": 41
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/700328575307",
+              "title": "Wszystkie",
+              "handle": "all",
+              "productsCount": {
+                "count": 34
+              }
+            }
+          ]
+        },
+        "publications": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Publication/353508327755",
+              "name": "Online Store",
+              "supportsFuturePublishing": true
+            },
+            {
+              "id": "gid://shopify/Publication/353508360523",
+              "name": "Point of Sale",
+              "supportsFuturePublishing": false
+            }
+          ]
+        },
+        "locations": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Location/121726861643",
+              "name": "Mlynarovičova 5",
+              "isActive": true,
+              "fulfillsOnlineOrders": true,
+              "address": {
+                "country": "Slovakia",
+                "countryCode": "SK",
+                "city": "Bratislava"
+              }
+            }
+          ]
+        },
+        "themes": {
+          "nodes": [
+            {
+              "id": "gid://shopify/OnlineStoreTheme/203830985035",
+              "name": "Prestige",
+              "role": "DEMO",
+              "prefix": "/t/4",
+              "processing": false,
+              "themeStoreId": 855
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/204502204747",
+              "name": "ROLLBACK – posledná pred-Claude živá (pl-fixed-v4)",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/7",
+              "processing": false,
+              "themeStoreId": null
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/205865582923",
+              "name": "⚠️ NEPUBLIKOVAŤ – nemá metafieldy",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/10",
+              "processing": false,
+              "themeStoreId": null
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/205866303819",
+              "name": "ROLLBACK 15.8. – pred opravou fontu",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/11",
+              "processing": false,
+              "themeStoreId": null
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/205880328523",
+              "name": "ROLLBACK 18.8. – pred jazykovou očistou",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/12",
+              "processing": false,
+              "themeStoreId": null
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/206048690507",
+              "name": "PERPERUNA.PL – živá 18.8.",
+              "role": "MAIN",
+              "prefix": "/t/13",
+              "processing": false,
+              "themeStoreId": null
+            }
+          ]
+        },
+        "metafieldDefinitions": {
+          "nodes": [
+            {
+              "key": "zlozenie",
+              "namespace": "custom",
+              "name": "Zlozenie",
+              "type": {
+                "name": "multi_line_text_field"
+              }
+            },
+            {
+              "key": "hero_label",
+              "namespace": "custom",
+              "name": "Hero label",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "hero_label_bottom",
+              "namespace": "custom",
+              "name": "Hero label bottom",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "promo",
+              "namespace": "custom",
+              "name": "Promo",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "badges",
+              "namespace": "custom",
+              "name": "Badges",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "benefity",
+              "namespace": "custom",
+              "name": "Benefity (odkaz na vone)",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "navod",
+              "namespace": "custom",
+              "name": "Navod (odkaz)",
+              "type": {
+                "name": "metaobject_reference"
+              }
+            },
+            {
+              "key": "faq",
+              "namespace": "custom",
+              "name": "FAQ (odkaz na polozky)",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "recenzie",
+              "namespace": "custom",
+              "name": "Recenzie",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "rating",
+              "namespace": "reviews",
+              "name": "Product rating",
+              "type": {
+                "name": "rating"
+              }
+            },
+            {
+              "key": "rating_count",
+              "namespace": "reviews",
+              "name": "Product rating count",
+              "type": {
+                "name": "number_integer"
+              }
+            }
+          ]
+        },
+        "metaobjectDefinitions": {
+          "nodes": [
+            {
+              "type": "doran_shoppable_videos_translation",
+              "name": "Doran Shoppable Videos Translation",
+              "fieldDefinitions": [
+                {
+                  "key": "heading",
+                  "name": "Heading"
+                },
+                {
+                  "key": "description",
+                  "name": "Description"
+                }
+              ]
+            },
+            {
+              "type": "recenzia",
+              "name": "Recenzia",
+              "fieldDefinitions": [
+                {
+                  "key": "headline",
+                  "name": "Headline"
+                },
+                {
+                  "key": "text",
+                  "name": "Text"
+                },
+                {
+                  "key": "meno",
+                  "name": "Meno"
+                },
+                {
+                  "key": "hviezdy",
+                  "name": "Hviezdy"
+                },
+                {
+                  "key": "datum",
+                  "name": "Datum"
+                }
+              ]
+            },
+            {
+              "type": "navod",
+              "name": "Návod na použitie",
+              "fieldDefinitions": [
+                {
+                  "key": "nazov",
+                  "name": "Nazov"
+                },
+                {
+                  "key": "text",
+                  "name": "Text"
+                }
+              ]
+            },
+            {
+              "type": "faq_polozka",
+              "name": "FAQ položka",
+              "fieldDefinitions": [
+                {
+                  "key": "otazka",
+                  "name": "Otazka"
+                },
+                {
+                  "key": "odpoved",
+                  "name": "Odpoved"
+                }
+              ]
+            },
+            {
+              "type": "benefit_vone",
+              "name": "Benefity vône",
+              "fieldDefinitions": [
+                {
+                  "key": "nazov",
+                  "name": "Nazov"
+                },
+                {
+                  "key": "benefity",
+                  "name": "Benefity"
+                }
+              ]
+            }
+          ]
+        },
+        "ordersLast90d": {
+          "count": 0,
+          "precision": "EXACT"
+        },
+        "recentOrders": []
+      }
+    },
+    {
+      "key": "hu",
+      "ok": true,
+      "value": {
+        "shop": {
+          "name": "PERPERUNA.HU",
+          "myshopifyDomain": "3c8h1t-wa.myshopify.com",
+          "email": "sarkozi.jan@gmail.com",
+          "contactEmail": "sarkozi.jan@gmail.com",
+          "currencyCode": "HUF",
+          "ianaTimezone": "Europe/Bratislava",
+          "weightUnit": "KILOGRAMS",
+          "plan": {
+            "displayName": "Shopify",
+            "partnerDevelopment": false,
+            "shopifyPlus": false
+          },
+          "primaryDomain": {
+            "host": "perperuna-hu.myshopify.com",
+            "url": "https://perperuna-hu.myshopify.com"
+          },
+          "billingAddress": {
+            "country": "Slovakia",
+            "countryCodeV2": "SK",
+            "city": "Bratislava"
+          },
+          "currencyFormats": {
+            "moneyFormat": "{{amount_no_decimals_with_comma_separator}} Ft",
+            "moneyWithCurrencyFormat": "{{amount_no_decimals_with_comma_separator}} HUF"
+          },
+          "resourceLimits": {
+            "maxProductVariants": 2048
+          }
+        },
+        "shopLocales": [
+          {
+            "locale": "hu",
+            "name": "Hungarian",
+            "primary": true,
+            "published": true
+          }
+        ],
+        "markets": {
+          "nodes": [
+            {
+              "name": "Hungary",
+              "handle": "hungary",
+              "status": "ACTIVE",
+              "currencySettings": null,
+              "webPresences": {
+                "nodes": [
+                  {
+                    "domain": {
+                      "host": "perperuna.hu"
+                    },
+                    "subfolderSuffix": null,
+                    "defaultLocale": {
+                      "locale": "hu"
+                    },
+                    "alternateLocales": []
+                  }
+                ]
+              },
+              "catalogsCount": {
+                "count": 0
+              }
+            }
+          ]
+        },
+        "productsCount": {
+          "count": 50
+        },
+        "ordersCount": {
+          "nodes": []
+        },
+        "collections": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Collection/720903471434",
+              "title": "Home page",
+              "handle": "frontpage",
+              "productsCount": {
+                "count": 40
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/720912187722",
+              "title": "Aromás rituálék a zuhanyhoz és a fürdőhöz",
+              "handle": "aromas-ritualek",
+              "productsCount": {
+                "count": 42
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/720912220490",
+              "title": "PERPERUNA",
+              "handle": "perperuna-kollekcio",
+              "productsCount": {
+                "count": 41
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/720912253258",
+              "title": "Összes",
+              "handle": "all",
+              "productsCount": {
+                "count": 34
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/720912286026",
+              "title": "Golyók",
+              "handle": "golyok",
+              "productsCount": {
+                "count": 4
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/720912318794",
+              "title": "Kockák",
+              "handle": "kockak",
+              "productsCount": {
+                "count": 8
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/720912351562",
+              "title": "Zsák",
+              "handle": "vaszonzsak",
+              "productsCount": {
+                "count": 1
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/720912384330",
+              "title": "Tál",
+              "handle": "kotal",
+              "productsCount": {
+                "count": 2
+              }
+            },
+            {
+              "id": "gid://shopify/Collection/720912417098",
+              "title": "Aromás fürdőteák",
+              "handle": "aromas-furdoteak",
+              "productsCount": {
+                "count": 8
+              }
+            }
+          ]
+        },
+        "publications": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Publication/364960088394",
+              "name": "Online Store",
+              "supportsFuturePublishing": true
+            },
+            {
+              "id": "gid://shopify/Publication/364960121162",
+              "name": "Point of Sale",
+              "supportsFuturePublishing": false
+            }
+          ]
+        },
+        "locations": {
+          "nodes": [
+            {
+              "id": "gid://shopify/Location/125608755530",
+              "name": "Mlynarovičova 5",
+              "isActive": true,
+              "fulfillsOnlineOrders": true,
+              "address": {
+                "country": "Slovakia",
+                "countryCode": "SK",
+                "city": "Bratislava"
+              }
+            }
+          ]
+        },
+        "themes": {
+          "nodes": [
+            {
+              "id": "gid://shopify/OnlineStoreTheme/205606781258",
+              "name": "ROLLBACK 15.8. – pred opravou fontu",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/2",
+              "processing": false,
+              "themeStoreId": 2481
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/205614711114",
+              "name": "ROLLBACK 18.8. – slovenské handle kolekcií",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/3",
+              "processing": false,
+              "themeStoreId": 2481
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/205783990602",
+              "name": "ROLLBACK 18.8. – pred jazykovou očistou",
+              "role": "UNPUBLISHED",
+              "prefix": "/t/4",
+              "processing": false,
+              "themeStoreId": 2481
+            },
+            {
+              "id": "gid://shopify/OnlineStoreTheme/205787332938",
+              "name": "PERPERUNA.HU – živá 18.8. (jazyk)",
+              "role": "MAIN",
+              "prefix": "/t/5",
+              "processing": false,
+              "themeStoreId": 2481
+            }
+          ]
+        },
+        "metafieldDefinitions": {
+          "nodes": [
+            {
+              "key": "zlozenie",
+              "namespace": "custom",
+              "name": "Zlozenie",
+              "type": {
+                "name": "multi_line_text_field"
+              }
+            },
+            {
+              "key": "hero_label",
+              "namespace": "custom",
+              "name": "Hero label",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "hero_label_bottom",
+              "namespace": "custom",
+              "name": "Hero label bottom",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "promo",
+              "namespace": "custom",
+              "name": "Promo",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "badges",
+              "namespace": "custom",
+              "name": "Badges",
+              "type": {
+                "name": "single_line_text_field"
+              }
+            },
+            {
+              "key": "benefity",
+              "namespace": "custom",
+              "name": "Benefity",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "navod",
+              "namespace": "custom",
+              "name": "Navod",
+              "type": {
+                "name": "metaobject_reference"
+              }
+            },
+            {
+              "key": "faq",
+              "namespace": "custom",
+              "name": "FAQ",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "recenzie",
+              "namespace": "custom",
+              "name": "Recenzie",
+              "type": {
+                "name": "list.metaobject_reference"
+              }
+            },
+            {
+              "key": "rating",
+              "namespace": "reviews",
+              "name": "Product rating",
+              "type": {
+                "name": "rating"
+              }
+            },
+            {
+              "key": "rating_count",
+              "namespace": "reviews",
+              "name": "Product rating count",
+              "type": {
+                "name": "number_integer"
+              }
+            }
+          ]
+        },
+        "metaobjectDefinitions": {
+          "nodes": [
+            {
+              "type": "recenzia",
+              "name": "Recenzia",
+              "fieldDefinitions": [
+                {
+                  "key": "headline",
+                  "name": "Headline"
+                },
+                {
+                  "key": "text",
+                  "name": "Text"
+                },
+                {
+                  "key": "meno",
+                  "name": "Meno"
+                },
+                {
+                  "key": "hviezdy",
+                  "name": "Hviezdy"
+                },
+                {
+                  "key": "datum",
+                  "name": "Datum"
+                }
+              ]
+            },
+            {
+              "type": "navod",
+              "name": "Navod",
+              "fieldDefinitions": [
+                {
+                  "key": "nazov",
+                  "name": "Nazov"
+                },
+                {
+                  "key": "text",
+                  "name": "Text"
+                }
+              ]
+            },
+            {
+              "type": "faq_polozka",
+              "name": "FAQ polozka",
+              "fieldDefinitions": [
+                {
+                  "key": "otazka",
+                  "name": "Otazka"
+                },
+                {
+                  "key": "odpoved",
+                  "name": "Odpoved"
+                }
+              ]
+            },
+            {
+              "type": "benefit_vone",
+              "name": "Benefit vone",
+              "fieldDefinitions": [
+                {
+                  "key": "nazov",
+                  "name": "Nazov"
+                },
+                {
+                  "key": "benefity",
+                  "name": "Benefity"
+                }
+              ]
+            }
+          ]
+        },
+        "ordersLast90d": {
+          "count": 0,
+          "precision": "EXACT"
+        },
+        "recentOrders": []
+      }
+    }
+  ]
+}
