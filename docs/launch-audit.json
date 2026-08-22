@@ -1,76 +1,6 @@
 {
-  "generatedAt": "2026-08-22T11:59:33.894Z",
+  "generatedAt": "2026-08-22T12:33:42.813Z",
   "results": [
-    {
-      "key": "cz",
-      "locale": "cs",
-      "country": "CZ",
-      "shop": "PERPERUNA.CZ",
-      "domain": "cz.perperuna.com",
-      "marketDomain": "cz.perperuna.com",
-      "theme": "PERPERUNA.CZ – živá 18.8. (jazyk)",
-      "stats": {
-        "products": 57,
-        "active": 27,
-        "drafts": 6,
-        "collections": 7,
-        "pages": 9,
-        "menus": 5,
-        "shippingZones": 1,
-        "activeRates": 3,
-        "shipsTo": [
-          "CZ"
-        ],
-        "wallets": [
-          "APPLE_PAY",
-          "GOOGLE_PAY"
-        ],
-        "taxesIncluded": true,
-        "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
-      },
-      "findings": [
-        {
-          "sev": "blocker",
-          "area": "policy",
-          "msg": "Doprava: len 159 znakov — pravdepodobne prázdne"
-        },
-        {
-          "sev": "info",
-          "area": "catalog",
-          "msg": "6 produktov v DRAFT stave"
-        },
-        {
-          "sev": "blocker",
-          "area": "catalog",
-          "msg": "1 produktov je vypredaných a nedovoľuje objednávku",
-          "detail": {
-            "priklady": [
-              "love-sprchova-aromaticka-kostka"
-            ]
-          }
-        },
-        {
-          "sev": "warn",
-          "area": "catalog",
-          "msg": "1 aktívnych produktov nemá popis (<50 znakov)",
-          "detail": {
-            "priklady": [
-              "nedokonale-sprchove-aromaticke-kostky"
-            ]
-          }
-        },
-        {
-          "sev": "info",
-          "area": "collection",
-          "msg": "Kolekcia „Home page\" nemá popis"
-        },
-        {
-          "sev": "warn",
-          "area": "page",
-          "msg": "Stránka „Kontakt\" nie je publikovaná"
-        }
-      ]
-    },
     {
       "key": "ro",
       "locale": "ro",
@@ -86,94 +16,16 @@
         "collections": 7,
         "pages": 9,
         "menus": 5,
-        "shippingZones": 2,
+        "shippingZones": 1,
         "activeRates": 3,
         "shipsTo": [
-          "SK",
-          "AE",
-          "AT",
-          "AU",
-          "BE",
-          "CA",
-          "CH",
-          "CZ",
-          "DE",
-          "DK",
-          "ES",
-          "FI",
-          "FR",
-          "GB",
-          "HK",
-          "IE",
-          "IL",
-          "IT",
-          "JP",
-          "KR",
-          "MY",
-          "NL",
-          "NO",
-          "NZ",
-          "PL",
-          "PT",
-          "SE",
-          "SG",
-          "US"
+          "RO"
         ],
         "wallets": [],
         "taxesIncluded": true,
         "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
       },
       "findings": [
-        {
-          "sev": "blocker",
-          "area": "shipping",
-          "msg": "Cieľová krajina RO nie je v žiadnej dopravnej zóne — zákazník neprejde checkoutom",
-          "detail": {
-            "zonyPokryvaju": [
-              "SK",
-              "AE",
-              "AT",
-              "AU",
-              "BE",
-              "CA",
-              "CH",
-              "CZ",
-              "DE",
-              "DK",
-              "ES",
-              "FI",
-              "FR",
-              "GB",
-              "HK",
-              "IE",
-              "IL",
-              "IT",
-              "JP",
-              "KR",
-              "MY",
-              "NL",
-              "NO",
-              "NZ",
-              "PL",
-              "PT",
-              "SE",
-              "SG",
-              "US"
-            ]
-          }
-        },
-        {
-          "sev": "blocker",
-          "area": "shipping",
-          "msg": "3 dopravných sadzieb je v inej mene než obchod (RON)",
-          "detail": {
-            "sadzby": [
-              "Štandardná: 3.99 EUR",
-              "Expresná: 6.99 EUR",
-              "International: 16.0 EUR"
-            ]
-          }
-        },
         {
           "sev": "blocker",
           "area": "payments",
@@ -253,66 +105,16 @@
         "collections": 8,
         "pages": 9,
         "menus": 5,
-        "shippingZones": 2,
-        "activeRates": 3,
+        "shippingZones": 1,
+        "activeRates": 2,
         "shipsTo": [
-          "SK",
-          "AE",
-          "AT",
-          "AU",
-          "BE",
-          "CA",
-          "CH",
-          "CZ",
-          "DE",
-          "DK",
-          "ES",
-          "FI",
-          "FR",
-          "GB",
-          "HK",
-          "IE",
-          "IL",
-          "IT",
-          "JP",
-          "KR",
-          "MY",
-          "NL",
-          "NO",
-          "NZ",
-          "PL",
-          "PT",
-          "SE",
-          "SG",
-          "US"
+          "PL"
         ],
         "wallets": [],
         "taxesIncluded": true,
         "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
       },
       "findings": [
-        {
-          "sev": "blocker",
-          "area": "shipping",
-          "msg": "PL je pokrytá len zbernou zónou „International\" (28 krajín) — nemá vlastnú domácu zónu",
-          "detail": {
-            "sadzby": [
-              "International 17.0 EUR"
-            ]
-          }
-        },
-        {
-          "sev": "blocker",
-          "area": "shipping",
-          "msg": "3 dopravných sadzieb je v inej mene než obchod (PLN)",
-          "detail": {
-            "sadzby": [
-              "Štandardná: 3.99 EUR",
-              "Expresná: 6.99 EUR",
-              "International: 17.0 EUR"
-            ]
-          }
-        },
         {
           "sev": "blocker",
           "area": "payments",
@@ -401,38 +203,10 @@
         "collections": 9,
         "pages": 9,
         "menus": 5,
-        "shippingZones": 2,
-        "activeRates": 3,
+        "shippingZones": 1,
+        "activeRates": 2,
         "shipsTo": [
-          "SK",
-          "AE",
-          "AT",
-          "AU",
-          "BE",
-          "CA",
-          "CH",
-          "CZ",
-          "DE",
-          "DK",
-          "ES",
-          "FI",
-          "FR",
-          "GB",
-          "HK",
-          "IE",
-          "IL",
-          "IT",
-          "JP",
-          "KR",
-          "MY",
-          "NL",
-          "NO",
-          "NZ",
-          "PL",
-          "PT",
-          "SE",
-          "SG",
-          "US"
+          "HU"
         ],
         "wallets": [],
         "taxesIncluded": true,
@@ -445,56 +219,6 @@
           "msg": "Primárna doména je stále perperuna-hu.myshopify.com — vlastná doména nie je dokončená",
           "detail": {
             "marketDomain": "perperuna.hu"
-          }
-        },
-        {
-          "sev": "blocker",
-          "area": "shipping",
-          "msg": "Cieľová krajina HU nie je v žiadnej dopravnej zóne — zákazník neprejde checkoutom",
-          "detail": {
-            "zonyPokryvaju": [
-              "SK",
-              "AE",
-              "AT",
-              "AU",
-              "BE",
-              "CA",
-              "CH",
-              "CZ",
-              "DE",
-              "DK",
-              "ES",
-              "FI",
-              "FR",
-              "GB",
-              "HK",
-              "IE",
-              "IL",
-              "IT",
-              "JP",
-              "KR",
-              "MY",
-              "NL",
-              "NO",
-              "NZ",
-              "PL",
-              "PT",
-              "SE",
-              "SG",
-              "US"
-            ]
-          }
-        },
-        {
-          "sev": "blocker",
-          "area": "shipping",
-          "msg": "3 dopravných sadzieb je v inej mene než obchod (HUF)",
-          "detail": {
-            "sadzby": [
-              "Štandardná: 3.99 EUR",
-              "Expresná: 6.99 EUR",
-              "International: 16.0 EUR"
-            ]
           }
         },
         {
