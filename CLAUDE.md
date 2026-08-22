@@ -65,11 +65,14 @@ za posledných 90 dní nula objednávok.
 ```
 lib/shopify.mjs             multi-backend Admin API klient (token cache, retry, pagination)
 lib/lang.mjs                detekcia jazyka — odhalí nepreložený text medzi backendmi
+lib/supabase.mjs            minimálny REST klient pre cross-backend katalóg
 scripts/check-credentials.mjs  overenie prístupov
 scripts/dump-context.mjs       read-only snapshot obchodov → docs/shop-context.json
 scripts/audit-launch.mjs       audit pripravenosti → docs/launch-audit.json
+scripts/catalog-pull.mjs       sync produktov/cien/skladu do Supabase (cross-backend katalóg)
 docs/credentials.md            ako sa nastavujú prístupy
 docs/launch-plan.md            plán spustenia RO/PL/HU
+docs/catalog.md                cross-backend katalóg — dátový model, stav, ďalšie fázy
 docs/shop-context.json         posledný snapshot
 docs/launch-audit.json         posledný audit
 ```
