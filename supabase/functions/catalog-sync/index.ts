@@ -36,9 +36,20 @@ function secretKey(): string {
 
 type Listing = Record<string, unknown>;
 
+/**
+ * Read a secret, tolerating a whole `NAME=value` line pasted into the value
+ * field — an easy slip when copying a block of secrets into the dashboard.
+ */
+function envValue(name: string): string | undefined {
+  const raw = Deno.env.get(name)?.trim();
+  if (!raw) return undefined;
+  const prefix = `${name}=`;
+  return raw.startsWith(prefix) ? raw.slice(prefix.length).trim() : raw;
+}
+
 function shopEnv(store: string, suffix: string): string {
   const name = `SHOPIFY_${store.toUpperCase()}_${suffix}`;
-  const value = Deno.env.get(name);
+  const value = envValue(name);
   if (!value) throw new Error(`missing secret ${name}`);
   return value;
 }
@@ -158,8 +169,25 @@ async function upsert(table: string, rows: unknown[], onConflict: string, key: s
 Deno.serve(async (req) => {
   try {
     const body = req.headers.get('content-type')?.includes('json') ? await req.json() : {};
-    const configured = (Deno.env.get('SHOPIFY_SHOPS') ?? 'cz,ro,pl,hu')
-      .split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+    const configured = (envValue('SHOPIFY_SHOPS') ?? 'cz,ro,pl,hu')
+      .split(',')
+      .map((s) => s.trim().toLowerCase())
+      // Backend keys are two-letter codes; anything else is a malformed secret.
+      .filter((s) => /^[a-z]{2}$/.test(s));
+    if (!configured.length) throw new Error('SHOPIFY_SHOPS has no valid two-letter backend codes');
+
+    // Diagnostic: report which secrets are set, never their values.
+    if (body.check) {
+      const present: Record<string, boolean> = { SHOPIFY_SHOPS: !!envValue('SHOPIFY_SHOPS') };
+      for (const s of ['sk', 'cz', 'ro', 'pl', 'hu']) {
+        for (const suffix of ['SHOP', 'CLIENT_ID', 'CLIENT_SECRET']) {
+          const name = `SHOPIFY_${s.toUpperCase()}_${suffix}`;
+          present[name] = !!envValue(name);
+        }
+      }
+      return Response.json({ ok: true, parsedStores: configured, secretsPresent: present });
+    }
+
     const stores: string[] = body.stores?.length ? body.stores : configured.filter((s) => s !== 'sk');
 
     const perStore: Record<string, number> = {};
