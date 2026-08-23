@@ -194,6 +194,54 @@ vlastnú doménu treba `PRIMARY_ORIGIN` vo funkciách upraviť.
 - SK sa zapisuje ako prvé; ak zlyhá, ostatné obchody sa nechajú tak.
 - Každá zmena ide do `catalog_sync_log` s `actor = 'inventory-set'`.
 
+## Zapnutie a vypnutie produktu na trhu
+
+Pri každej cene v matici je bodka so stavom produktu v tom obchode: zelená =
+`ACTIVE`, prázdna = `DRAFT`, oranžová = `UNLISTED`, sivá = `ARCHIVED`,
+bodkovaná = SKU tam vôbec nie je. Klik na bodku prepína medzi `ACTIVE`
+a `DRAFT` cez Edge Function **`product-status`**.
+
+```
+POST /functions/v1/product-status
+{ "sku": "PP-CUBE-LOVE-020", "store": "pl", "status": "ACTIVE", "password": "…" }
+```
+
+`UNLISTED` a `ARCHIVED` sa cez appku nastaviť nedajú. Nie sú to prepínače, ale
+samostatné rozhodnutia o produkte — archivovaný produkt navyše zmizne
+z default pohľadu v Shopify admine, kde by ho už nikto náhodou nenašiel.
+
+### Poistky
+
+- Heslo je to isté ako pri úprave skladu (`catalog_settings.edit_password_sha256`).
+- Cieľový stav môže byť len `ACTIVE` alebo `DRAFT`.
+- Ak jedno SKU sedí v tom obchode na viacerých produktoch, endpoint odmietne
+  zápis a vypíše handles — hádať, ktorý prepnúť, by bolo horšie než nič.
+- Shopify hľadá `sku:` prefixovo, takže sa zhoda ešte overuje na presnú rovnosť.
+- Zmena ide do `catalog_sync_log` s `actor = 'product-status'` a rovno sa
+  premietne do `catalog_listings`, aby bodka preskočila bez čakania na sync.
+
+Filter **len rozdiely v zapnutí** nechá v tabuľke iba SKU, kde sa aspoň jeden
+trh predajnosťou líši od ostatných — vrátane tých, čo v jednom obchode chýbajú.
+
+## Hmotnosti
+
+`scripts/weight-mirror.mjs` kopíruje hmotnosti variantov zo SK podľa SKU,
+rovnako ako `inventory-mirror` kopíruje sklad. Na rozdiel od skladu je
+hmotnosť statická vlastnosť, takže stačí pustiť raz po zmene katalógu.
+
+```
+node scripts/weight-mirror.mjs                          # dry run
+node scripts/weight-mirror.mjs ro pl --apply            # zápis
+node scripts/weight-mirror.mjs cz --apply --skip=SKU    # vynechať SKU
+```
+
+`--skip` je pre SKU, ktoré znamená v každom obchode niečo iné — napr.
+`PP-NUBE-NEDO-020` je na SK jedna kocka, ale na CZ balenie 10 ks, takže SK
+hmotnosť by tam bola nesprávna.
+
+Skript preferuje SK listing, ktorý hmotnosť naozaj má, a nesahá na položky,
+ktoré sa neposielajú (`FEE-*` služby).
+
 ## Zrkadlenie skladov zo SK
 
 SK je zdroj pravdy pre sklad. Ostatné backendy sa naň dorovnávajú podľa SKU —
@@ -243,6 +291,9 @@ prepíše.
 4. ✅ **Zrkadlenie skladov** — Edge Function `inventory-mirror`, s logom.
 5. ✅ **UI** — dashboard na Netlify, matica SKU × obchod + obe tlačidlá.
 6. ✅ **Úprava skladu z appky** — Edge Function `inventory-set`, chránená heslom.
+6b. ✅ **Zapnutie/vypnutie produktu na trhu** — Edge Function `product-status`,
+   bodka pri cene + filter rozdielov.
+6c. ✅ **Hmotnosti** — `scripts/weight-mirror.mjs`, jednorazovo zo SK.
 7. ⏳ **Ceny** — katalóg ich ukazuje, ale nemení. Zrkadlenie cien nedáva
    zmysel priamo (iné meny), chcelo by to prepočet cez kurz + pravidlá
    zaokrúhlenia.
