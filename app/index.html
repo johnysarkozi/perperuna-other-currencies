@@ -44,7 +44,11 @@
   label.check { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); cursor: pointer; user-select: none; }
   .meta { color: var(--muted); font-size: 12.5px; }
 
-  .wrap { overflow-x: auto; }
+  /* overflow-x:auto also makes this the vertical scrollport, so the sticky
+     header offsets below resolve against it. Bounding its height is what makes
+     the table scroll inside the page rather than the page scrolling past a
+     header that then covers the first rows. */
+  .wrap { overflow: auto; max-height: calc(100vh - var(--head-h, 112px)); }
   table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
   th, td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
   thead th {
@@ -52,8 +56,8 @@
     font-weight: 600; font-size: 11.5px; text-transform: uppercase;
     letter-spacing: .04em; color: var(--muted);
   }
-  thead tr.groups th { top: 53px; text-align: center; border-bottom: none; padding-bottom: 2px; }
-  thead tr.cols th { top: 76px; padding-top: 2px; cursor: pointer; user-select: none; }
+  thead tr.groups th { top: 0; text-align: center; border-bottom: none; padding-bottom: 2px; }
+  thead tr.cols th { top: var(--group-h, 24px); padding-top: 2px; cursor: pointer; user-select: none; }
   thead tr.cols th:hover { color: var(--text); }
   th .arrow { opacity: .55; font-size: 9px; }
   th.sep, td.sep { border-left: 1px solid var(--line); }
@@ -759,7 +763,20 @@ wireDialog('skuHelp', 'skuDialog', 'skuClose');
 
 // ---- boot ----------------------------------------------------------------
 
+/**
+ * The page header wraps to two lines on narrow windows and the group row's
+ * height depends on the font, so both offsets are measured rather than guessed
+ * — a wrong guess either hides the first row or leaves a gap.
+ */
+function measureChrome() {
+  const root = document.documentElement.style;
+  root.setProperty('--head-h', `${document.querySelector('header').offsetHeight}px`);
+  root.setProperty('--group-h', `${$('groupRow').offsetHeight}px`);
+}
+
 buildHeader();
+measureChrome();
+addEventListener('resize', measureChrome);
 load();
 </script>
 </body>
