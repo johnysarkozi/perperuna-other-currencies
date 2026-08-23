@@ -67,6 +67,27 @@
   .stock.bad { color: var(--bad); font-weight: 650; }
   .stock.drift { color: var(--warn); font-weight: 650; }
   .status { font-size: 10.5px; color: var(--faint); text-transform: lowercase; }
+
+  /* Whether a SKU is switched on in a market — the thing you scan for down a
+     column, so it is a shape rather than a word. */
+  .dot {
+    display: inline-block;
+    width: 11px; height: 11px; padding: 0; margin-right: 7px; flex: none;
+    border-radius: 50%; border: 1.5px solid var(--faint); background: none;
+    vertical-align: -1px; cursor: pointer;
+  }
+  .dot:hover:not(:disabled) { box-shadow: 0 0 0 3px var(--panel); border-color: var(--text); }
+  .dot:disabled { cursor: default; }
+  .dot.active   { background: var(--ok);   border-color: var(--ok); }
+  .dot.draft    { background: none;        border-color: var(--faint); }
+  .dot.unlisted { background: var(--warn); border-color: var(--warn); }
+  .dot.archived { background: var(--faint); border-color: var(--faint); opacity: .5; }
+  .dot.absent   { border-style: dotted; }
+  .dot.busy     { opacity: .4; }
+  /* A market that is switched differently from the majority — the case worth
+     noticing without reading every dot in the row. */
+  td.odd-one { background: var(--warn-bg); }
+  .cell { display: flex; align-items: center; justify-content: flex-end; }
   input.qty {
     width: 82px; padding: 3px 6px; text-align: right; font: inherit;
     font-variant-numeric: tabular-nums;
@@ -122,6 +143,7 @@
     <input type="search" id="q" placeholder="Hľadať SKU alebo názov…">
     <label class="check"><input type="checkbox" id="onlyActive" checked> len aktívne</label>
     <label class="check"><input type="checkbox" id="onlyProblems"> len problémy</label>
+    <label class="check"><input type="checkbox" id="onlyDiff"> len rozdiely v zapnutí</label>
     <span class="grow"></span>
     <span class="meta" id="stats"></span>
     <button id="howHelp" title="Ako to celé funguje">Ako to funguje</button>
@@ -173,6 +195,31 @@
         <td>Osvieži čísla v tejto tabuľke. Nič v obchodoch nemení.</td></tr>
   </table>
 
+  <h3>Bodky — či sa produkt na tom trhu predáva</h3>
+  <p>Pri každej cene je bodka. Ukazuje, v akom stave je produkt v tom obchode.</p>
+  <table>
+    <tr><td><span class="dot active"></span></td>
+        <td><strong>Zelená</strong> — zapnutý, zákazník si ho kúpi.</td></tr>
+    <tr><td><span class="dot draft"></span></td>
+        <td><strong>Prázdna</strong> — vypnutý (draft). Na trhu sa nepredáva.</td></tr>
+    <tr><td><span class="dot unlisted"></span></td>
+        <td><strong>Oranžová</strong> — unlisted: nie je v ponuke ani vo vyhľadávaní, ale cez priamy link sa stále dá kúpiť.</td></tr>
+    <tr><td><span class="dot archived"></span></td>
+        <td><strong>Sivá</strong> — archivovaný, teda ukončený.</td></tr>
+    <tr><td><span class="dot absent"></span></td>
+        <td><strong>Bodkovaná</strong> — SKU v tom obchode vôbec nie je založené.</td></tr>
+  </table>
+  <p><strong>Klik na bodku produkt zapne alebo vypne</strong> — prepína medzi
+     zelenou a prázdnou. Pýta si to isté heslo ako zmena skladu a zmena je
+     okamžitá. Oranžové a sivé bodky sa takto prepnúť nedajú; unlisted
+     a archived rieš priamo v Shopify admine, lebo to nie sú „zapnuté / vypnuté",
+     ale samostatné rozhodnutia o produkte.</p>
+  <p>Sklad ani ceny sa vypnutím nemenia — produkt len zmizne z predaja.</p>
+  <p>Ak je niektorý trh nastavený inak než väčšina ostatných, celý ten stĺpec
+     v riadku sa podfarbí. Filter <strong>len rozdiely v zapnutí</strong> nechá
+     iba také riadky — je to najrýchlejší spôsob, ako nájsť produkt, ktorý sa
+     omylom predáva len na časti trhov.</p>
+
   <h3>Čo znamenajú farby</h3>
   <table>
     <tr><td><span class="stock bad">červená</span></td>
@@ -191,6 +238,8 @@
         <td>Zapnuté defaultne. Skryje draft, archived a unlisted produkty.</td></tr>
     <tr><td><strong>len problémy</strong></td>
         <td>Nechá riadky, kde má aspoň jeden obchod niektorý z príznakov vyššie.</td></tr>
+    <tr><td><strong>len rozdiely v zapnutí</strong></td>
+        <td>Nechá riadky, kde sa aspoň jeden trh predajnosťou líši od ostatných — vrátane SKU, ktoré v jednom obchode chýba.</td></tr>
   </table>
   <p>Zoradiť sa dá kliknutím na hlavičku ktoréhokoľvek stĺpca, druhý klik
      otočí smer.</p>
@@ -336,6 +385,13 @@ const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 const STORES = ['sk', 'cz', 'pl', 'ro', 'hu'];
 const TRUTH = 'sk';
 
+const STATUS_LABEL = {
+  ACTIVE: 'zapnutý, v predaji',
+  DRAFT: 'vypnutý (draft)',
+  UNLISTED: 'skrytý, ale kupiteľný cez priamy link',
+  ARCHIVED: 'archivovaný',
+};
+
 const $ = (id) => document.getElementById(id);
 let listings = [];
 let sort = { key: 'sku', dir: 1 };
@@ -390,6 +446,22 @@ function cellFlags(row, store) {
   else if (cell.status === 'ACTIVE' && qty !== null && qty <= 0 && cell.inventory_policy === 'DENY') flags.push('sold-out');
   if (truth && store !== TRUTH && cell.inventory_quantity !== truth.inventory_quantity) flags.push('drift');
   return flags;
+}
+
+/** A customer can reach the product: ACTIVE, or UNLISTED via a direct link. */
+const sellable = (status) => status === 'ACTIVE' || status === 'UNLISTED';
+
+/**
+ * Which markets are switched differently from the rest of the row.
+ * Absent counts as not-sellable, so a SKU that exists in four stores and is
+ * missing from the fifth shows up here too — that is exactly the gap worth
+ * seeing.
+ */
+function oddStores(row) {
+  const on = STORES.filter((s) => sellable(row.stores[s]?.status));
+  const off = STORES.filter((s) => !sellable(row.stores[s]?.status));
+  if (!on.length || !off.length) return [];
+  return on.length >= off.length ? off : on;
 }
 
 const money = (v, cur) => v === null || v === undefined
@@ -457,32 +529,49 @@ function render() {
   const q = $('q').value.trim().toLowerCase();
   const onlyActive = $('onlyActive').checked;
   const onlyProblems = $('onlyProblems').checked;
+  const onlyDiff = $('onlyDiff').checked;
 
   const rows = pivot().filter((row) => {
     if (q && !row.sku.toLowerCase().includes(q) && !(row.title ?? '').toLowerCase().includes(q)) return false;
     if (onlyActive && !STORES.some((s) => row.stores[s]?.status === 'ACTIVE')) return false;
     if (onlyProblems && !STORES.some((s) => cellFlags(row, s).length)) return false;
+    if (onlyDiff && !oddStores(row).length) return false;
     return true;
   }).sort(compare);
 
   $('rows').innerHTML = rows.map((row) => {
+    const odd = new Set(oddStores(row));
     const cells = STORES.map((store) => {
       const cell = row.stores[store];
       const flags = cellFlags(row, store);
-      if (!cell) return '<td class="sep absent">—</td><td class="num absent">—</td>';
+      const oddCls = odd.has(store) ? ' odd-one' : '';
+
+      if (!cell) {
+        return `<td class="sep absent${oddCls}"><div class="cell">` +
+          `<span class="dot absent" title="${store.toUpperCase()}: SKU tu nie je založené"></span>—</div></td>` +
+          `<td class="num absent${oddCls}">—</td>`;
+      }
 
       const qty = cell.inventory_quantity;
       const cls = flags.includes('negative') || flags.includes('sold-out') ? 'bad'
         : flags.includes('drift') ? 'drift' : '';
       const status = cell.status === 'ACTIVE' ? '' : `<div class="status">${cell.status.toLowerCase()}</div>`;
-      const price = `<td class="num sep">${money(cell.price, cell.currency)}${status}</td>`;
+
+      // Only ACTIVE and DRAFT can be toggled from here — see the product-status
+      // function for why archived and unlisted are left to the Shopify admin.
+      const toggleable = cell.status === 'ACTIVE' || cell.status === 'DRAFT';
+      const dot = `<button class="dot ${cell.status.toLowerCase()}" ${toggleable ? '' : 'disabled'}
+          data-sku="${row.sku}" data-store="${store}" data-status="${cell.status}"
+          title="${store.toUpperCase()}: ${STATUS_LABEL[cell.status] ?? cell.status}${toggleable ? ' — klikni na prepnutie' : ''}"></button>`;
+
+      const price = `<td class="num sep${oddCls}"><div class="cell">${dot}<span>${money(cell.price, cell.currency)}</span></div>${status}</td>`;
 
       // Stock is edited on SK only; the rest follow from the mirror, so an edit
       // there would just be overwritten.
       const stock = store === TRUTH
-        ? `<td class="num"><input class="qty" type="number" step="1" min="0"
+        ? `<td class="num${oddCls}"><input class="qty" type="number" step="1" min="0"
              value="${qty ?? ''}" data-sku="${row.sku}" data-was="${qty ?? ''}"></td>`
-        : `<td class="num"><span class="stock ${cls}">${qty ?? '—'}</span></td>`;
+        : `<td class="num${oddCls}"><span class="stock ${cls}">${qty ?? '—'}</span></td>`;
       return price + stock;
     }).join('');
 
@@ -504,6 +593,7 @@ function render() {
 $('q').addEventListener('input', render);
 $('onlyActive').addEventListener('change', render);
 $('onlyProblems').addEventListener('change', render);
+$('onlyDiff').addEventListener('change', render);
 
 // ---- editing stock -------------------------------------------------------
 
@@ -563,6 +653,50 @@ async function saveQuantity(input) {
     input.classList.remove('saving');
   }
 }
+
+// ---- switching a product on or off ---------------------------------------
+
+async function toggleStatus(dot) {
+  const { sku, store, status } = dot.dataset;
+  const next = status === 'ACTIVE' ? 'DRAFT' : 'ACTIVE';
+  const verb = next === 'ACTIVE' ? 'Zapnúť' : 'Vypnúť';
+
+  if (!confirm(`${verb} ${sku} na ${store.toUpperCase()}?\n\n` +
+    (next === 'ACTIVE'
+      ? 'Produkt sa okamžite objaví v predaji na tom trhu.'
+      : 'Produkt sa okamžite prestane predávať na tom trhu. Sklad ani ceny sa nemenia.'))) return;
+
+  const password = editPassword();
+  if (!password) return;
+
+  dot.disabled = true;
+  dot.classList.add('busy');
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/product-status`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sku, store, status: next, password }),
+    });
+    const out = await res.json();
+    if (!out.ok) {
+      if (res.status === 403) sessionStorage.removeItem('editpw');
+      throw new Error(out.error ?? 'zmena zlyhala');
+    }
+    // The catalog copy only refreshes on the next sync, so move the dot now.
+    for (const l of listings) if (l.sku === sku && l.store === store) l.status = next;
+    toast(`${sku} — ${store.toUpperCase()} ${next === 'ACTIVE' ? 'zapnuté' : 'vypnuté'}`);
+    render();
+  } catch (err) {
+    toast(`Chyba: ${err.message}`, true);
+    dot.disabled = false;
+    dot.classList.remove('busy');
+  }
+}
+
+$('rows').addEventListener('click', (e) => {
+  const dot = e.target.closest('button.dot');
+  if (dot && !dot.disabled) toggleStatus(dot);
+});
 
 $('rows').addEventListener('change', (e) => {
   if (e.target.classList.contains('qty')) saveQuantity(e.target);
