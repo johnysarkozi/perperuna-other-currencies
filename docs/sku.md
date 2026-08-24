@@ -60,7 +60,7 @@ PP-CUBE-BALA-003
 | Kód | Význam |
 |-----|--------|
 | `NEDO` | Balenie nedokonalých kociek (mix vôní, nie konkrétna vôňa) |
-| `BUND` | V `PP-BATE-BUND-031` = kompletná kolekcia v rámci kategórie |
+| `BUND` | Kompletná kolekcia v rámci kategórie — `PP-BATE-BUND-031` (všetkých 5 čajov), `PP-CUBE-BUND-034` (10 kociek, 2× každá vôňa), `PP-RSET-BUND-025` (5 kociek + miska). Nezamieňať s kategóriou `BUND`, ktorá skladá balík z rôznych kategórií. |
 
 ## Číslo
 
@@ -137,13 +137,13 @@ produkty, lebo tak sú vedené v Shopify. Sklad sa im nesleduje.
 
    | Kategória | Najvyššie použité | Ďalšie voľné |
    |-----------|-------------------|--------------|
-   | `CUBE` | 033 | **034** |
-   | `NUBE` | 034 | **035** |
+   | `CUBE` | 034 | **035** |
+   | `NUBE` | 035 | **036** |
    | `BALL` | 007 | **008** |
    | `BATE` | 032 | **033** |
    | `ACCS` | 032 | **033** |
    | `ESET` | 025 | **026** |
-   | `RSET` | 024 | **025** |
+   | `RSET` | 025 | **026** |
 
 5. Balík dostane `BUND` a čísla svojich súčastí namiesto variantu.
 6. Ten istý fyzický produkt v inom režime predaja → prípona (`-FREE`, `-SET`),
