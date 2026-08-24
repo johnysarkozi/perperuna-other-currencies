@@ -134,8 +134,8 @@ const SCENTS = 'Uplift · Breathe · Balance · Calm · Refresh';
 const PRODUCTS = [
   {
     sku: 'PP-RSET-BUND-025',
-    handle: 'objavny-set-5-kociek-a-kamenna-miska',
-    title: 'Objavný set – 5 sprchových kociek + kamenná miska',
+    handle: 'discovery-set-5-kociek-a-kamenna-miska',
+    title: 'Discovery set – 5 sprchových kociek + kamenná miska',
     price: '39.99',
     // 5 × 7.99 + 19.99 — the sum of what the parts cost separately.
     compareAtPrice: '59.94',
@@ -156,7 +156,7 @@ const PRODUCTS = [
       note: 'Jedna kocka ti dopraje až 3 sprchy, z celého setu máš približne 15 sprch.',
     }),
     media: media([
-      ['5_plus_5_a_miska_2.jpg', 'Objavný set – päť sprchových kociek a kamenná miska'],
+      ['5_plus_5_a_miska_2.jpg', 'Discovery set – päť sprchových kociek a kamenná miska'],
       ['krabicky_bundle_novy_gr.png', 'Päť krabičiek sprchových kociek'],
       ['miska_1_gr.png', 'Kamenná miska na sprchový rituál'],
       ['3.png', 'Päť vôní sprchových kociek'],
