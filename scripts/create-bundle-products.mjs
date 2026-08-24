@@ -63,13 +63,22 @@ const ingredientsBlock = (name, inci) =>
   `<div class="pp-ingredients-block">\n<h4>${name}</h4>\n<p>\n${inci}\n${FOOTNOTE}\n</p>\n</div>`;
 
 /**
- * Ingredient lists copied verbatim from the single-cube products.
+ * Ingredient lists for the five scents.
  *
- * Refresh is missing on purpose: PP-CUBE-REFR-033 has no custom.zlozenie on SK
- * either, and an INCI list is a regulated claim — it gets copied in once the
- * real one exists, never invented here.
+ * Uplift, Breathe, Balance and Calm are copied verbatim from the single-cube
+ * products. Refresh is transcribed from the printed box artwork ("SINGLE BOXY
+ * EN fin.pdf", batch P260516AF), because the Refresh cube carries no
+ * custom.zlozenie on SK — the label is the authoritative source, not the site.
  */
-const ZLOZENIE_4 = '<div class="pp-ingredients-card">' + [
+const INCI = {
+  refresh:
+    'Sodium Bicarbonate (Jedlá sóda), Citric Acid (Kyselina citrónová), Zea Mays Starch (Kukuričný škrob), Aqua (Voda),\n' +
+    'Maranta Arundinacea Root Powder (Arorut), Cymbopogon Flexuosus Oil (Citrónová tráva), Menthol (Mentol),\n' +
+    'Citrus Aurantifolia Oil (Limetkový olej), Mentha Viridis Leaf Oil (Mäta kučeravá), CI 19140, CI 42090,\n' +
+    'Citral*, Limonene*, Geraniol*, Linalool*',
+};
+
+const ZLOZENIE_5 = '<div class="pp-ingredients-card">' + [
   ingredientsBlock('Uplift',
     'Sodium Bicarbonate (Jedlá sóda), Citric Acid (Kyselina citrónová), Zea Mays Starch (Kukuričný škrob), Aqua (Voda),\n' +
     'Citrus Limon Peel Oil (Citrónový olej), Eucalyptus Globulus Leaf Oil (Eukalyptus),\n' +
@@ -91,6 +100,7 @@ const ZLOZENIE_4 = '<div class="pp-ingredients-card">' + [
     'Lavandula Angustifolia Oil (Levanduľový olej), Citrus Nobilis Peel Oil (Mandarínkový olej),\n' +
     'Maranta Arundinacea Root Powder (Arorut),\n' +
     'Limonene*, Linalool*, Linalyl Acetate*, Pinene*, Geraniol*'),
+  ingredientsBlock('Refresh', INCI.refresh),
 ].join('') + '</div>';
 
 /** The explainer graphics every cube product carries, in the usual order. */
@@ -153,7 +163,7 @@ const PRODUCTS = [
       ...SHARED_GRAPHICS,
     ]),
     metafields: [
-      { namespace: 'custom', key: 'zlozenie', type: 'multi_line_text_field', value: ZLOZENIE_4 },
+      { namespace: 'custom', key: 'zlozenie', type: 'multi_line_text_field', value: ZLOZENIE_5 },
       { namespace: 'custom', key: 'benefity', type: 'list.metaobject_reference', value: JSON.stringify(BENEFITY_5) },
       { namespace: 'custom', key: 'navod', type: 'metaobject_reference', value: MO.navodKocky },
       { namespace: 'custom', key: 'faq', type: 'list.metaobject_reference', value: JSON.stringify(FAQ) },
@@ -191,7 +201,7 @@ const PRODUCTS = [
       ...SHARED_GRAPHICS,
     ]),
     metafields: [
-      { namespace: 'custom', key: 'zlozenie', type: 'multi_line_text_field', value: ZLOZENIE_4 },
+      { namespace: 'custom', key: 'zlozenie', type: 'multi_line_text_field', value: ZLOZENIE_5 },
       { namespace: 'custom', key: 'benefity', type: 'list.metaobject_reference', value: JSON.stringify(BENEFITY_5) },
       { namespace: 'custom', key: 'navod', type: 'metaobject_reference', value: MO.navodKocky },
       { namespace: 'custom', key: 'faq', type: 'list.metaobject_reference', value: JSON.stringify(FAQ) },
@@ -230,7 +240,7 @@ const PRODUCTS = [
       ...SHARED_GRAPHICS,
     ]),
     metafields: [
-      { namespace: 'custom', key: 'zlozenie', type: 'multi_line_text_field', value: ZLOZENIE_4 },
+      { namespace: 'custom', key: 'zlozenie', type: 'multi_line_text_field', value: ZLOZENIE_5 },
       { namespace: 'custom', key: 'benefity', type: 'list.metaobject_reference', value: JSON.stringify(BENEFITY_5) },
       { namespace: 'custom', key: 'navod', type: 'metaobject_reference', value: MO.navodKocky },
       { namespace: 'custom', key: 'faq', type: 'list.metaobject_reference', value: JSON.stringify(FAQ) },
@@ -247,6 +257,24 @@ const PRODUCTS = [
  * dashboard before the products go live.
  */
 const START_QUANTITY = 500;
+
+/**
+ * Metafields that belong on products this script did not create. Applied by
+ * --sync-metafields, so the ingredient text has one home rather than being
+ * pasted into an admin and drifting.
+ */
+const EXTRA_METAFIELDS = [
+  {
+    handle: 'refresh-sprchova-aromaticka-kocka',
+    metafields: [{
+      namespace: 'custom',
+      key: 'zlozenie',
+      type: 'multi_line_text_field',
+      // The single cubes carry a plain list, not the multi-scent card.
+      value: `${INCI.refresh}\n* prirodzene sa vyskytujúce v esenciálnych olejoch.`,
+    }],
+  },
+];
 
 // ---- writing --------------------------------------------------------------
 
@@ -280,9 +308,44 @@ async function primaryLocation() {
   return active[0];
 }
 
+const SET_METAFIELDS = `mutation M($metafields: [MetafieldsSetInput!]!) {
+  metafieldsSet(metafields: $metafields) {
+    metafields { key }
+    userErrors { field message }
+  }
+}`;
+
 const args = process.argv.slice(2);
 const apply = args.includes('--apply');
 const only = args.find((a) => a.startsWith('--only='))?.slice('--only='.length);
+
+/**
+ * Re-apply the declared metafields to products that already exist, for when
+ * copy or an ingredient list changes after creation.
+ */
+if (args.includes('--sync-metafields')) {
+  const targets = [
+    ...PRODUCTS.map((p) => ({ handle: p.handle, metafields: p.metafields })),
+    ...EXTRA_METAFIELDS,
+  ];
+  console.log(`store: ${STORE.toUpperCase()}   ${apply ? '*** APPLY ***' : 'dry run'}   sync metafields\n`);
+
+  for (const t of targets) {
+    const product = await existingHandle(t.handle);
+    const keys = t.metafields.map((m) => `${m.namespace}.${m.key}`).join(', ');
+    console.log(`=== ${t.handle}${product ? '' : '  !! neexistuje — preskakujem'}`);
+    console.log(`    ${keys}`);
+    if (!product || !apply) { console.log(); continue; }
+
+    const res = await graphql(STORE, SET_METAFIELDS, {
+      metafields: t.metafields.map((m) => ({ ...m, ownerId: product.id })),
+    });
+    const errs = res.metafieldsSet.userErrors;
+    console.log(errs.length ? `    ✗ ${JSON.stringify(errs)}\n` : `    ✓ ${res.metafieldsSet.metafields.length} zapísaných\n`);
+  }
+  process.exit(0);
+}
+
 const wanted = only ? PRODUCTS.filter((p) => p.sku === only) : PRODUCTS;
 
 if (!wanted.length) {
