@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-30T21:38:09.063Z",
+  "generatedAt": "2026-08-30T22:00:24.336Z",
   "results": [
     {
       "key": "pl",
@@ -11,8 +11,8 @@
       "theme": "PERPERUNA.PL – živá 18.8.",
       "stats": {
         "products": 53,
-        "active": 31,
-        "drafts": 8,
+        "active": 28,
+        "drafts": 3,
         "collections": 8,
         "pages": 9,
         "menus": 5,
@@ -32,7 +32,17 @@
         {
           "sev": "info",
           "area": "catalog",
-          "msg": "8 produktov v DRAFT stave"
+          "msg": "3 produktov v DRAFT stave"
+        },
+        {
+          "sev": "blocker",
+          "area": "catalog",
+          "msg": "1 aktívnych produktov nie je publikovaných v Online Store",
+          "detail": {
+            "priklady": [
+              "kompletna-kolekcja-the-ritual-sweet-dreams-rise-shine"
+            ]
+          }
         },
         {
           "sev": "warn",
@@ -51,17 +61,7 @@
           "detail": {
             "priklady": [
               "kompletna-kolekcja-the-ritual-sweet-dreams-rise-shine",
-              "good-night-kompletny-zestaw-z-kamienna-miska"
-            ]
-          }
-        },
-        {
-          "sev": "warn",
-          "area": "catalog",
-          "msg": "1 aktívnych produktov nemá popis (<50 znakov)",
-          "detail": {
-            "priklady": [
-              "niedoskonale-kostki-pod-prysznic"
+              "kostka-pod-prysznic-love"
             ]
           }
         },

@@ -3,11 +3,13 @@
  * Zosúladí publikačný stav produktov medzi backendmi, keyed by SKU (rovnaká
  * logika párovania ako `catalog-pull.mjs`).
  *
- * Keď pribudne nový produkt na SK a preklad naň nadväzujúca automatizácia
- * založí na inom backende len ako DRAFT bez publikácie do žiadneho kanála,
- * tento skript to dorovná: prevezme `status` zo zdrojového produktu a
- * publikuje cieľový produkt do rovnakých kanálov (Online Store, POS, …),
- * v akých je publikovaný zdrojový — len do tých, ktoré cieľový backend má.
+ * Cieľ je presná zhoda so zdrojom — obojsmerne. Keď pribudne nový produkt na
+ * SK a preklad naň nadväzujúca automatizácia založí na inom backende len ako
+ * DRAFT bez publikácie do žiadneho kanála, skript ho doťahuje na ACTIVE. Rovnako
+ * ale aj naopak: keď je zdrojový produkt zámerne UNLISTED (napr. vypredaný, tak
+ * ho SK schovalo z vyhľadávania), cieľový produkt sa stiahne na rovnaký status
+ * a odpublikuje z kanálov, ktoré zdroj nemá — nie je to len jednosmerné
+ * „doťahovanie nahor".
  *
  * Nerieši obsah ani ceny, len či je produkt vôbec vidieť. Pri viacerých
  * produktoch so zhodnou množinou SKU (napr. plnocenná verzia vs. archivovaná
@@ -39,6 +41,12 @@ const PUBLICATIONS = `{ publications(first: 10) { nodes { id name } } }`;
 
 const PUBLISH = `mutation($id: ID!, $input: [PublicationInput!]!) {
   publishablePublish(id: $id, input: $input) {
+    userErrors { field message }
+  }
+}`;
+
+const UNPUBLISH = `mutation($id: ID!, $input: [PublicationInput!]!) {
+  publishableUnpublish(id: $id, input: $input) {
     userErrors { field message }
   }
 }`;
@@ -98,7 +106,7 @@ for (const [sku, srcP] of sourceProducts) {
   if (!tgtP) continue; // chýbajúci produkt rieši iný nástroj (catalog-pull.mjs zisťuje párovanie)
   if (onlyHandles && !onlyHandles.has(tgtP.handle)) continue;
 
-  const statusMismatch = STATUS_RANK[tgtP.status] > STATUS_RANK[srcP.status];
+  const statusMismatch = tgtP.status !== srcP.status;
   const srcPublishedNames = new Set(
     srcP.resourcePublicationsV2.nodes.filter((n) => n.isPublished).map((n) => n.publication.name),
   );
@@ -106,13 +114,15 @@ for (const [sku, srcP] of sourceProducts) {
     tgtP.resourcePublicationsV2.nodes.filter((n) => n.isPublished).map((n) => n.publication.name),
   );
   const missingChannels = [...srcPublishedNames].filter((name) => pubByName.has(name) && !tgtPublishedNames.has(name));
+  const extraChannels = [...tgtPublishedNames].filter((name) => !srcPublishedNames.has(name));
 
-  if (!statusMismatch && missingChannels.length === 0) continue;
+  if (!statusMismatch && missingChannels.length === 0 && extraChannels.length === 0) continue;
 
   changed++;
   console.log(`[${tgtP.handle}] "${tgtP.title}"`);
   if (statusMismatch) console.log(`  status:  ${tgtP.status} → ${srcP.status}  (zdroj ${srcP.handle})`);
-  if (missingChannels.length) console.log(`  kanály:  chýba ${missingChannels.join(', ')}`);
+  if (missingChannels.length) console.log(`  kanály:  chýba   ${missingChannels.join(', ')}`);
+  if (extraChannels.length) console.log(`  kanály:  naviac  ${extraChannels.join(', ')}`);
 
   if (!applyChanges) continue;
 
@@ -126,6 +136,12 @@ for (const [sku, srcP] of sourceProducts) {
     const r = await graphql(target, PUBLISH, { id: tgtP.id, input });
     const errors = r.publishablePublish.userErrors;
     if (errors.length) throw new Error(`publish zlyhal pre ${tgtP.handle}: ${JSON.stringify(errors)}`);
+  }
+  if (extraChannels.length) {
+    const input = extraChannels.map((name) => ({ publicationId: pubByName.get(name).id }));
+    const r = await graphql(target, UNPUBLISH, { id: tgtP.id, input });
+    const errors = r.publishableUnpublish.userErrors;
+    if (errors.length) throw new Error(`unpublish zlyhal pre ${tgtP.handle}: ${JSON.stringify(errors)}`);
   }
   console.log('  hotovo');
 }
