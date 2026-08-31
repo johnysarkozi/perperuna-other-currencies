@@ -310,7 +310,11 @@
   <h3>Filtre</h3>
   <table>
     <tr><td><strong>len aktívne</strong></td>
-        <td>Zapnuté defaultne. Skryje riadky, ktoré sa nikde nedajú kúpiť — teda všade draft alebo archived. Unlisted sa počíta ako kupiteľné, lebo cez priamy link sa objednať dá.</td></tr>
+        <td>Zapnuté defaultne. Nechá len riadky, kde je aspoň jeden trh zapnutý
+            (zelená bodka) — teda schová poplatky, archív a staré balíčky.
+            Keď zapneš niektorý z filtrov nižšie, tento sa <em>neuplatňuje</em>
+            a zošedne: inak by schoval práve tie riadky, ktoré hľadáš — napr.
+            SKU, ktoré je na jednom trhu potichu unlisted a nikde inde zapnuté.</td></tr>
     <tr><td><strong>len problémy</strong></td>
         <td>Nechá riadky, kde má aspoň jeden obchod niektorý z príznakov vyššie.</td></tr>
     <tr><td><strong>len rozdiely oproti SK</strong></td>
@@ -732,11 +736,18 @@ function render() {
   const onlyProblems = $('onlyProblems').checked;
   const onlyDiff = $('onlyDiff').checked;
 
+  // Hunting for problems beats tidiness: the rows worth finding are often ones
+  // no market has switched on (a SKU left unlisted everywhere), so an explicit
+  // problem filter overrides "len aktívne" instead of narrowing it away.
+  const hunting = onlyProblems || onlyDiff;
+  $('onlyActive').disabled = hunting;
+  $('onlyActive').closest('label').title = hunting
+    ? 'Pri hľadaní problémov sa neuplatňuje — inak by skryl práve tie riadky, ktoré hľadáš.'
+    : '';
+
   const rows = pivot().filter((row) => {
     if (q && !row.sku.toLowerCase().includes(q) && !(row.title ?? '').toLowerCase().includes(q)) return false;
-    // Unlisted counts as on sale here: it is reachable through a direct link,
-    // and treating it as hidden is what kept the unlisted CZ cubes out of sight.
-    if (onlyActive && !STORES.some((s) => sellable(row.stores[s]?.status))) return false;
+    if (onlyActive && !hunting && !STORES.some((s) => row.stores[s]?.status === 'ACTIVE')) return false;
     if (onlyProblems && !STORES.some((s) => cellFlags(row, s).length)) return false;
     if (onlyDiff && !oddStores(row).length) return false;
     return true;
