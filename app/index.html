@@ -147,7 +147,7 @@
     <input type="search" id="q" placeholder="Hľadať SKU alebo názov…">
     <label class="check"><input type="checkbox" id="onlyActive" checked> len aktívne</label>
     <label class="check"><input type="checkbox" id="onlyProblems"> len problémy</label>
-    <label class="check"><input type="checkbox" id="onlyDiff"> len rozdiely v zapnutí</label>
+    <label class="check"><input type="checkbox" id="onlyDiff"> len rozdiely oproti SK</label>
     <span class="grow"></span>
     <span class="meta" id="stats"></span>
     <button id="howHelp" title="Ako to celé funguje">Ako to funguje</button>
@@ -224,10 +224,12 @@
      sú „zapnuté / vypnuté", ale samostatné rozhodnutia o produkte. Preto sa pri
      vypnutí na SK neprepnú ani ich kópie v zahraničí (napr. „-25 %" listingy).</p>
   <p>Sklad ani ceny sa vypnutím nemenia — produkt len zmizne z predaja.</p>
-  <p>Ak je niektorý trh nastavený inak než väčšina ostatných, celý ten stĺpec
-     v riadku sa podfarbí. Filter <strong>len rozdiely v zapnutí</strong> nechá
-     iba také riadky — je to najrýchlejší spôsob, ako nájsť produkt, ktorý sa
-     omylom predáva len na časti trhov.</p>
+  <p>Ak sa niektorý trh <strong>stavom líši od SK</strong>, celý ten stĺpec
+     v riadku sa podfarbí — a porovnáva sa stav proti stavu, nie „predáva sa /
+     nepredáva". Unlisted produkt sa cez priamy link kúpiť dá, takže keď je
+     kocka na SK v predaji a na CZ potichu unlisted, je to rozdiel, ktorý treba
+     vidieť. Filter <strong>len rozdiely oproti SK</strong> nechá iba také
+     riadky.</p>
 
   <h3>Čo znamenajú farby</h3>
   <table>
@@ -237,6 +239,11 @@
         <td>Sklad sa líši od SK. Krátko po predaji je to normálne; ak to tak zostane, zrkadlenie neprebehlo.</td></tr>
     <tr><td><span class="chip warn">chýba XX</span></td>
         <td>SKU v tom obchode vôbec nie je založené.</td></tr>
+    <tr><td><span class="chip warn">2×</span></td>
+        <td>To isté SKU je v tom obchode na viacerých produktoch, ku ktorým sa
+            zákazník dostane (aktívnych alebo unlisted) — napr. bežná verzia
+            a „(-50%)" kópia vedľa seba. Tabuľka ukazuje vždy len jeden z nich,
+            preto to inak nevidno; celý zoznam je v bublinke nad značkou.</td></tr>
     <tr><td><span class="status">draft / archived</span></td>
         <td>Stav produktu, ak nie je ACTIVE. Pod cenou.</td></tr>
   </table>
@@ -244,11 +251,11 @@
   <h3>Filtre</h3>
   <table>
     <tr><td><strong>len aktívne</strong></td>
-        <td>Zapnuté defaultne. Skryje draft, archived a unlisted produkty.</td></tr>
+        <td>Zapnuté defaultne. Skryje riadky, ktoré sa nikde nedajú kúpiť — teda všade draft alebo archived. Unlisted sa počíta ako kupiteľné, lebo cez priamy link sa objednať dá.</td></tr>
     <tr><td><strong>len problémy</strong></td>
         <td>Nechá riadky, kde má aspoň jeden obchod niektorý z príznakov vyššie.</td></tr>
-    <tr><td><strong>len rozdiely v zapnutí</strong></td>
-        <td>Nechá riadky, kde sa aspoň jeden trh predajnosťou líši od ostatných — vrátane SKU, ktoré v jednom obchode chýba.</td></tr>
+    <tr><td><strong>len rozdiely oproti SK</strong></td>
+        <td>Nechá riadky, kde je aspoň jeden trh v inom stave než SK — vrátane unlisted a SKU, ktoré v tom obchode chýba.</td></tr>
   </table>
   <p>Zoradiť sa dá kliknutím na hlavičku ktoréhokoľvek stĺpca, druhý klik
      otočí smer.</p>
@@ -430,7 +437,12 @@ function pivot() {
   const bySku = new Map();
   for (const l of listings) {
     let row = bySku.get(l.sku);
-    if (!row) { row = { sku: l.sku, title: null, stores: {} }; bySku.set(l.sku, row); }
+    if (!row) { row = { sku: l.sku, title: null, stores: {}, all: {} }; bySku.set(l.sku, row); }
+    // Every listing is kept, not just the one shown: a SKU sitting on two live
+    // products in one store is invisible in a one-cell-per-store matrix, and it
+    // is exactly the kind of thing nobody notices until a customer buys the
+    // wrong one.
+    (row.all[l.store] ??= []).push(l);
     const current = row.stores[l.store];
     const better = !current
       || (l.status === 'ACTIVE' && current.status !== 'ACTIVE')
@@ -447,6 +459,12 @@ function pivot() {
   return [...bySku.values()];
 }
 
+/** A customer can reach the product: ACTIVE, or UNLISTED via a direct link. */
+const sellable = (status) => status === 'ACTIVE' || status === 'UNLISTED';
+
+/** Listings of this SKU a customer can actually reach in one store. */
+const reachable = (row, store) => (row.all[store] ?? []).filter((l) => sellable(l.status));
+
 /** Flag a cell when it would surprise someone managing the catalog. */
 function cellFlags(row, store) {
   const cell = row.stores[store];
@@ -460,19 +478,28 @@ function cellFlags(row, store) {
   if (qty !== null && qty < 0) flags.push('negative');
   else if (cell.status === 'ACTIVE' && qty !== null && qty <= 0 && cell.inventory_policy === 'DENY') flags.push('sold-out');
   if (truth && store !== TRUTH && cell.inventory_quantity !== truth.inventory_quantity) flags.push('drift');
+  // The same SKU on two products a customer can buy — a duplicate listing, or
+  // an old one left reachable beside its replacement.
+  if (reachable(row, store).length > 1) flags.push('twin');
+  if (truth && store !== TRUTH && cell.status !== truth.status) flags.push('state');
   return flags;
 }
 
-/** A customer can reach the product: ACTIVE, or UNLISTED via a direct link. */
-const sellable = (status) => status === 'ACTIVE' || status === 'UNLISTED';
-
 /**
- * Which markets are switched differently from the rest of the row.
- * Absent counts as not-sellable, so a SKU that exists in four stores and is
- * missing from the fifth shows up here too — that is exactly the gap worth
- * seeing.
+ * Which markets are in a different state than SK.
+ *
+ * Compared state by state, not just "sells / does not sell": an UNLISTED
+ * product is still reachable through a direct link, so counting it as sold
+ * hid the case where SK has a cube on sale and another market has it quietly
+ * unlisted. Absent counts as its own state, so a SKU missing from one store
+ * shows up here too.
  */
 function oddStores(row) {
+  const truth = row.stores[TRUTH];
+  if (truth) {
+    return STORES.filter((s) => s !== TRUTH && (row.stores[s]?.status ?? 'ABSENT') !== truth.status);
+  }
+  // No SK listing to compare against — fall back to whichever group is smaller.
   const on = STORES.filter((s) => sellable(row.stores[s]?.status));
   const off = STORES.filter((s) => !sellable(row.stores[s]?.status));
   if (!on.length || !off.length) return [];
@@ -548,7 +575,9 @@ function render() {
 
   const rows = pivot().filter((row) => {
     if (q && !row.sku.toLowerCase().includes(q) && !(row.title ?? '').toLowerCase().includes(q)) return false;
-    if (onlyActive && !STORES.some((s) => row.stores[s]?.status === 'ACTIVE')) return false;
+    // Unlisted counts as on sale here: it is reachable through a direct link,
+    // and treating it as hidden is what kept the unlisted CZ cubes out of sight.
+    if (onlyActive && !STORES.some((s) => sellable(row.stores[s]?.status))) return false;
     if (onlyProblems && !STORES.some((s) => cellFlags(row, s).length)) return false;
     if (onlyDiff && !oddStores(row).length) return false;
     return true;
@@ -586,7 +615,17 @@ function render() {
           data-sku="${row.sku}" data-store="${store}" data-status="${cell.status}"
           title="${store.toUpperCase()}: ${STATUS_LABEL[cell.status] ?? cell.status}${hint}"></button>`;
 
-      const price = `<td class="num sep${oddCls}"><div class="cell">${dot}<span>${money(cell.price, cell.currency)}</span></div>${status}</td>`;
+      // A cell shows one listing, so a second reachable one is called out here
+      // — with the whole set in the tooltip, since that is what has to be
+      // untangled in the Shopify admin.
+      const twins = reachable(row, store);
+      const twin = twins.length > 1
+        ? ` <span class="chip warn" title="${twins.length} listingov, ktoré zákazník nájde:&#10;${
+            twins.map((l) => `${l.status.toLowerCase()} · ${money(l.price, l.currency)} · ${l.title}`)
+              .join('&#10;').replace(/"/g, '&quot;')}">${twins.length}×</span>`
+        : '';
+
+      const price = `<td class="num sep${oddCls}"><div class="cell">${dot}<span>${money(cell.price, cell.currency)}</span>${twin}</div>${status}</td>`;
 
       // Stock is edited on SK only; the rest follow from the mirror, so an edit
       // there would just be overwritten.

@@ -87,8 +87,12 @@ Farebne označuje záporný sklad, vypredané ACTIVE položky, odchýlku od SK
 a SKU, ktoré v niektorom obchode chýba.
 
 - **hľadanie** podľa SKU alebo názvu
-- **filter „len aktívne"** (zapnutý defaultne) — skryje DRAFT/ARCHIVED/UNLISTED
+- **filter „len aktívne"** (zapnutý defaultne) — skryje riadky, ktoré sa nikde
+  nedajú kúpiť, teda všade DRAFT/ARCHIVED. UNLISTED sa počíta ako kupiteľné
+  (priamy link funguje), takže sa neskrýva
 - **filter „len problémy"** — nechá len riadky s nejakým príznakom
+- **filter „len rozdiely oproti SK"** — riadky, kde je aspoň jeden trh v inom
+  stave než SK; porovnáva sa stav proti stavu, nie „predáva sa / nepredáva"
 - **zoradenie** kliknutím na hlavičku ktoréhokoľvek stĺpca (druhý klik otočí smer)
 - **úprava SK skladu** priamo v tabuľke, viď nižšie
 - tlačidlo **Ako to funguje** — modál s pravidlami: odkiaľ sa berú sklady,
@@ -235,8 +239,25 @@ ostatných.
   premietne do `catalog_listings` (len do `ACTIVE`/`DRAFT` riadkov), aby bodky
   preskočili bez čakania na sync.
 
-Filter **len rozdiely v zapnutí** nechá v tabuľke iba SKU, kde sa aspoň jeden
-trh predajnosťou líši od ostatných — vrátane tých, čo v jednom obchode chýbajú.
+## Ako sa dajú nájsť tichí zabijaci katalógu
+
+Matica ukazuje **jeden listing na obchod** (preferuje ACTIVE, pri zhode drahší).
+To je čitateľné, ale samo osebe to dvakrát klame — obe diery sú zaplátané:
+
+1. **Skrytý dvojník.** To isté SKU môže v jednom obchode sedieť na viacerých
+   produktoch, ku ktorým sa zákazník dostane (ACTIVE alebo UNLISTED) — napr. na
+   CZ je pri kockách bežná verzia UNLISTED a „(-50%)" kópia ACTIVE, pri
+   `PP-CUBE-REFR-033` sú ACTIVE dokonca obe. V tabuľke bol vidno vždy len jeden
+   z nich. Bunka teraz nesie značku `2×` so zoznamom všetkých takých listingov
+   v bublinke a príznak ide aj do filtra **len problémy**.
+2. **Unlisted ako „predáva sa".** Rozdiely medzi trhmi sa porovnávali cez
+   „predáva sa / nepredáva", kde UNLISTED patrilo k predáva sa. Trh, ktorý mal
+   produkt potichu unlisted, kým na SK bežal normálne, tak nevyzeral ako
+   rozdiel. Teraz sa porovnáva **stav proti stavu SK** a filter sa volá
+   **len rozdiely oproti SK**; chýbajúce SKU je tiež rozdiel.
+
+Zrkadlenie na tieto prípady zámerne nesiaha (UNLISTED je samostatné
+rozhodnutie) — appka ich má nájsť, opravujú sa ručne v Shopify admine.
 
 ## Hmotnosti
 
