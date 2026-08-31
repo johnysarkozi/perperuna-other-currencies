@@ -131,3 +131,28 @@ vyčerpaní renderovacieho.
 
 Keď token s Dev/Full sedadlom nie je po ruke, použi `--source=<dir>` s ručným
 exportom sekcie z Figmy — výsledok je rovnaký.
+
+## Backendy, kde je jazyk primárny (RO, HU)
+
+Rumunčina a maďarčina nie sú locale eurového obchodu, ale samostatné backendy,
+kde je ten jazyk primárny. Metafield `custom.<locale>_images` tam nemá zmysel —
+storefront ukazuje priamo `product.media`, takže sa vymieňajú samotné médiá.
+
+Robí to `scripts/media-from-figma.mjs` v dvoch režimoch:
+
+- **replace** — produkt médiá má a preložené väčšinou sú, vymenia sa len
+  pozície, ktoré zostali slovenské (RO).
+- **build** — poskladá sa celá sada od nuly; obrázky bez textu sa prevezmú
+  zo slovenského obchodu, ostatné z Figmy (HU).
+
+Ktoré pozície sú ešte slovenské, sa zistí hashom: médium sa porovná so
+slovenskými aj s cieľovými framami a rozhodne sa, ku ktorým má bližšie.
+
+Dve veci, na ktoré si dať pozor:
+
+- **Videá sa cez URL kopírovať nedajú.** Musia sa stiahnuť a nahrať ako súbor,
+  a to **pre každý produkt zvlášť** — jeden staged upload sa dá spotrebovať
+  len raz, opakované použitie Shopify odmietne ako `duplicate external_video_id`.
+- **Režim replace nie je idempotentný.** Druhý beh nad tým istým produktom
+  pridá kópie, lebo pôvodné médiá už neexistujú a mazanie zlyhá. Púšťaj ho
+  na produkt len raz.

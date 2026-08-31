@@ -78,7 +78,9 @@ scripts/figma-scan.mjs         read-only strom Figma súboru (názvy a geometria
 scripts/gallery-hash.py        perceptuálne párovanie médium ↔ Figma fram (jediný Python v repe)
 scripts/gallery-plan.mjs       plán galérie pre jazyk → plan/<locale>-figma.json
 scripts/gallery-from-figma.mjs jazykové galérie z Figmy → custom.<locale>_images
-plan/sl-figma.json             plán slovinských galérií (pozícia → Figma fram)
+scripts/media-from-figma.mjs   médiá produktov na RO/HU (tam je jazyk primárny)
+plan/<locale>-figma.json       plány galérií na eurovom backende
+plan/ro-media.json, hu-media.json  plány médií pre RO a HU
 docs/galerie.md                ako fungujú jazykové galérie a odkiaľ sa berú obrázky
 docs/credentials.md            ako sa nastavujú prístupy
 docs/launch-plan.md            plán spustenia RO/PL/HU

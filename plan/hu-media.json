@@ -1,0 +1,1730 @@
+{
+ "store": "hu",
+ "figmaFile": "DY4Bgvk3iz0j0hiOQPYK8f",
+ "products": [
+  {
+   "handle": "zuhanykocka-uplift",
+   "productId": "gid://shopify/Product/15966291689802",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/novy_uplift.jpg?v=1770052247"
+    },
+    {
+     "pos": 2,
+     "figmaNode": "5167:11639",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/UPLIFT/ 17"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/44f75c8806c543248edcb7b266a4f3d6/44f75c8806c543248edcb7b266a4f3d6.HD-1080p-7.2Mbps-64664520.mp4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11707",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/UPLIFT/ 18"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11939",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/UPLIFT/ 19"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    },
+    {
+     "pos": 10,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/vrecko.png?v=1775904102"
+    }
+   ]
+  },
+  {
+   "handle": "zuhanykocka-breathe",
+   "productId": "gid://shopify/Product/15966291820874",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/novy_breathe.jpg?v=1770052262"
+    },
+    {
+     "pos": 2,
+     "figmaNode": "5167:11930",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 18"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/9e5a51a80b974289bd202504a034e5dd/9e5a51a80b974289bd202504a034e5dd.HD-1080p-7.2Mbps-64664535.mp4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11692",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 17"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11947",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 19"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    },
+    {
+     "pos": 10,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/vrecko.png?v=1775904102"
+    }
+   ]
+  },
+  {
+   "handle": "zuhanykocka-balance",
+   "productId": "gid://shopify/Product/15966291951946",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/novy_balance.jpg?v=1770052278"
+    },
+    {
+     "pos": 2,
+     "figmaNode": "5167:11905",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 18"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/694b18741f44443c94b9df1a3498e2fa/694b18741f44443c94b9df1a3498e2fa.HD-1080p-7.2Mbps-64664509.mp4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11647",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 17"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11927",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 19"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    },
+    {
+     "pos": 10,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/vrecko.png?v=1775904102"
+    }
+   ]
+  },
+  {
+   "handle": "zuhanykocka-calm",
+   "productId": "gid://shopify/Product/15966291984714",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/novy_calm.jpg?v=1773066799"
+    },
+    {
+     "pos": 2,
+     "figmaNode": "5167:11918",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 18"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/694b18741f44443c94b9df1a3498e2fa/694b18741f44443c94b9df1a3498e2fa.HD-1080p-7.2Mbps-64664509.mp4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11722",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 17"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11950",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 19"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    },
+    {
+     "pos": 10,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/vrecko.png?v=1775904102"
+    }
+   ]
+  },
+  {
+   "handle": "rise-and-shine-reggeli-ritual",
+   "productId": "gid://shopify/Product/15966292115786",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/rise_and_shine_produkt.jpg?v=1764764021"
+    },
+    {
+     "pos": 2,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/rise_and_shine_aranz.jpg?v=1764764021"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/44f75c8806c543248edcb7b266a4f3d6/44f75c8806c543248edcb7b266a4f3d6.HD-1080p-7.2Mbps-64664520.mp4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11692",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 17"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11930",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 18"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11639",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/UPLIFT/ 17"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    }
+   ]
+  },
+  {
+   "handle": "sweet-dreams-esti-ritual",
+   "productId": "gid://shopify/Product/15966292181322",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/sweet_dreams_aranz.jpg?v=1764082153"
+    },
+    {
+     "pos": 2,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/sweet_dreams_zhora_aranz.jpg?v=1764190775"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/694b18741f44443c94b9df1a3498e2fa/694b18741f44443c94b9df1a3498e2fa.HD-1080p-7.2Mbps-64664509.mp4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11722",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 17"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11918",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 18"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11905",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 18"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    }
+   ]
+  },
+  {
+   "handle": "vaszonzsak-a-ritualehoz",
+   "productId": "gid://shopify/Product/15966292312394",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/finvrecko2.png?v=1764958243"
+    },
+    {
+     "pos": 2,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/finvrecko1.png?v=1776769398"
+    },
+    {
+     "pos": 3,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/vrecko.png?v=1775904102"
+    }
+   ]
+  },
+  {
+   "handle": "kotal-a-ritualehoz",
+   "productId": "gid://shopify/Product/15966292377930",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/miska_1_gr.png?v=1764865750"
+    },
+    {
+     "pos": 2,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/miska_2_gr.png?v=1764865750"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/60c87445e688494f9f65929a31ef9a9b/60c87445e688494f9f65929a31ef9a9b.HD-1080p-7.2Mbps-64451866.mp4"
+    },
+    {
+     "pos": 4,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/miska_3_gr.png?v=1764865750"
+    },
+    {
+     "pos": 5,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/skuska_svetlo_hmla.jpg?v=1764865750"
+    },
+    {
+     "pos": 6,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/cierna_miska_49e5e1f5-6c1e-4440-8ba8-128b3e394ecf.jpg?v=1773908643"
+    },
+    {
+     "pos": 7,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/ruzova_miska_novy_povrch.jpg?v=1773908661"
+    }
+   ]
+  },
+  {
+   "handle": "sweet-dreams-rise-shine-tal-ajandekba",
+   "productId": "gid://shopify/Product/15966292509002",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/produkt_rise_a_dreams_miska.jpg?v=1770050539"
+    },
+    {
+     "pos": 2,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/1_321c15b2-61c8-4b8a-b9f6-d2a56a1b1437.png?v=1770050539"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/fed201a264584f8088c3ba31c7fbf4d7/fed201a264584f8088c3ba31c7fbf4d7.HD-1080p-4.8Mbps-65058438.mp4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11905",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 18"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11918",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 18"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11639",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/UPLIFT/ 17"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11930",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 18"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 12,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/rise_and_shine_aranz.jpg?v=1764764021"
+    },
+    {
+     "pos": 13,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/sweet_dreams_zhora_aranz.jpg?v=1764190775"
+    }
+   ]
+  },
+  {
+   "handle": "the-ritual-teljes-szett-kotallal",
+   "productId": "gid://shopify/Product/15966294212938",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/hero_ritual-2.jpg?v=1775903561"
+    },
+    {
+     "pos": 2,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/druhy_aranz_ritual.jpg?v=1775903561"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/d04a49f26f7f45af9b86722f29adb6d5/d04a49f26f7f45af9b86722f29adb6d5.HD-1080p-7.2Mbps-64664139.mp4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11930",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 18"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11905",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 18"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11918",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 18"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11639",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/UPLIFT/ 17"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11950",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 19"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11722",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 17"
+    },
+    {
+     "pos": 12,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 13,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/8.png?v=1776769398"
+    }
+   ]
+  },
+  {
+   "handle": "love-essential-szett-vaszonzsakkal",
+   "productId": "gid://shopify/Product/15966294311242",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/love.jpg?v=1775903282"
+    },
+    {
+     "pos": 2,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/essential_love_refresh.jpg?v=1786957901"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/d0d18eb1066a4a1186663fdb81714816/d0d18eb1066a4a1186663fdb81714816.HD-1080p-7.2Mbps-64389987.mp4"
+    },
+    {
+     "pos": 4,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/finvrecko1.png?v=1776769398"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11977",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/REFRESH/3"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11639",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/UPLIFT/ 17"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11918",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 18"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11950",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 19"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    },
+    {
+     "pos": 12,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    }
+   ]
+  },
+  {
+   "handle": "good-night-essential-szett-vaszonzsakkal",
+   "productId": "gid://shopify/Product/15966294442314",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/good_night.jpg?v=1775903496"
+    },
+    {
+     "pos": 2,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/essential_night_refresh.jpg?v=1786957902"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/f33568fba9fb4623902c80daef0088b0/f33568fba9fb4623902c80daef0088b0.HD-720p-2.1Mbps-65058477.mp4"
+    },
+    {
+     "pos": 4,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/finvrecko1.png?v=1776769398"
+    },
+    {
+     "pos": 5,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/52_12d55ac8-ab1c-476f-bc05-98dc401ca8b5.png?v=1781459611"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11905",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 18"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11918",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 18"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11950",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 19"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 12,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    }
+   ]
+  },
+  {
+   "handle": "teljes-kollekcio-the-ritual-good-night-love",
+   "productId": "gid://shopify/Product/15966294573386",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/coplete_set.jpg?v=1775903477"
+    },
+    {
+     "pos": 2,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/druhy_aranz_ritual.jpg?v=1775903561"
+    },
+    {
+     "pos": 3,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/essential_night_refresh.jpg?v=1786957902"
+    },
+    {
+     "pos": 4,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/essential_love_refresh.jpg?v=1786957901"
+    },
+    {
+     "pos": 5,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/d04a49f26f7f45af9b86722f29adb6d5/d04a49f26f7f45af9b86722f29adb6d5.HD-1080p-7.2Mbps-64664139.mp4"
+    },
+    {
+     "pos": 6,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/finvrecko1.png?v=1776769398"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11918",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 18"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11639",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/UPLIFT/ 17"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11977",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/REFRESH/3"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11905",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 18"
+    },
+    {
+     "pos": 12,
+     "figmaNode": "5167:11930",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 18"
+    },
+    {
+     "pos": 13,
+     "figmaNode": "5167:11950",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 19"
+    },
+    {
+     "pos": 14,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 15,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 16,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    }
+   ]
+  },
+  {
+   "handle": "the-ritual-essential-szett-vaszonzsakkal",
+   "productId": "gid://shopify/Product/15966294704458",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/ritual.jpg?v=1775903290"
+    },
+    {
+     "pos": 2,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/ritual_essential_otvoreny.jpg?v=1775903291"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/d0d18eb1066a4a1186663fdb81714816/d0d18eb1066a4a1186663fdb81714816.HD-1080p-7.2Mbps-64389987.mp4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 5,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/finvrecko1.png?v=1776769398"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11950",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 19"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11692",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 17"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11639",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/UPLIFT/ 17"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11905",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 18"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11930",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 18"
+    },
+    {
+     "pos": 12,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    },
+    {
+     "pos": 13,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 14,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/vrecko.png?v=1775904102"
+    }
+   ]
+  },
+  {
+   "handle": "furdotea-dream-valley",
+   "productId": "gid://shopify/Product/15966295097674",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/dream_valley_teglik_hero.png?v=1780930629"
+    },
+    {
+     "pos": 2,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/33312abc8d43483fa8cd9c006868e1f5/33312abc8d43483fa8cd9c006868e1f5.SD-480p-1.2Mbps-85611850.mp4"
+    },
+    {
+     "pos": 3,
+     "figmaNode": "5167:11189",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Dream Valley/05"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11143",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11208",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Dream Valley/04"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11125",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Dream Valley/06"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11119",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Vrecko"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11366",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Recenzie"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11240",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Dream Valley/02"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11320",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Benefity"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11267",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Dream Valley/01"
+    }
+   ]
+  },
+  {
+   "handle": "furdotea-secret-garden",
+   "productId": "gid://shopify/Product/15966295195978",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/secret_garden_teglik_hero.png?v=1780930592"
+    },
+    {
+     "pos": 2,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/33312abc8d43483fa8cd9c006868e1f5/33312abc8d43483fa8cd9c006868e1f5.SD-480p-1.2Mbps-85611850.mp4"
+    },
+    {
+     "pos": 3,
+     "figmaNode": "5167:11568",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Secret Garden/04"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11555",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Secret Garden/05"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11143",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11577",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Secret Garden/03"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11119",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Vrecko"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11507",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Zena"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11240",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Dream Valley/02"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11366",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Recenzie"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11591",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Secret Garden/01"
+    },
+    {
+     "pos": 12,
+     "figmaNode": "5167:11320",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Benefity"
+    }
+   ]
+  },
+  {
+   "handle": "furdotea-herbal-spring",
+   "productId": "gid://shopify/Product/15966295294282",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/herbal_spring_teglik_hero.png?v=1780930561"
+    },
+    {
+     "pos": 2,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/33312abc8d43483fa8cd9c006868e1f5/33312abc8d43483fa8cd9c006868e1f5.SD-480p-1.2Mbps-85611850.mp4"
+    },
+    {
+     "pos": 3,
+     "figmaNode": "5167:11485",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Herbal Spring/04"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11107",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Herbal Spring/06"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11143",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11493",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Herbal Spring/03"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11119",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Vrecko"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11507",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Zena"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11240",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Dream Valley/02"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11514",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Herbal Spring/01"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11320",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Benefity"
+    }
+   ]
+  },
+  {
+   "handle": "furdotea-nordic-forest",
+   "productId": "gid://shopify/Product/15966295392586",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/nordic_forest_teglik_hero.png?v=1780930516"
+    },
+    {
+     "pos": 2,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/33312abc8d43483fa8cd9c006868e1f5/33312abc8d43483fa8cd9c006868e1f5.SD-480p-1.2Mbps-85611850.mp4"
+    },
+    {
+     "pos": 3,
+     "figmaNode": "5167:11232",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Nordic Forest/05"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11195",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Nordic Forest/06"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11143",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11308",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Nordic Forest/03"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11119",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Vrecko"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11507",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Zena"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11240",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Dream Valley/02"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11366",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Recenzie"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11445",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Nordic Forest/01"
+    },
+    {
+     "pos": 12,
+     "figmaNode": "5167:11320",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Benefity"
+    }
+   ]
+  },
+  {
+   "handle": "furdotea-mount-chocolate",
+   "productId": "gid://shopify/Product/15966295458122",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/mount_chocolate_teglik_hero.png?v=1780930487"
+    },
+    {
+     "pos": 2,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/33312abc8d43483fa8cd9c006868e1f5/33312abc8d43483fa8cd9c006868e1f5.SD-480p-1.2Mbps-85611850.mp4"
+    },
+    {
+     "pos": 3,
+     "figmaNode": "5167:11224",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Mount Chocolate/06"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11143",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11177",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Mount Chocolate/07"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11631",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Mount Chocolate/01"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11255",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Mount Chocolate/04"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11119",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Vrecko"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11507",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Zena"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11240",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Dream Valley/02"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11405",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Mount Chocolate/02"
+    },
+    {
+     "pos": 12,
+     "figmaNode": "5167:11366",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Recenzie"
+    },
+    {
+     "pos": 13,
+     "figmaNode": "5167:11320",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Benefity"
+    }
+   ]
+  },
+  {
+   "handle": "furdotea-teljes-kollekcio",
+   "productId": "gid://shopify/Product/15966295589194",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/1_70525.png?v=1782141241"
+    },
+    {
+     "pos": 2,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/33312abc8d43483fa8cd9c006868e1f5/33312abc8d43483fa8cd9c006868e1f5.SD-480p-1.2Mbps-85611850.mp4"
+    },
+    {
+     "pos": 3,
+     "figmaNode": "5167:11362",
+     "figmaName": "PG PERPERUNA/KEFA/HU/4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11224",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Mount Chocolate/06"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11568",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Secret Garden/04"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11189",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Dream Valley/05"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11485",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Herbal Spring/04"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11232",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Nordic Forest/05"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11143",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11255",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Mount Chocolate/04"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11119",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Vrecko"
+    },
+    {
+     "pos": 12,
+     "figmaNode": "5167:11507",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Zena"
+    },
+    {
+     "pos": 13,
+     "figmaNode": "5167:11240",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Dream Valley/02"
+    },
+    {
+     "pos": 14,
+     "figmaNode": "5167:11405",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Mount Chocolate/02"
+    },
+    {
+     "pos": 15,
+     "figmaNode": "5167:11366",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Recenzie"
+    },
+    {
+     "pos": 16,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/CAJ_produktova_galeria_Dream-13.png?v=1780491871"
+    }
+   ]
+  },
+  {
+   "handle": "szaraz-kefe",
+   "productId": "gid://shopify/Product/15966295687498",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/zhora1.png?v=1780842345"
+    },
+    {
+     "pos": 2,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/028d76efc3084b698e3760a4a76f4ac6/028d76efc3084b698e3760a4a76f4ac6.SD-480p-1.2Mbps-85913579.mp4"
+    },
+    {
+     "pos": 3,
+     "figmaNode": "5167:11353",
+     "figmaName": "PG PERPERUNA/KEFA/HU/2"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11348",
+     "figmaName": "PG PERPERUNA/KEFA/HU/3"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11357",
+     "figmaName": "PG PERPERUNA/KEFA/HU/4"
+    }
+   ]
+  },
+  {
+   "handle": "zuhanykocka-refresh",
+   "productId": "gid://shopify/Product/15966295785802",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/54.png?v=1781459596"
+    },
+    {
+     "pos": 2,
+     "figmaNode": "5167:11977",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/REFRESH/3"
+    },
+    {
+     "pos": 3,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/ad43a6875af2437caade6ca2058d8473/ad43a6875af2437caade6ca2058d8473.HD-1080p-7.2Mbps-86577062.mp4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11962",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/REFRESH/2"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11982",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/REFRESH/4"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11737",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/BENEFITY"
+    }
+   ]
+  },
+  {
+   "handle": "pohar-es-kanal-a-tearitualehoz",
+   "productId": "gid://shopify/Product/15966295982410",
+   "existingMedia": [],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/Frame_427321420.png?v=1782141683"
+    },
+    {
+     "pos": 2,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/33312abc8d43483fa8cd9c006868e1f5/33312abc8d43483fa8cd9c006868e1f5.SD-480p-1.2Mbps-85611850.mp4"
+    },
+    {
+     "pos": 3,
+     "figmaNode": "5167:11362",
+     "figmaName": "PG PERPERUNA/KEFA/HU/4"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11143",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11255",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Mount Chocolate/04"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11405",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Mount Chocolate/02"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11366",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Recenzie"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11320",
+     "figmaName": "PG PERPERUNA/CAJE/HU/Spolocne/Benefity"
+    },
+    {
+     "pos": 9,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/1_70525.png?v=1782141241"
+    }
+   ]
+  },
+  {
+   "handle": "kedvezmenyes-szett-5-zuhanykocka-kotal",
+   "productId": "gid://shopify/Product/15991934222666",
+   "existingMedia": [
+    "gid://shopify/MediaImage/71535846359370",
+    "gid://shopify/MediaImage/71535846392138",
+    "gid://shopify/MediaImage/71535846424906",
+    "gid://shopify/MediaImage/71535846457674",
+    "gid://shopify/MediaImage/71535846490442",
+    "gid://shopify/MediaImage/71535846523210",
+    "gid://shopify/MediaImage/71535846555978",
+    "gid://shopify/MediaImage/71535846588746",
+    "gid://shopify/MediaImage/71535846621514",
+    "gid://shopify/MediaImage/71535846654282",
+    "gid://shopify/MediaImage/71535846687050"
+   ],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/5_a_miska.jpg?v=1787592607"
+    },
+    {
+     "pos": 2,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/60c87445e688494f9f65929a31ef9a9b/60c87445e688494f9f65929a31ef9a9b.HD-1080p-7.2Mbps-64451866.mp4"
+    },
+    {
+     "pos": 3,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11950",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 19"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11722",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 17"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11918",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 18"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11639",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/UPLIFT/ 17"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11977",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/REFRESH/3"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11905",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 18"
+    },
+    {
+     "pos": 12,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/3_6395b817-9781-415e-99c7-fb4428d2342d.png?v=1787590780"
+    }
+   ]
+  },
+  {
+   "handle": "kedvezmenyes-szett-10-zuhanykocka",
+   "productId": "gid://shopify/Product/15991934320970",
+   "existingMedia": [
+    "gid://shopify/MediaImage/71535847637322",
+    "gid://shopify/MediaImage/71535847670090",
+    "gid://shopify/MediaImage/71535847702858",
+    "gid://shopify/MediaImage/71535847735626",
+    "gid://shopify/MediaImage/71535847768394",
+    "gid://shopify/MediaImage/71535847801162",
+    "gid://shopify/MediaImage/71535847833930",
+    "gid://shopify/MediaImage/71535847866698",
+    "gid://shopify/MediaImage/71535847899466",
+    "gid://shopify/MediaImage/71535847932234",
+    "gid://shopify/MediaImage/71535847965002"
+   ],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/krabicky_bundle_novy_gr_e8382fdc-7737-43c0-8769-57ed15370177.png?v=1787590779"
+    },
+    {
+     "pos": 2,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/9e5a51a80b974289bd202504a034e5dd/9e5a51a80b974289bd202504a034e5dd.HD-1080p-7.2Mbps-64664535.mp4"
+    },
+    {
+     "pos": 3,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11950",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 19"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11722",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 17"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11930",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 18"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11977",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/REFRESH/3"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11905",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 18"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11639",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/UPLIFT/ 17"
+    },
+    {
+     "pos": 12,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/5.png?v=1776769398"
+    }
+   ]
+  },
+  {
+   "handle": "10-tokeletlen-zuhanykocka",
+   "productId": "gid://shopify/Product/15991934353738",
+   "existingMedia": [
+    "gid://shopify/MediaImage/71535848816970",
+    "gid://shopify/MediaImage/71535848849738",
+    "gid://shopify/MediaImage/71535848882506",
+    "gid://shopify/MediaImage/71535848915274",
+    "gid://shopify/MediaImage/71535848948042",
+    "gid://shopify/MediaImage/71535848980810",
+    "gid://shopify/MediaImage/71535849013578",
+    "gid://shopify/MediaImage/71535849046346",
+    "gid://shopify/MediaImage/71535849079114",
+    "gid://shopify/MediaImage/71535849111882",
+    "gid://shopify/MediaImage/71535849144650"
+   ],
+   "items": [
+    {
+     "pos": 1,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/kocky_prasknute_2_3967695f-c05c-4852-9333-4011c2a735b0.png?v=1787590784"
+    },
+    {
+     "pos": 2,
+     "type": "VIDEO",
+     "note": "bez textu",
+     "videoUrl": "https://cdn.shopify.com/videos/c/vp/772789b703cb404d8b40c16a01860f75/772789b703cb404d8b40c16a01860f75.HD-1080p-7.2Mbps-64390107.mp4"
+    },
+    {
+     "pos": 3,
+     "figmaNode": "5167:11950",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 19"
+    },
+    {
+     "pos": 4,
+     "figmaNode": "5167:11868",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 5,
+     "figmaNode": "5167:11824",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/RECENZIE"
+    },
+    {
+     "pos": 6,
+     "figmaNode": "5167:11803",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 7,
+     "figmaNode": "5167:11722",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 17"
+    },
+    {
+     "pos": 8,
+     "figmaNode": "5167:11977",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/REFRESH/3"
+    },
+    {
+     "pos": 9,
+     "figmaNode": "5167:11930",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BREATHE/ 18"
+    },
+    {
+     "pos": 10,
+     "figmaNode": "5167:11905",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/BALANCE/ 18"
+    },
+    {
+     "pos": 11,
+     "figmaNode": "5167:11918",
+     "figmaName": "PG PERPERUNA/KOCKY/HU/CALM/ 18"
+    },
+    {
+     "pos": 12,
+     "type": "IMAGE",
+     "note": "bez textu",
+     "sourceUrl": "https://cdn.shopify.com/s/files/1/0914/4500/2567/files/6.png?v=1776769398"
+    }
+   ]
+  }
+ ]
+}

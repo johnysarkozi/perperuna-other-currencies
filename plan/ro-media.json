@@ -1,0 +1,556 @@
+{
+ "store": "ro",
+ "figmaFile": "DY4Bgvk3iz0j0hiOQPYK8f",
+ "products": [
+  {
+   "handle": "rise-and-shine-ritual-de-dimineata",
+   "replace": [
+    {
+     "pos": 4,
+     "mediaId": "gid://shopify/MediaImage/62777972851016",
+     "figmaNode": "5167:13599",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/SPOLOCNE/BENEFITY",
+     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+    }
+   ]
+  },
+  {
+   "handle": "ceai-de-baie-dream-valley",
+   "replace": [
+    {
+     "pos": 2,
+     "mediaId": "gid://shopify/MediaImage/62778042646856",
+     "figmaNode": "5167:13051",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Dream Valley/05",
+     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/05"
+    },
+    {
+     "pos": 3,
+     "mediaId": "gid://shopify/MediaImage/62778042679624",
+     "figmaNode": "5167:13005",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Ako to funguje",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 4,
+     "mediaId": "gid://shopify/MediaImage/62778042712392",
+     "figmaNode": "5167:13070",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Dream Valley/04",
+     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/04"
+    },
+    {
+     "pos": 5,
+     "mediaId": "gid://shopify/MediaImage/62778042745160",
+     "figmaNode": "5167:12987",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Dream Valley/06",
+     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/06"
+    },
+    {
+     "pos": 6,
+     "mediaId": "gid://shopify/MediaImage/62778042777928",
+     "figmaNode": "5167:12981",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Vrecko",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+    },
+    {
+     "pos": 8,
+     "mediaId": "gid://shopify/MediaImage/62778042843464",
+     "figmaNode": "5167:13102",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Dream Valley/02",
+     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/02"
+    },
+    {
+     "pos": 9,
+     "mediaId": "gid://shopify/MediaImage/62778042876232",
+     "figmaNode": "5167:13182",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Benefity",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+    },
+    {
+     "pos": 10,
+     "mediaId": "gid://shopify/MediaImage/62778042909000",
+     "figmaNode": "5167:13129",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Dream Valley/01",
+     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/01"
+    }
+   ]
+  },
+  {
+   "handle": "ceai-de-baie-secret-garden",
+   "replace": [
+    {
+     "pos": 2,
+     "mediaId": "gid://shopify/MediaImage/62778042974536",
+     "figmaNode": "5167:13430",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Secret Garden/04",
+     "from": "PG PERPERUNA/CAJE/SK/Secret Garden/04"
+    },
+    {
+     "pos": 3,
+     "mediaId": "gid://shopify/MediaImage/62778043007304",
+     "figmaNode": "5167:13417",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Secret Garden/05",
+     "from": "PG PERPERUNA/CAJE/SK/Secret Garden/05"
+    },
+    {
+     "pos": 4,
+     "mediaId": "gid://shopify/MediaImage/62778043040072",
+     "figmaNode": "5167:13005",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Ako to funguje",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 5,
+     "mediaId": "gid://shopify/MediaImage/62778043072840",
+     "figmaNode": "5167:13439",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Secret Garden/03",
+     "from": "PG PERPERUNA/CAJE/SK/Secret Garden/03"
+    },
+    {
+     "pos": 6,
+     "mediaId": "gid://shopify/MediaImage/62778043105608",
+     "figmaNode": "5167:12981",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Vrecko",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+    },
+    {
+     "pos": 7,
+     "mediaId": "gid://shopify/MediaImage/62778043138376",
+     "figmaNode": "5167:13369",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Zena",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Zena"
+    },
+    {
+     "pos": 8,
+     "mediaId": "gid://shopify/MediaImage/62778043171144",
+     "figmaNode": "5167:13102",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Dream Valley/02",
+     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/02"
+    },
+    {
+     "pos": 10,
+     "mediaId": "gid://shopify/MediaImage/62778043236680",
+     "figmaNode": "5167:13453",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Secret Garden/01",
+     "from": "PG PERPERUNA/CAJE/SK/Secret Garden/01"
+    },
+    {
+     "pos": 11,
+     "mediaId": "gid://shopify/MediaImage/62778043269448",
+     "figmaNode": "5167:13182",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Benefity",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+    }
+   ]
+  },
+  {
+   "handle": "ceai-de-baie-herbal-spring",
+   "replace": [
+    {
+     "pos": 2,
+     "mediaId": "gid://shopify/MediaImage/62778043334984",
+     "figmaNode": "5167:13347",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Herbal Spring/04",
+     "from": "PG PERPERUNA/CAJE/SK/Herbal Spring/04"
+    },
+    {
+     "pos": 3,
+     "mediaId": "gid://shopify/MediaImage/62778043367752",
+     "figmaNode": "5167:12969",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Herbal Spring/06",
+     "from": "PG PERPERUNA/CAJE/SK/Herbal Spring/06"
+    },
+    {
+     "pos": 4,
+     "mediaId": "gid://shopify/MediaImage/62778043400520",
+     "figmaNode": "5167:13005",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Ako to funguje",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 5,
+     "mediaId": "gid://shopify/MediaImage/62778043433288",
+     "figmaNode": "5167:13355",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Herbal Spring/03",
+     "from": "PG PERPERUNA/CAJE/SK/Herbal Spring/03"
+    },
+    {
+     "pos": 6,
+     "mediaId": "gid://shopify/MediaImage/62778043466056",
+     "figmaNode": "5167:12981",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Vrecko",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+    },
+    {
+     "pos": 7,
+     "mediaId": "gid://shopify/MediaImage/62778043498824",
+     "figmaNode": "5167:13369",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Zena",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Zena"
+    },
+    {
+     "pos": 8,
+     "mediaId": "gid://shopify/MediaImage/62778043531592",
+     "figmaNode": "5167:13102",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Dream Valley/02",
+     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/02"
+    },
+    {
+     "pos": 9,
+     "mediaId": "gid://shopify/MediaImage/62778043564360",
+     "figmaNode": "5167:13376",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Herbal Spring/01",
+     "from": "PG PERPERUNA/CAJE/SK/Herbal Spring/01"
+    },
+    {
+     "pos": 10,
+     "mediaId": "gid://shopify/MediaImage/62778043597128",
+     "figmaNode": "5167:13182",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Benefity",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+    }
+   ]
+  },
+  {
+   "handle": "ceai-de-baie-nordic-forest",
+   "replace": [
+    {
+     "pos": 3,
+     "mediaId": "gid://shopify/MediaImage/62778043695432",
+     "figmaNode": "5167:13057",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Nordic Forest/06",
+     "from": "PG PERPERUNA/CAJE/SK/Nordic Forest/06"
+    },
+    {
+     "pos": 4,
+     "mediaId": "gid://shopify/MediaImage/62778043728200",
+     "figmaNode": "5167:13005",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Ako to funguje",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 5,
+     "mediaId": "gid://shopify/MediaImage/62778043760968",
+     "figmaNode": "5167:13355",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Herbal Spring/03",
+     "from": "PG PERPERUNA/CAJE/SK/Herbal Spring/03"
+    },
+    {
+     "pos": 6,
+     "mediaId": "gid://shopify/MediaImage/62778043793736",
+     "figmaNode": "5167:12981",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Vrecko",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+    },
+    {
+     "pos": 7,
+     "mediaId": "gid://shopify/MediaImage/62778043826504",
+     "figmaNode": "5167:13369",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Zena",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Zena"
+    },
+    {
+     "pos": 8,
+     "mediaId": "gid://shopify/MediaImage/62778043859272",
+     "figmaNode": "5167:13102",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Dream Valley/02",
+     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/02"
+    },
+    {
+     "pos": 10,
+     "mediaId": "gid://shopify/MediaImage/62778043924808",
+     "figmaNode": "5167:13307",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Nordic Forest/01",
+     "from": "PG PERPERUNA/CAJE/SK/Nordic Forest/01"
+    },
+    {
+     "pos": 11,
+     "mediaId": "gid://shopify/MediaImage/62778043957576",
+     "figmaNode": "5167:13182",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Benefity",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+    }
+   ]
+  },
+  {
+   "handle": "ceai-de-baie-mount-chocolate",
+   "replace": [
+    {
+     "pos": 2,
+     "mediaId": "gid://shopify/MediaImage/62778044023112",
+     "figmaNode": "5167:13086",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Mount Chocolate/06",
+     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/06"
+    },
+    {
+     "pos": 3,
+     "mediaId": "gid://shopify/MediaImage/62778044055880",
+     "figmaNode": "5167:13005",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Ako to funguje",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 5,
+     "mediaId": "gid://shopify/MediaImage/62778044121416",
+     "figmaNode": "5167:13493",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Mount Chocolate/01",
+     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/01"
+    },
+    {
+     "pos": 7,
+     "mediaId": "gid://shopify/MediaImage/62778044186952",
+     "figmaNode": "5167:12981",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Vrecko",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+    },
+    {
+     "pos": 8,
+     "mediaId": "gid://shopify/MediaImage/62778044219720",
+     "figmaNode": "5167:13369",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Zena",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Zena"
+    },
+    {
+     "pos": 9,
+     "mediaId": "gid://shopify/MediaImage/62778044252488",
+     "figmaNode": "5167:13102",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Dream Valley/02",
+     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/02"
+    },
+    {
+     "pos": 10,
+     "mediaId": "gid://shopify/MediaImage/62778044285256",
+     "figmaNode": "5167:13267",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Mount Chocolate/02",
+     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/02"
+    },
+    {
+     "pos": 12,
+     "mediaId": "gid://shopify/MediaImage/62778044350792",
+     "figmaNode": "5167:13182",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Benefity",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+    }
+   ]
+  },
+  {
+   "handle": "colectia-completa-ceaiuri-de-baie",
+   "replace": [
+    {
+     "pos": 3,
+     "mediaId": "gid://shopify/MediaImage/62778048577864",
+     "figmaNode": "5167:13086",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Mount Chocolate/06",
+     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/06"
+    },
+    {
+     "pos": 4,
+     "mediaId": "gid://shopify/MediaImage/62778048610632",
+     "figmaNode": "5167:13430",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Secret Garden/04",
+     "from": "PG PERPERUNA/CAJE/SK/Secret Garden/04"
+    },
+    {
+     "pos": 5,
+     "mediaId": "gid://shopify/MediaImage/62778048643400",
+     "figmaNode": "5167:13051",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Dream Valley/05",
+     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/05"
+    },
+    {
+     "pos": 6,
+     "mediaId": "gid://shopify/MediaImage/62778048676168",
+     "figmaNode": "5167:13347",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Herbal Spring/04",
+     "from": "PG PERPERUNA/CAJE/SK/Herbal Spring/04"
+    },
+    {
+     "pos": 8,
+     "mediaId": "gid://shopify/MediaImage/62778048741704",
+     "figmaNode": "5167:13005",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Ako to funguje",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 10,
+     "mediaId": "gid://shopify/MediaImage/62778048807240",
+     "figmaNode": "5167:12981",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Vrecko",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+    },
+    {
+     "pos": 11,
+     "mediaId": "gid://shopify/MediaImage/62778048840008",
+     "figmaNode": "5167:13369",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Zena",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Zena"
+    },
+    {
+     "pos": 12,
+     "mediaId": "gid://shopify/MediaImage/62778048872776",
+     "figmaNode": "5167:13102",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Dream Valley/02",
+     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/02"
+    },
+    {
+     "pos": 13,
+     "mediaId": "gid://shopify/MediaImage/62778048905544",
+     "figmaNode": "5167:13267",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Mount Chocolate/02",
+     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/02"
+    },
+    {
+     "pos": 15,
+     "mediaId": "gid://shopify/MediaImage/62778048971080",
+     "figmaNode": "5167:13182",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Benefity",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+    }
+   ]
+  },
+  {
+   "handle": "perie-pentru-periaj-uscat",
+   "replace": [
+    {
+     "pos": 3,
+     "mediaId": "gid://shopify/MediaImage/62778049069384",
+     "figmaNode": "5167:13210",
+     "figmaName": "PG PERPERUNA/KEFA/RO/3",
+     "from": "PG PERPERUNA/KEFA/SK/3"
+    },
+    {
+     "pos": 4,
+     "mediaId": "gid://shopify/MediaImage/62778049102152",
+     "figmaNode": "5167:13219",
+     "figmaName": "PG PERPERUNA/KEFA/RO/4",
+     "from": "PG PERPERUNA/KEFA/SK/4"
+    }
+   ]
+  },
+  {
+   "handle": "cana-si-lingurita-pentru-ritualul-ceaiului",
+   "replace": [
+    {
+     "pos": 3,
+     "mediaId": "gid://shopify/MediaImage/62778049724744",
+     "figmaNode": "5167:13005",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Ako to funguje",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+    },
+    {
+     "pos": 5,
+     "mediaId": "gid://shopify/MediaImage/62778049790280",
+     "figmaNode": "5167:13267",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Mount Chocolate/02",
+     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/02"
+    },
+    {
+     "pos": 7,
+     "mediaId": "gid://shopify/MediaImage/62778049855816",
+     "figmaNode": "5167:13182",
+     "figmaName": "PG PERPERUNA/CAJE/RO/Spolocne/Benefity",
+     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+    }
+   ]
+  },
+  {
+   "handle": "set-avantajos-5-cuburi-bol-din-piatra",
+   "replace": [
+    {
+     "pos": 2,
+     "mediaId": "gid://shopify/MediaImage/62982682345800",
+     "figmaNode": "5167:13730",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/SPOLOCNE/AKO FUNGUJE",
+     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 5,
+     "mediaId": "gid://shopify/MediaImage/62982682444104",
+     "figmaNode": "5167:13665",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/SPOLOCNE/MUZ",
+     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 7,
+     "mediaId": "gid://shopify/MediaImage/62982682509640",
+     "figmaNode": "5167:13780",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/CALM/ 26",
+     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+    },
+    {
+     "pos": 11,
+     "mediaId": "gid://shopify/MediaImage/62982682640712",
+     "figmaNode": "5167:13792",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/BREATHE/ 26",
+     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+    }
+   ]
+  },
+  {
+   "handle": "set-avantajos-10-cuburi-pentru-dus",
+   "replace": [
+    {
+     "pos": 2,
+     "mediaId": "gid://shopify/MediaImage/62982683066696",
+     "figmaNode": "5167:13730",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/SPOLOCNE/AKO FUNGUJE",
+     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 5,
+     "mediaId": "gid://shopify/MediaImage/62982683165000",
+     "figmaNode": "5167:13665",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/SPOLOCNE/MUZ",
+     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 7,
+     "mediaId": "gid://shopify/MediaImage/62982683230536",
+     "figmaNode": "5167:13792",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/BREATHE/ 26",
+     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+    },
+    {
+     "pos": 11,
+     "mediaId": "gid://shopify/MediaImage/62982683361608",
+     "figmaNode": "5167:13780",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/CALM/ 26",
+     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+    }
+   ]
+  },
+  {
+   "handle": "10-cuburi-pentru-dus-imperfecte",
+   "replace": [
+    {
+     "pos": 3,
+     "mediaId": "gid://shopify/MediaImage/62982684442952",
+     "figmaNode": "5167:13730",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/SPOLOCNE/AKO FUNGUJE",
+     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+    },
+    {
+     "pos": 5,
+     "mediaId": "gid://shopify/MediaImage/62982684508488",
+     "figmaNode": "5167:13665",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/SPOLOCNE/MUZ",
+     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+    },
+    {
+     "pos": 8,
+     "mediaId": "gid://shopify/MediaImage/62982684606792",
+     "figmaNode": "5167:13792",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/BREATHE/ 26",
+     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+    },
+    {
+     "pos": 10,
+     "mediaId": "gid://shopify/MediaImage/62982684672328",
+     "figmaNode": "5167:13780",
+     "figmaName": "PG PERPERUNA/KOCKY/RO/CALM/ 26",
+     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+    }
+   ]
+  }
+ ]
+}
