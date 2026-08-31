@@ -22,6 +22,18 @@ Ak metafield existuje a nie je prázdny, galéria sa iteruje **priamo z neho**
 
 Locale kódy sú ISO: slovinčina je `sl` (nie `si`), chorvátčina `hr` (nie `cr`).
 
+Eurový backend má locale `sk` (primárny), `bg`, `de`, `en`, `es`, `fr`, `hr`,
+`it`, `nl`, `sl`. Iba pre ne má metafieldová galéria zmysel.
+
+**RO a HU sem nepatria** — sú to samostatné obchody s vlastnou menou, kde je
+rumunčina a maďarčina primárnym jazykom. Tam storefront ukazuje priamo médiá
+produktu, takže preklad znamená vymeniť médiá, nie pridať metafield. Figma
+sekcie `KOCKY RUMUNSKO/HU` a `CAJ RUMUNSKO/HU` sú pripravené, ale plán z nich
+sa na eurový backend nesmie použiť.
+
+**Holandčina nemá vo Figme sekciu** — `nl` je publikovaný locale bez vlastných
+galérií, takže na ňom vidno slovenské obrázky.
+
 ## Odkiaľ sa berú obrázky
 
 Zdrojom je Figma, súbor `perperuna`, plátno *Produktova galeria jazykove

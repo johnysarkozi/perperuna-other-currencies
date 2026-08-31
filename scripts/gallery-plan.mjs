@@ -71,8 +71,15 @@ for (const p of prods) {
     const pos = i + 1, h = M[`${p.handle}#${pos}`];
     if (!h || !h.hasText || h.type !== 'IMAGE') { keep++; return; }
     if (h.dopDist <= 12) { keep++; return; }                       // univerzálna fotka
+    // Opravená verzia "Premeň sprchovú rutinu" je len v sk/de/pl/bg. Keď ju
+    // nemáme, použije sa bežná verzia tej istej kocky — rovnako ako pri
+    // recenziách. Vynechať by znamenalo dieru v galérii.
     const already = reuse.get(m.id);
-    if (h.oprDist <= 14 && !already) { skip.push(pos); waiting.push(`${p.handle}#${pos}`); return; }
+    if (h.oprDist <= 14 && already) {
+      positions[pos] = { fileId: already, from: 'existujúci preklad' };
+      reused.push(`${p.handle}#${pos}`); return;
+    }
+    if (h.oprDist <= 14) waiting.push(`${p.handle}#${pos}`);
 
     // slovenská strana určuje, čo stránka ukazuje; nemecká pomôže len tam,
     // kde slovenské médium vo Figme dobrý náprotivok nemá (starší export)

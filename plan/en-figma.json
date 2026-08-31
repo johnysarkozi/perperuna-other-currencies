@@ -1,0 +1,1631 @@
+{
+ "locale": "en",
+ "figmaFile": "DY4Bgvk3iz0j0hiOQPYK8f",
+ "products": [
+  {
+   "handle": "sprchova-aromaticka-kocka-uplift",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:9777",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 9",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9845",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 10",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:10077",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 11",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "sprchova-aromaticka-kocka-breathe",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:10068",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 10",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9830",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 9",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10085",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 11",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "sprchova-aromaticka-kocka-balance",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9785",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 9",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10065",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 11",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "sprchova-aromaticka-kocka-calm",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9860",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 9",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "set-sprchoveho-ritualu-4-ks-rise-shine",
+   "positions": {
+    "4": {
+     "figmaNode": "5167:9830",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 9",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10068",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 10",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9777",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 9",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "bežná recenzia"
+    },
+    "10": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "set-sprchoveho-ritualu-4-ks-sweet-dreams",
+   "positions": {
+    "4": {
+     "figmaNode": "5167:9860",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 9",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "bavlnene-vrecusko-na-sprchovy-ritual",
+   "positions": {},
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "kamenna-miska-na-sprchovy-ritual",
+   "positions": {},
+   "skip": [],
+   "keep": 7
+  },
+  {
+   "handle": "sweet-dreams-rise-shine-miska-zdarma",
+   "positions": {
+    "4": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9777",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 9",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:10068",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 10",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 5
+  },
+  {
+   "handle": "uplift-sprchova-aromaticka-kocka-vrecko",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:9777",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 9",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9845",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 10",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10077",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 11",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "breathe-sprchova-aromaticka-kocka-bavlnene-vrecko",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:10068",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 10",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9830",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 9",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10085",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 11",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "balance-sprchova-aromaticka-kocka-bavlnene-vrecko",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9785",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 9",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10065",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 11",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "calm-sprchova-aromaticka-kocka-bavlnene-vrecko",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9860",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 9",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "nedokonale-kocky",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:9777",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 9",
+     "from": "sk"
+    },
+    "3": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:10068",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 10",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10051",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/LOVE/3",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:10115",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/3",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "12": {
+     "figmaNode": "5167:9860",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 9",
+     "from": "sk"
+    },
+    "13": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "14": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "15": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "love-sprchova-aromaticka-kocka",
+   "positions": {
+    "1": {
+     "figmaNode": "5167:10094",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/LOVE/1",
+     "from": "sk"
+    },
+    "2": {
+     "figmaNode": "5167:10051",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/LOVE/3",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9815",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/LOVE/2",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10080",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/LOVE/4",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 1
+  },
+  {
+   "handle": "nedokonala-love-sprchova-aromaticka-kocka-1",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:10051",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/LOVE/3",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9815",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/LOVE/2",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10080",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/LOVE/4",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 2
+  },
+  {
+   "handle": "love-ritual",
+   "positions": {
+    "4": {
+     "figmaNode": "5167:10051",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/LOVE/3",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:10080",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/LOVE/4",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "good-night-kompletny-set-s-kamennou-miskou-1",
+   "positions": {
+    "5": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10051",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/LOVE/3",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    },
+    "12": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 4
+  },
+  {
+   "handle": "the-ritual-kompletny-set-s-kamennou-miskou",
+   "positions": {
+    "4": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10068",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 10",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9777",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 9",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9860",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 9",
+     "from": "sk"
+    },
+    "12": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 4
+  },
+  {
+   "handle": "love-ritual-essential-set-s-bavlnenym-vreckom",
+   "positions": {
+    "5": {
+     "figmaNode": "5167:10115",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/3",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9777",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 9",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    },
+    "12": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 4
+  },
+  {
+   "handle": "good-night-ritual-essential-set-s-bavlnenym-vreckom",
+   "positions": {
+    "6": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "12": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 5
+  },
+  {
+   "handle": "kompletna-kolekcia-the-ritual-good-night-a-love",
+   "positions": {
+    "7": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9777",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 9",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:10115",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/3",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "12": {
+     "figmaNode": "5167:10068",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 10",
+     "from": "sk"
+    },
+    "13": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "14": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "15": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "16": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 6
+  },
+  {
+   "handle": "the-ritual-essential-set-s-bavlnenym-vreckom-1",
+   "positions": {
+    "4": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9830",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 9",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9777",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 9",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:10068",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 10",
+     "from": "sk"
+    },
+    "12": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    },
+    "13": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 5
+  },
+  {
+   "handle": "dream-valley-aromaticky-caj-do-kupela",
+   "positions": {
+    "3": {
+     "figmaNode": "5167:9327",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Dream Valley/05",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9281",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Ako to funguje",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9346",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Dream Valley/04",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9263",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Dream Valley/06",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9257",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Vrecko",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9504",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Recenzie",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9378",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Dream Valley/02",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9458",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Benefity",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9405",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Dream Valley/01",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 2
+  },
+  {
+   "handle": "secret-garden-aromaticky-caj-do-kupela",
+   "positions": {
+    "3": {
+     "figmaNode": "5167:9706",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Secret Garden/04",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9693",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Secret Garden/05",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9281",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Ako to funguje",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9715",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Secret Garden/03",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9257",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Vrecko",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9645",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Zena",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9378",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Dream Valley/02",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9504",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Recenzie",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9729",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Secret Garden/01",
+     "from": "sk"
+    },
+    "12": {
+     "figmaNode": "5167:9458",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Benefity",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 2
+  },
+  {
+   "handle": "herbal-spring-aromaticky-caj-do-kupela",
+   "positions": {
+    "3": {
+     "figmaNode": "5167:9623",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Herbal Spring/04",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9245",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Herbal Spring/06",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9281",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Ako to funguje",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9631",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Herbal Spring/03",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9257",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Vrecko",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9645",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Zena",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9378",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Dream Valley/02",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9652",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Herbal Spring/01",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9458",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Benefity",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 2
+  },
+  {
+   "handle": "nordic-forest-aromaticky-caj-do-kupela",
+   "positions": {
+    "3": {
+     "figmaNode": "5167:9370",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Nordic Forest/05",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9333",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Nordic Forest/06",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9281",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Ako to funguje",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9446",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Nordic Forest/03",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9257",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Vrecko",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9645",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Zena",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9378",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Dream Valley/02",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9504",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Recenzie",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9583",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Nordic Forest/01",
+     "from": "sk"
+    },
+    "12": {
+     "figmaNode": "5167:9458",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Benefity",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 2
+  },
+  {
+   "handle": "mount-chocolate-aromaticky-caj-do-kupela",
+   "positions": {
+    "3": {
+     "figmaNode": "5167:9362",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Mount Chocolate/06",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9281",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Ako to funguje",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9315",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Mount Chocolate/07",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9769",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Mount Chocolate/01",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9393",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Mount Chocolate/04",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9257",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Vrecko",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9645",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Zena",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9378",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Dream Valley/02",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9543",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Mount Chocolate/02",
+     "from": "sk"
+    },
+    "12": {
+     "figmaNode": "5167:9504",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Recenzie",
+     "from": "sk"
+    },
+    "13": {
+     "figmaNode": "5167:9458",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Benefity",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 2
+  },
+  {
+   "handle": "kompletna-kolekcia-aromaticke-caje-do-kupela-5-ks",
+   "positions": {
+    "3": {
+     "figmaNode": "5167:9500",
+     "figmaName": "PG PERPERUNA/KEFA/EN/4",
+     "from": "de"
+    },
+    "4": {
+     "figmaNode": "5167:9362",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Mount Chocolate/06",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9706",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Secret Garden/04",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9327",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Dream Valley/05",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9623",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Herbal Spring/04",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9370",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Nordic Forest/05",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9281",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Ako to funguje",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:9393",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Mount Chocolate/04",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9257",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Vrecko",
+     "from": "sk"
+    },
+    "12": {
+     "figmaNode": "5167:9645",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Zena",
+     "from": "sk"
+    },
+    "13": {
+     "figmaNode": "5167:9378",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Dream Valley/02",
+     "from": "sk"
+    },
+    "14": {
+     "figmaNode": "5167:9543",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Mount Chocolate/02",
+     "from": "sk"
+    },
+    "15": {
+     "figmaNode": "5167:9504",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Recenzie",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "kefa-na-suche-kefovanie",
+   "positions": {
+    "3": {
+     "figmaNode": "5167:9491",
+     "figmaName": "PG PERPERUNA/KEFA/EN/2",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:9486",
+     "figmaName": "PG PERPERUNA/KEFA/EN/3",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9495",
+     "figmaName": "PG PERPERUNA/KEFA/EN/4",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 2
+  },
+  {
+   "handle": "refresh-sprchova-aromaticka-kocka",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:10115",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/3",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:10100",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/2",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10120",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/4",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9875",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/BENEFITY",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 2
+  },
+  {
+   "handle": "nedokonala-refresh-sprchova-aromaticka-kocka-copy",
+   "positions": {
+    "2": {
+     "figmaNode": "5167:10115",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/3",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:10100",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/2",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:10120",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/4",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "poharik-a-lyzicka-na-cajovy-ritual",
+   "positions": {
+    "3": {
+     "figmaNode": "5167:9500",
+     "figmaName": "PG PERPERUNA/KEFA/EN/4",
+     "from": "de"
+    },
+    "4": {
+     "figmaNode": "5167:9281",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Ako to funguje",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9393",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Mount Chocolate/04",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9543",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Mount Chocolate/02",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9504",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Recenzie",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9458",
+     "figmaName": "PG PERPERUNA/CAJE/EN/Spolocne/Benefity",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "discovery-set-5-kociek-a-kamenna-miska",
+   "positions": {
+    "3": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9860",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 9",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:9777",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 9",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:10115",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/3",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "10-sprchovych-kociek-2x-kazda-vona",
+   "positions": {
+    "3": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9860",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 9",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10068",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 10",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:10115",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/3",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:9777",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/UPLIFT/ 9",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  },
+  {
+   "handle": "10-nedokonalych-sprchovych-kociek",
+   "positions": {
+    "3": {
+     "figmaNode": "5167:10088",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 11",
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:10006",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/AKO FUNGUJE",
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:9962",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/RECENZIE",
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:9941",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/SPOLOCNE/MUZ",
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:9860",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 9",
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:10115",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/REFRESH/3",
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:10068",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BREATHE/ 10",
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:10043",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/BALANCE/ 10",
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:10056",
+     "figmaName": "PG PERPERUNA/KOCKY/EN/CALM/ 10",
+     "from": "sk"
+    }
+   },
+   "skip": [],
+   "keep": 3
+  }
+ ]
+}
