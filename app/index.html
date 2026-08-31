@@ -71,6 +71,10 @@
   .stock.bad { color: var(--bad); font-weight: 650; }
   .stock.drift { color: var(--warn); font-weight: 650; }
   .status { font-size: 10.5px; color: var(--faint); text-transform: lowercase; }
+  /* The euro equivalent of a foreign price; orange once it drifts far enough
+     from the SK price to be worth checking. */
+  .eur { cursor: help; }
+  .eur.off { color: var(--warn); font-weight: 600; }
 
   /* Whether a SKU is switched on in a market — the thing you scan for down a
      column, so it is a shape rather than a word. */
@@ -230,6 +234,17 @@
      kocka na SK v predaji a na CZ potichu unlisted, je to rozdiel, ktorý treba
      vidieť. Filter <strong>len rozdiely oproti SK</strong> nechá iba také
      riadky.</p>
+
+  <h3>Prepočet do €</h3>
+  <p>Pod každou zahraničnou cenou je <strong>≈ suma v eurách</strong> a za ňou,
+     o koľko percent sa líši od ceny na SK. Slúži to na rýchlu kontrolu
+     nacenenia — nie je to účtovný kurz. Ak je rozdiel <strong>10 % a viac</strong>,
+     číslo zoranžovie; to nemusí byť chyba (iné dane, iná cenová hladina,
+     zaokrúhlenie na pekné číslo), ale stojí za pozretie.</p>
+  <p>Kurzy sú referenčné <strong>kurzy ECB</strong> (cez frankfurter.dev),
+     dátum je v hlavičke vpravo. ECB ich vyhlasuje raz denne v pracovný deň,
+     takže cez víkend platí piatkový. Bublinka nad sumou ukáže presný kurz aj
+     cenu na SK, s ktorou sa porovnáva.</p>
 
   <h3>Čo znamenajú farby</h3>
   <table>
@@ -401,6 +416,17 @@ const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 const STORES = ['sk', 'cz', 'pl', 'ro', 'hu'];
 const TRUTH = 'sk';
 
+// ECB reference rates, so a CZK or HUF price can be read next to the SK one.
+// Frankfurter publishes them without a key; the last set is kept in
+// localStorage so a failed fetch (or an offline moment) still shows something
+// rather than dropping the column back to bare foreign currency.
+const FX_URL = 'https://api.frankfurter.dev/v1/latest?base=EUR&symbols=CZK,PLN,RON,HUF';
+const FX_CACHE = 'fxrates';
+/** Percentage gap from the SK price that is worth a second look. */
+const PRICE_GAP = 10;
+
+let fx = { date: null, rates: null };
+
 const STATUS_LABEL = {
   ACTIVE: 'zapnutý, v predaji',
   DRAFT: 'vypnutý (draft)',
@@ -513,6 +539,61 @@ const money = (v, cur) => v === null || v === undefined
       maximumFractionDigits: cur === 'HUF' ? 0 : 2,
     }).format(v);
 
+// ---- exchange rates ------------------------------------------------------
+
+/** The foreign price in euros, or null while the rates are not known. */
+function toEur(value, currency) {
+  if (value === null || value === undefined) return null;
+  if (!currency || currency === 'EUR') return value;
+  const rate = fx.rates?.[currency];
+  return rate ? value / rate : null;
+}
+
+const shortDate = (iso) => new Date(iso).toLocaleDateString('sk-SK', { day: 'numeric', month: 'numeric', year: 'numeric' });
+
+/**
+ * What a foreign price is worth in euros, and how far it sits from the SK
+ * price — the two numbers you need to tell whether a market is priced right.
+ */
+function eurNote(cell, truth) {
+  const eur = toEur(cell.price, cell.currency);
+  if (eur === null) return '';
+
+  const parts = [`≈ ${money(eur, 'EUR')}`];
+  const tip = [`${money(cell.price, cell.currency)} kurzom ${fx.rates[cell.currency]} ${cell.currency}/€ (ECB ${shortDate(fx.date)})`];
+
+  let gap = null;
+  if (truth?.price) {
+    gap = ((eur - truth.price) / truth.price) * 100;
+    // Rounded first, so a half-percent difference reads as 0 % rather than −0 %.
+    const shown = Math.round(gap);
+    parts.push(shown === 0 ? '0 %' : `${shown > 0 ? '+' : '−'}${Math.abs(shown)} %`);
+    tip.push(`SK ${money(truth.price, 'EUR')} · rozdiel ${gap > 0 ? '+' : '−'}${Math.abs(gap).toFixed(1)} %`);
+  }
+
+  const off = gap !== null && Math.abs(gap) >= PRICE_GAP;
+  return `<span class="eur${off ? ' off' : ''}" title="${tip.join(' · ')}">${parts.join(' ')}</span>`;
+}
+
+/** Today's rates, falling back to the last set that was fetched. */
+async function loadRates() {
+  let cached = null;
+  try { cached = JSON.parse(localStorage.getItem(FX_CACHE) ?? 'null'); } catch { /* unreadable cache is no cache */ }
+  if (cached?.rates) fx = cached;
+
+  try {
+    const res = await fetch(FX_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!data.rates) throw new Error('bez kurzov');
+    fx = { date: data.date, rates: { ...data.rates, EUR: 1 } };
+    try { localStorage.setItem(FX_CACHE, JSON.stringify(fx)); } catch { /* private mode */ }
+  } catch (err) {
+    if (!cached?.rates) toast(`Kurzy sa nepodarilo načítať (${err.message}) — ceny ostanú v pôvodnej mene.`, true);
+  }
+  render();
+}
+
 // ---- sorting -------------------------------------------------------------
 
 /** Value a row sorts by for the given column key. */
@@ -599,7 +680,16 @@ function render() {
       const qty = cell.inventory_quantity;
       const cls = flags.includes('negative') || flags.includes('sold-out') ? 'bad'
         : flags.includes('drift') ? 'drift' : '';
-      const status = cell.status === 'ACTIVE' ? '' : `<div class="status">${cell.status.toLowerCase()}</div>`;
+
+      // One sub-line under the price carries both the state (when it is not
+      // simply on sale) and what the foreign price is in euros.
+      const sub = [];
+      if (cell.status !== 'ACTIVE') sub.push(cell.status.toLowerCase());
+      if (store !== TRUTH) {
+        const eur = eurNote(cell, row.stores[TRUTH]);
+        if (eur) sub.push(eur);
+      }
+      const status = sub.length ? `<div class="status">${sub.join(' · ')}</div>` : '';
 
       // Only ACTIVE and DRAFT can be switched from here — see the product-status
       // function for why archived and unlisted are left to the Shopify admin.
@@ -648,7 +738,8 @@ function render() {
   const synced = listings.reduce((max, l) => (l.synced_at > max ? l.synced_at : max), '');
   $('stats').textContent =
     `${rows.length} SKU · ${listings.length} listingov` +
-    (synced ? ` · sync ${new Date(synced).toLocaleString('sk-SK', { dateStyle: 'short', timeStyle: 'short' })}` : '');
+    (synced ? ` · sync ${new Date(synced).toLocaleString('sk-SK', { dateStyle: 'short', timeStyle: 'short' })}` : '') +
+    (fx.date ? ` · kurzy ECB ${shortDate(fx.date)}` : '');
 }
 
 $('q').addEventListener('input', render);
@@ -857,6 +948,7 @@ buildHeader();
 measureChrome();
 addEventListener('resize', measureChrome);
 load();
+loadRates();
 </script>
 </body>
 </html>

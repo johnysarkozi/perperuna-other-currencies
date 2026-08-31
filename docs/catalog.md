@@ -100,6 +100,7 @@ a SKU, ktoré v niektorom obchode chýba.
 - tlačidlo **SKU kľúč** — modál s vysvetlením, ako sa tvoria SKU kódy
   (obsah zrkadlí [`docs/sku.md`](sku.md); pri zmene uprav oboje)
 - tlačidlá **Zrkadliť zo SK** a **Načítať zo Shopify**
+- **prepočet zahraničných cien do €** pod cenou, aj s odchýlkou od SK
 
 ### Prístup
 
@@ -238,6 +239,25 @@ ostatných.
 - Každá zmena ide do `catalog_sync_log` s `actor = 'product-status'` a rovno sa
   premietne do `catalog_listings` (len do `ACTIVE`/`DRAFT` riadkov), aby bodky
   preskočili bez čakania na sync.
+
+## Prepočet zahraničných cien do €
+
+Pod každou cenou v CZ/PL/RO/HU je `≈` suma v eurách a odchýlka od ceny na SK
+v percentách. Od **10 %** vyššie sa zvýrazní oranžovo — nie je to nutne chyba
+(iné dane, iná cenová hladina, zaokrúhlenie), ale je to zoznam na prejdenie.
+Bublinka ukáže presný kurz aj cenu na SK, s ktorou sa porovnáva.
+
+Kurzy sú referenčné kurzy ECB z <https://api.frankfurter.dev> (bez kľúča,
+CORS povolený), ťahané pri načítaní stránky a odkladané do `localStorage`,
+takže výpadok API neodstráni prepočet, len ho nechá na poslednom známom kurze.
+Dátum kurzov je v hlavičke vpravo. Je to orientačný prepočet na kontrolu
+nacenenia, nie účtovný kurz — ceny sa nikde neprepočítavajú ani nezapisujú.
+
+Pri poslednej kontrole malo 62 z 221 buniek odchýlku ≥ 10 %; najvýraznejšie
+čaje do kúpeľa (`PP-BATE-*`, v zahraničí o 38–51 % lacnejšie než na SK)
+a vrecúško `PP-ACCS-SPOU-011` (na PL/RO/HU vyše 3× drahšie). Pozor, časť
+rozdielov je legitímna — napr. `PP-NUBE-NEDO-020` je na CZ balenie 10 ks,
+kým na SK je to jedna kocka.
 
 ## Ako sa dajú nájsť tichí zabijaci katalógu
 
