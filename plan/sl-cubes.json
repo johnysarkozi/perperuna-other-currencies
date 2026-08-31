@@ -1,0 +1,207 @@
+{
+ "locale": "sl",
+ "products": [
+  {
+   "handle": "sprchova-aromaticka-kocka-uplift",
+   "positions": {
+    "2": {
+     "filename": "sl_uplift_5.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/UPLIFT__5.png"
+    },
+    "4": {
+     "filename": "sl_uplift_6.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/UPLIFT__6.png"
+    },
+    "5": {
+     "filename": "sl_spolocne_AKO_FUNGUJE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__AKO_FUNGUJE.png"
+    },
+    "6": {
+     "filename": "sl_spolocne_MUZ.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__MUZ.png"
+    },
+    "7": {
+     "filename": "sl_uplift_7.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/UPLIFT__7.png"
+    },
+    "8": {
+     "filename": "sl_spolocne_RECENZIE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__RECENZIE.png"
+    },
+    "9": {
+     "filename": "sl_spolocne_BENEFITY.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__BENEFITY.png"
+    }
+   }
+  },
+  {
+   "handle": "sprchova-aromaticka-kocka-breathe",
+   "positions": {
+    "2": {
+     "filename": "sl_breathe_6.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/BREATHE__6.png"
+    },
+    "4": {
+     "filename": "sl_breathe_5.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/BREATHE__5.png"
+    },
+    "5": {
+     "filename": "sl_spolocne_AKO_FUNGUJE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__AKO_FUNGUJE.png"
+    },
+    "6": {
+     "filename": "sl_spolocne_MUZ.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__MUZ.png"
+    },
+    "7": {
+     "filename": "sl_spolocne_RECENZIE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__RECENZIE.png"
+    },
+    "8": {
+     "filename": "sl_breathe_7.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/BREATHE__7.png"
+    },
+    "9": {
+     "filename": "sl_spolocne_BENEFITY.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__BENEFITY.png"
+    }
+   }
+  },
+  {
+   "handle": "sprchova-aromaticka-kocka-balance",
+   "positions": {
+    "2": {
+     "filename": "sl_balance_6.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/BALANCE__6.png"
+    },
+    "4": {
+     "filename": "sl_balance_5.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/BALANCE__5.png"
+    },
+    "5": {
+     "filename": "sl_spolocne_AKO_FUNGUJE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__AKO_FUNGUJE.png"
+    },
+    "6": {
+     "filename": "sl_spolocne_MUZ.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__MUZ.png"
+    },
+    "7": {
+     "filename": "sl_spolocne_RECENZIE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__RECENZIE.png"
+    },
+    "8": {
+     "filename": "sl_balance_7.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/BALANCE__7.png"
+    },
+    "9": {
+     "filename": "sl_spolocne_BENEFITY.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__BENEFITY.png"
+    }
+   }
+  },
+  {
+   "handle": "sprchova-aromaticka-kocka-calm",
+   "positions": {
+    "2": {
+     "filename": "sl_calm_6.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/CALM__6.png"
+    },
+    "4": {
+     "filename": "sl_calm_5.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/CALM__5.png"
+    },
+    "5": {
+     "filename": "sl_spolocne_AKO_FUNGUJE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__AKO_FUNGUJE.png"
+    },
+    "6": {
+     "filename": "sl_calm_7.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/CALM__7.png"
+    },
+    "7": {
+     "filename": "sl_spolocne_MUZ.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__MUZ.png"
+    },
+    "8": {
+     "filename": "sl_spolocne_RECENZIE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__RECENZIE.png"
+    },
+    "9": {
+     "filename": "sl_spolocne_BENEFITY.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__BENEFITY.png"
+    }
+   }
+  },
+  {
+   "handle": "love-sprchova-aromaticka-kocka",
+   "positions": {
+    "1": {
+     "filename": "sl_love_1.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/LOVE__1.png"
+    },
+    "2": {
+     "filename": "sl_love_3.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/LOVE__3.png"
+    },
+    "4": {
+     "filename": "sl_love_2.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/LOVE__2.png"
+    },
+    "5": {
+     "filename": "sl_spolocne_AKO_FUNGUJE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__AKO_FUNGUJE.png"
+    },
+    "6": {
+     "filename": "sl_love_4.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/LOVE__4.png"
+    },
+    "7": {
+     "filename": "sl_spolocne_MUZ.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__MUZ.png"
+    },
+    "8": {
+     "filename": "sl_spolocne_RECENZIE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__RECENZIE.png"
+    },
+    "9": {
+     "filename": "sl_spolocne_BENEFITY.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__BENEFITY.png"
+    }
+   }
+  },
+  {
+   "handle": "refresh-sprchova-aromaticka-kocka",
+   "positions": {
+    "2": {
+     "filename": "sl_refresh_3.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/REFRESH__3.png"
+    },
+    "4": {
+     "filename": "sl_refresh_2.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/REFRESH__2.png"
+    },
+    "5": {
+     "filename": "sl_refresh_4.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/REFRESH__4.png"
+    },
+    "6": {
+     "filename": "sl_spolocne_AKO_FUNGUJE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__AKO_FUNGUJE.png"
+    },
+    "7": {
+     "filename": "sl_spolocne_MUZ.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__MUZ.png"
+    },
+    "8": {
+     "filename": "sl_spolocne_RECENZIE.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__RECENZIE.png"
+    },
+    "9": {
+     "filename": "sl_spolocne_BENEFITY.png",
+     "path": "/tmp/claude-0/-workspace-perperuna-other-currencies/fb4e6525-8c05-5f1e-92a3-78121c3a2fa3/scratchpad/sl/SPOLOCNE__BENEFITY.png"
+    }
+   }
+  }
+ ]
+}
