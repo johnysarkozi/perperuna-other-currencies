@@ -74,6 +74,10 @@ supabase/functions/catalog-sync/     Edge Function — sync Shopify → katalóg
 supabase/functions/inventory-mirror/ Edge Function — zrkadlí sklady zo SK (cron á 15 min)
 supabase/functions/inventory-set/    Edge Function — nastaví sklad SKU vo všetkých obchodoch
 scripts/inventory-mirror.mjs   lokálne zrkadlenie skladov (dry-run, --apply)
+scripts/figma-scan.mjs         read-only strom Figma súboru (názvy a geometria framov)
+scripts/gallery-from-figma.mjs jazykové galérie z Figmy → custom.<locale>_images
+plan/sl-figma.json             plán slovinských galérií (pozícia → Figma fram)
+docs/galerie.md                ako fungujú jazykové galérie a odkiaľ sa berú obrázky
 docs/credentials.md            ako sa nastavujú prístupy
 docs/launch-plan.md            plán spustenia RO/PL/HU
 docs/catalog.md                cross-backend katalóg — dátový model, stav, ďalšie fázy
