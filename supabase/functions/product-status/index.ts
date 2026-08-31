@@ -1,13 +1,21 @@
 /**
- * product-status — turns one SKU on or off in one store.
+ * product-status — turns one SKU on or off, and spreads that decision.
  *
- *   { "sku": "PP-CUBE-LOVE-020", "store": "pl", "status": "ACTIVE", "password": "…" }
+ *   { "sku": "PP-CUBE-LOVE-020", "store": "sk", "status": "DRAFT", "password": "…" }
+ *
+ * SK is the source of truth for the on/off state just as it is for stock, so a
+ * switch on SK is applied to every other backend right away rather than waiting
+ * for the next mirror run. A switch on any other backend touches only that one
+ * — but inventory-mirror would put it back within 15 minutes, which is why the
+ * dashboard only offers the SK dot.
  *
  * Only ACTIVE and DRAFT are accepted as targets: those are the two states the
  * dashboard's dot toggles between. ARCHIVED is deliberately not reachable from
  * here — archiving is a catalog decision, not a switch, and it hides the
  * product from the Shopify admin's default view where nobody would find it
- * again by accident.
+ * again by accident. For the same reason a foreign product that is UNLISTED or
+ * ARCHIVED is left alone when SK is switched: those listings (the "-25 %"
+ * copies among them) are their own decision.
  *
  * Gated by the same password as inventory-set, for the same reason: the page
  * carries only the publishable key, and this changes what a live storefront
@@ -16,6 +24,7 @@
 
 const API_VERSION = '2025-07';
 const ALLOWED = new Set(['ACTIVE', 'DRAFT']);
+const SOURCE = 'sk';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 
@@ -119,6 +128,66 @@ const UPDATE = `mutation P($input: ProductInput!) {
   }
 }`;
 
+type Applied =
+  | { changed: boolean; status: string; previous: string; handle: string }
+  | { changed: false; skipped: string; detail?: string };
+
+/**
+ * Set one SKU's product to `status` in one store.
+ *
+ * `strict` is for the store the person actually clicked: there, anything that
+ * stops the write — the SKU missing, or sitting on several products — is an
+ * error they need to see. When the same change is being spread to the other
+ * backends those are ordinary facts about a catalog that is not identical
+ * everywhere, so they are reported as skips instead of failing the request.
+ */
+async function applyStatus(store: string, sku: string, status: string, strict: boolean): Promise<Applied> {
+  const token = await accessToken(store);
+  const data = await gql(store, token, BY_SKU, { q: `sku:${sku}` });
+
+  // Shopify's sku: search is a prefix/token match, so pin it to an exact hit.
+  const products = new Map<string, { id: string; handle: string; title: string; status: string }>();
+  for (const v of data.productVariants.nodes) {
+    if (v.sku?.trim() !== sku) continue;
+    products.set(v.product.id, v.product);
+  }
+
+  if (!products.size) {
+    if (strict) throw new Error(`SKU ${sku} is not in ${store.toUpperCase()}`);
+    return { changed: false, skipped: 'absent' };
+  }
+
+  // UNLISTED and ARCHIVED listings are not switches — see the header.
+  const switchable = [...products.values()].filter((p) => ALLOWED.has(p.status));
+  if (!switchable.length) {
+    const states = [...products.values()].map((p) => p.status).join(', ');
+    if (strict) throw new Error(`SKU ${sku} in ${store.toUpperCase()} is ${states}, which this does not switch`);
+    return { changed: false, skipped: 'not-switchable', detail: states };
+  }
+  if (switchable.length > 1) {
+    // Two live products sharing a SKU is a data problem in itself; flipping a
+    // guessed one would be worse than refusing.
+    const handles = switchable.map((p) => p.handle).join(', ');
+    if (strict) {
+      throw new Error(
+        `SKU ${sku} sits on ${switchable.length} products in ${store.toUpperCase()} (${handles}) — fix that first`,
+      );
+    }
+    return { changed: false, skipped: 'ambiguous', detail: handles };
+  }
+
+  const product = switchable[0];
+  if (product.status === status) {
+    return { changed: false, status, previous: product.status, handle: product.handle };
+  }
+
+  const res = await gql(store, token, UPDATE, { input: { id: product.id, status } });
+  const errs = res.productUpdate.userErrors;
+  if (errs.length) throw new Error(`[${store}] update failed: ${JSON.stringify(errs).slice(0, 300)}`);
+
+  return { changed: true, status, previous: product.status, handle: product.handle };
+}
+
 Deno.serve(async (req) => {
   const headers = cors(req);
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers });
@@ -145,53 +214,60 @@ Deno.serve(async (req) => {
       return Response.json({ ok: false, error: 'Nesprávne heslo' }, { status: 403, headers });
     }
 
-    const token = await accessToken(store);
-    const data = await gql(store, token, BY_SKU, { q: `sku:${sku}` });
+    // The clicked store goes first: if it fails, nothing else is touched and
+    // the backends stay consistent with each other.
+    const primary = await applyStatus(store, sku, status, true);
+    const results: Record<string, Applied> = { [store]: primary };
 
-    // Shopify's sku: search is a prefix/token match, so pin it to an exact hit.
-    const products = new Map<string, { id: string; handle: string; title: string; status: string }>();
-    for (const v of data.productVariants.nodes) {
-      if (v.sku?.trim() !== sku) continue;
-      products.set(v.product.id, v.product);
+    // A switch on SK is a decision for the whole group, so it is spread now
+    // rather than 15 minutes from now. A switch anywhere else stays local.
+    const mirrored = store === SOURCE
+      ? configured.filter((s: string) => s !== SOURCE)
+      : [];
+    for (const other of mirrored) {
+      results[other] = await applyStatus(other, sku, status, false);
     }
 
-    if (!products.size) throw new Error(`SKU ${sku} is not in ${store.toUpperCase()}`);
-    if (products.size > 1) {
-      // Two products sharing a SKU is a data problem in itself; flipping a
-      // guessed one would be worse than refusing.
-      throw new Error(
-        `SKU ${sku} sits on ${products.size} products in ${store.toUpperCase()} ` +
-        `(${[...products.values()].map((p) => p.handle).join(', ')}) — fix that first`,
+    const written = Object.entries(results).filter(([, r]) => r.changed);
+
+    // Keep the catalog copy in step so the dots flip without waiting for a sync.
+    // Only the listings that were actually switched, so an unlisted or archived
+    // copy of the same SKU keeps showing its real state.
+    for (const [key] of written) {
+      await rest(
+        `catalog_listings?sku=eq.${encodeURIComponent(sku)}&store=eq.${encodeURIComponent(key)}` +
+        `&status=in.(${[...ALLOWED].join(',')})`,
+        { method: 'PATCH', body: JSON.stringify({ status }), headers: { Prefer: 'return=minimal' } },
       );
     }
 
-    const product = [...products.values()][0];
-    if (product.status === status) {
-      return Response.json({ ok: true, sku, store, status, changed: false, handle: product.handle }, { headers });
+    if (written.length) {
+      await rest('catalog_sync_log', {
+        method: 'POST',
+        headers: { Prefer: 'return=minimal' },
+        body: JSON.stringify(written.map(([key, r]) => ({
+          direction: 'push', store: key, sku, field: 'status',
+          old_value: (r as { previous: string }).previous, new_value: status, actor: 'product-status',
+        }))),
+      });
     }
 
-    const res = await gql(store, token, UPDATE, { input: { id: product.id, status } });
-    const errs = res.productUpdate.userErrors;
-    if (errs.length) throw new Error(`[${store}] update failed: ${JSON.stringify(errs).slice(0, 300)}`);
-
-    // Keep the catalog copy in step so the dot flips without waiting for a sync.
-    await rest(
-      `catalog_listings?sku=eq.${encodeURIComponent(sku)}&store=eq.${encodeURIComponent(store)}`,
-      { method: 'PATCH', body: JSON.stringify({ status }), headers: { Prefer: 'return=minimal' } },
-    );
-
-    await rest('catalog_sync_log', {
-      method: 'POST',
-      headers: { Prefer: 'return=minimal' },
-      body: JSON.stringify([{
-        direction: 'push', store, sku, field: 'status',
-        old_value: product.status, new_value: status, actor: 'product-status',
-      }]),
-    });
-
     return Response.json({
-      ok: true, sku, store, status, changed: true,
-      handle: product.handle, previous: product.status,
+      ok: true,
+      sku,
+      store,
+      status,
+      changed: primary.changed,
+      handle: 'handle' in primary ? primary.handle : undefined,
+      previous: 'previous' in primary ? primary.previous : undefined,
+      mirrored: store === SOURCE,
+      // Which backends now carry this state, so the dashboard can move their
+      // dots too instead of waiting for the next sync.
+      applied: Object.keys(results).filter((key) => {
+        const r = results[key];
+        return r.changed || 'handle' in r;
+      }),
+      stores: results,
     }, { headers });
   } catch (err) {
     return Response.json({ ok: false, error: String(err) }, { status: 500, headers });

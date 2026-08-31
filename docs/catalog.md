@@ -198,27 +198,42 @@ vlastnú doménu treba `PRIMARY_ORIGIN` vo funkciách upraviť.
 
 Pri každej cene v matici je bodka so stavom produktu v tom obchode: zelená =
 `ACTIVE`, prázdna = `DRAFT`, oranžová = `UNLISTED`, sivá = `ARCHIVED`,
-bodkovaná = SKU tam vôbec nie je. Klik na bodku prepína medzi `ACTIVE`
-a `DRAFT` cez Edge Function **`product-status`**.
+bodkovaná = SKU tam vôbec nie je.
+
+Klikateľná je **len bodka v stĺpci SK** a prepne produkt medzi `ACTIVE`
+a `DRAFT` naraz vo všetkých obchodoch — Edge Function **`product-status`**.
+Bodky v CZ/RO/PL/HU sú len zobrazenie; klik na ne vypíše, že sa stav riadi zo
+SK. Je to tá istá logika ako pri sklade: samostatnú zmenu na cudzom trhu by
+mirror do 15 minút vrátil späť.
 
 ```
 POST /functions/v1/product-status
-{ "sku": "PP-CUBE-LOVE-020", "store": "pl", "status": "ACTIVE", "password": "…" }
+{ "sku": "PP-CUBE-LOVE-020", "store": "sk", "status": "DRAFT", "password": "…" }
 ```
+
+Endpoint stále vie prepnúť aj jeden konkrétny trh (`"store": "pl"`) — vtedy
+nerozposiela nič, len ten obchod. Appka to nepoužíva.
 
 `UNLISTED` a `ARCHIVED` sa cez appku nastaviť nedajú. Nie sú to prepínače, ale
 samostatné rozhodnutia o produkte — archivovaný produkt navyše zmizne
-z default pohľadu v Shopify admine, kde by ho už nikto náhodou nenašiel.
+z default pohľadu v Shopify admine, kde by ho už nikto náhodou nenašiel. Preto
+sa pri vypnutí na SK neprepnú ani unlisted/archived kópie v zahraničí; to je
+zároveň jediný podporovaný spôsob, ako mať produkt na jednom trhu inak než na
+ostatných.
 
 ### Poistky
 
 - Heslo je to isté ako pri úprave skladu (`catalog_settings.edit_password_sha256`).
 - Cieľový stav môže byť len `ACTIVE` alebo `DRAFT`.
-- Ak jedno SKU sedí v tom obchode na viacerých produktoch, endpoint odmietne
-  zápis a vypíše handles — hádať, ktorý prepnúť, by bolo horšie než nič.
+- SK sa zapisuje ako prvé; ak zlyhá, ostatné obchody sa nechajú tak.
+- Ak jedno SKU sedí v tom obchode na viacerých `ACTIVE`/`DRAFT` produktoch,
+  endpoint ho neprepne — hádať, ktorý, by bolo horšie než nič. V klikanom
+  obchode je to chyba, pri rozposielaní len preskočenie (`skipped: ambiguous`),
+  rovnako ako SKU, ktoré v tom obchode nie je (`skipped: absent`).
 - Shopify hľadá `sku:` prefixovo, takže sa zhoda ešte overuje na presnú rovnosť.
-- Zmena ide do `catalog_sync_log` s `actor = 'product-status'` a rovno sa
-  premietne do `catalog_listings`, aby bodka preskočila bez čakania na sync.
+- Každá zmena ide do `catalog_sync_log` s `actor = 'product-status'` a rovno sa
+  premietne do `catalog_listings` (len do `ACTIVE`/`DRAFT` riadkov), aby bodky
+  preskočili bez čakania na sync.
 
 Filter **len rozdiely v zapnutí** nechá v tabuľke iba SKU, kde sa aspoň jeden
 trh predajnosťou líši od ostatných — vrátane tých, čo v jednom obchode chýbajú.
@@ -242,10 +257,10 @@ hmotnosť by tam bola nesprávna.
 Skript preferuje SK listing, ktorý hmotnosť naozaj má, a nesahá na položky,
 ktoré sa neposielajú (`FEE-*` služby).
 
-## Zrkadlenie skladov zo SK
+## Zrkadlenie skladov a zapnutia zo SK
 
-SK je zdroj pravdy pre sklad. Ostatné backendy sa naň dorovnávajú podľa SKU —
-Edge Function **`inventory-mirror`**.
+SK je zdroj pravdy pre sklad **aj pre to, či je produkt zapnutý**. Ostatné
+backendy sa naň dorovnávajú podľa SKU — Edge Function **`inventory-mirror`**.
 
 ```
 POST /functions/v1/inventory-mirror
@@ -256,10 +271,28 @@ POST /functions/v1/inventory-mirror
 
 Zapisuje len tam, kde sa číslo líši, a každý zápis zaloguje do
 `catalog_sync_log` (staré → nové), takže sa dá spätne dohľadať, čo sa menilo.
+Sklad ide cez `inventory_quantity`, stav cez `field = 'status'`.
 
-Rovnaká logika sa dá pustiť aj lokálne cez
+### Ktorý stav sa zrkadlí
+
+Len medzi `ACTIVE` a `DRAFT`, a to na oboch stranách:
+
+- Na SK je zdrojom stavu len `ACTIVE` alebo `DRAFT` listing. Archivovaná či
+  unlisted kópia toho istého SKU (typicky „-25 %") o ostatných trhoch nehovorí
+  nič. Ak je na SK viac listingov, vyhráva `ACTIVE` — rovnako ako pri sklade.
+- V cieľovom obchode sa prepínajú tiež len `ACTIVE`/`DRAFT` produkty. `UNLISTED`
+  a `ARCHIVED` sú samostatné rozhodnutia o tom listingu, takže sa ich mirror
+  nedotkne — a je to zároveň spôsob, ako urobiť výnimku pre jeden trh.
+- Ak jeden produkt v cieli nesie viac SKU, ktoré SK prepína rozdielne, mirror ho
+  preskočí a započíta do `statusConflicts` v odpovedi.
+
+Odpoveď má okrem `written` (sklad) aj `statusWritten` a per obchod
+`statusChanged` / `statusWritten` / `statusConflicts`.
+
+Rovnakú logiku pre **sklad** sa dá pustiť aj lokálne cez
 `node scripts/inventory-mirror.mjs [--enable-tracking] [--apply]` — hodí sa na
-jednorazové zásahy, lebo vypisuje jednotlivé varianty.
+jednorazové zásahy, lebo vypisuje jednotlivé varianty. Stav lokálny skript
+nezrkadlí, ten rieši len Edge Function.
 
 ### Cron
 
@@ -280,19 +313,20 @@ dá predať viac, než je fyzicky na sklade. Skutočné riešenie by bol jeden
 zdieľaný sklad (napr. cez Shopify webhooky na `inventory_levels/update`
 namiesto pollovania) — to zatiaľ postavené nie je.
 
-Sklad sa mení **len na SK**. Úpravy priamo na CZ/RO/PL/HU najbližší beh
-prepíše.
+Sklad aj zapnutie sa menia **len na SK**. Úpravy priamo na CZ/RO/PL/HU
+najbližší beh prepíše.
 
 ## Stav a ďalšie fázy
 
 1. ✅ **Schéma** — `catalog_products` / `catalog_listings` / `catalog_sync_log`.
 2. ✅ **Sync** — Edge Function `catalog-sync`.
 3. ✅ **Cron** — `pg_cron` + `pg_net`, mirror každých 15 min, sync po ňom.
-4. ✅ **Zrkadlenie skladov** — Edge Function `inventory-mirror`, s logom.
+4. ✅ **Zrkadlenie skladov a zapnutia** — Edge Function `inventory-mirror`, s logom.
 5. ✅ **UI** — dashboard na Netlify, matica SKU × obchod + obe tlačidlá.
 6. ✅ **Úprava skladu z appky** — Edge Function `inventory-set`, chránená heslom.
-6b. ✅ **Zapnutie/vypnutie produktu na trhu** — Edge Function `product-status`,
-   bodka pri cene + filter rozdielov.
+6b. ✅ **Zapnutie/vypnutie produktu** — Edge Function `product-status`, bodka
+   pri cene + filter rozdielov. Riadi sa zo SK a rozpošle sa do všetkých
+   obchodov.
 6c. ✅ **Hmotnosti** — `scripts/weight-mirror.mjs`, jednorazovo zo SK.
 7. ⏳ **Ceny** — katalóg ich ukazuje, ale nemení. Zrkadlenie cien nedáva
    zmysel priamo (iné meny), chcelo by to prepočet cez kurz + pravidlá

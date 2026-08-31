@@ -80,8 +80,8 @@
     border-radius: 50%; border: 1.5px solid var(--faint); background: none;
     vertical-align: -1px; cursor: pointer;
   }
-  .dot:hover:not(:disabled) { box-shadow: 0 0 0 3px var(--panel); border-color: var(--text); }
-  .dot:disabled { cursor: default; }
+  .dot:hover:not(:disabled):not(.locked) { box-shadow: 0 0 0 3px var(--panel); border-color: var(--text); }
+  .dot:disabled, .dot.locked { cursor: default; }
   .dot.active   { background: var(--ok);   border-color: var(--ok); }
   .dot.draft    { background: none;        border-color: var(--faint); }
   .dot.unlisted { background: var(--warn); border-color: var(--warn); }
@@ -152,7 +152,7 @@
     <span class="meta" id="stats"></span>
     <button id="howHelp" title="Ako to celé funguje">Ako to funguje</button>
     <button id="skuHelp" title="Ako sa tvoria SKU kódy">SKU kľúč</button>
-    <button id="mirror" title="Prepíše sklady na CZ/RO/PL/HU podľa SK">Zrkadliť zo SK</button>
+    <button id="mirror" title="Prepíše sklady aj zapnutie na CZ/RO/PL/HU podľa SK">Zrkadliť zo SK</button>
     <button id="sync">Načítať zo Shopify</button>
   </header>
   <div class="wrap"><table>
@@ -171,14 +171,15 @@
     <button id="howClose">Zavrieť</button>
   </div>
 
-  <h3>Odkiaľ sa berú sklady</h3>
-  <p><strong>SK je zdroj pravdy.</strong> Ostatné obchody sa naň dorovnávajú —
-     nie naopak. Sklad sa preto mení <em>len na SK</em>; zmena priamo v CZ, RO,
-     PL alebo HU sa pri najbližšom zrkadlení prepíše späť.</p>
+  <h3>Odkiaľ sa berú sklady a zapnutie</h3>
+  <p><strong>SK je zdroj pravdy</strong> — pre sklad aj pre to, či je produkt
+     zapnutý. Ostatné obchody sa naň dorovnávajú, nie naopak. Oboje sa preto
+     mení <em>len na SK</em>; zmena priamo v CZ, RO, PL alebo HU sa pri
+     najbližšom zrkadlení prepíše späť.</p>
 
   <h3>Ako často</h3>
   <table>
-    <tr><td><strong>Zrkadlenie skladov</strong><br><span class="meta">SK → CZ, RO, PL, HU</span></td>
+    <tr><td><strong>Zrkadlenie skladov a zapnutia</strong><br><span class="meta">SK → CZ, RO, PL, HU</span></td>
         <td>každých <strong>15 minút</strong><br><span class="meta">:00 · :15 · :30 · :45</span></td></tr>
     <tr><td><strong>Načítanie do tejto tabuľky</strong><br><span class="meta">Shopify → katalóg</span></td>
         <td>štyrikrát za hodinu<br><span class="meta">:05 · :20 · :35 · :50</span></td></tr>
@@ -194,7 +195,7 @@
   <h3>Tlačidlá</h3>
   <table>
     <tr><td><strong>Zrkadliť zo SK</strong></td>
-        <td>Spustí zrkadlenie hneď, nečaká na ďalších 15 minút.</td></tr>
+        <td>Spustí zrkadlenie skladov aj zapnutia hneď, nečaká na ďalších 15 minút.</td></tr>
     <tr><td><strong>Načítať zo Shopify</strong></td>
         <td>Osvieži čísla v tejto tabuľke. Nič v obchodoch nemení.</td></tr>
   </table>
@@ -213,11 +214,15 @@
     <tr><td><span class="dot absent"></span></td>
         <td><strong>Bodkovaná</strong> — SKU v tom obchode vôbec nie je založené.</td></tr>
   </table>
-  <p><strong>Klik na bodku produkt zapne alebo vypne</strong> — prepína medzi
-     zelenou a prázdnou. Pýta si to isté heslo ako zmena skladu a zmena je
-     okamžitá. Oranžové a sivé bodky sa takto prepnúť nedajú; unlisted
-     a archived rieš priamo v Shopify admine, lebo to nie sú „zapnuté / vypnuté",
-     ale samostatné rozhodnutia o produkte.</p>
+  <p><strong>Klikateľná je len bodka v stĺpci SK</strong> — a prepne produkt
+     naraz na SK aj vo všetkých ostatných obchodoch. Pýta si to isté heslo ako
+     zmena skladu a nečaká na ďalšie zrkadlenie. Bodky v CZ, RO, PL a HU sú len
+     na pozeranie: stav sa tam riadi zo SK, takže samostatná zmena by sa do 15
+     minút vrátila späť. Ak potrebuješ výnimku pre jeden trh, urob ju priamo
+     v Shopify admine cez unlisted alebo archived — tých sa zrkadlenie nedotkne.</p>
+  <p>Oranžové a sivé bodky sa prepnúť nedajú ani na SK; unlisted a archived nie
+     sú „zapnuté / vypnuté", ale samostatné rozhodnutia o produkte. Preto sa pri
+     vypnutí na SK neprepnú ani ich kópie v zahraničí (napr. „-25 %" listingy).</p>
   <p>Sklad ani ceny sa vypnutím nemenia — produkt len zmizne z predaja.</p>
   <p>Ak je niektorý trh nastavený inak než väčšina ostatných, celý ten stĺpec
      v riadku sa podfarbí. Filter <strong>len rozdiely v zapnutí</strong> nechá
@@ -431,7 +436,13 @@ function pivot() {
       || (l.status === 'ACTIVE' && current.status !== 'ACTIVE')
       || (l.status === current.status && (l.price ?? 0) > (current.price ?? 0));
     if (better) row.stores[l.store] = l;
-    if (!row.title || l.store === TRUTH) row.title = l.title;
+  }
+  // The name comes from the listing that was picked above, not from whichever
+  // one happened to come last: a SKU can sit on an archived discount copy too
+  // ("… (-25 %)"), and that copy's name is not what the product is called.
+  for (const row of bySku.values()) {
+    const named = row.stores[TRUTH] ?? STORES.map((s) => row.stores[s]).find(Boolean);
+    row.title = named?.title ?? null;
   }
   return [...bySku.values()];
 }
@@ -561,12 +572,19 @@ function render() {
         : flags.includes('drift') ? 'drift' : '';
       const status = cell.status === 'ACTIVE' ? '' : `<div class="status">${cell.status.toLowerCase()}</div>`;
 
-      // Only ACTIVE and DRAFT can be toggled from here — see the product-status
+      // Only ACTIVE and DRAFT can be switched from here — see the product-status
       // function for why archived and unlisted are left to the Shopify admin.
-      const toggleable = cell.status === 'ACTIVE' || cell.status === 'DRAFT';
-      const dot = `<button class="dot ${cell.status.toLowerCase()}" ${toggleable ? '' : 'disabled'}
+      // And only on SK: the state is mirrored from there, so a dot flipped on
+      // another market would be put back within 15 minutes.
+      const switchable = cell.status === 'ACTIVE' || cell.status === 'DRAFT';
+      const toggleable = switchable && store === TRUTH;
+      const hint = toggleable ? ' — klikni na prepnutie, zmení sa aj v ostatných obchodoch'
+        : switchable ? ' — riadi sa zo SK'
+        : '';
+      const dot = `<button class="dot ${cell.status.toLowerCase()}${toggleable ? '' : ' locked'}"
+          ${switchable ? '' : 'disabled'} ${toggleable ? '' : 'data-locked="1"'}
           data-sku="${row.sku}" data-store="${store}" data-status="${cell.status}"
-          title="${store.toUpperCase()}: ${STATUS_LABEL[cell.status] ?? cell.status}${toggleable ? ' — klikni na prepnutie' : ''}"></button>`;
+          title="${store.toUpperCase()}: ${STATUS_LABEL[cell.status] ?? cell.status}${hint}"></button>`;
 
       const price = `<td class="num sep${oddCls}"><div class="cell">${dot}<span>${money(cell.price, cell.currency)}</span></div>${status}</td>`;
 
@@ -664,11 +682,13 @@ async function toggleStatus(dot) {
   const { sku, store, status } = dot.dataset;
   const next = status === 'ACTIVE' ? 'DRAFT' : 'ACTIVE';
   const verb = next === 'ACTIVE' ? 'Zapnúť' : 'Vypnúť';
+  const others = STORES.filter((s) => s !== TRUTH).map((s) => s.toUpperCase()).join(', ');
 
-  if (!confirm(`${verb} ${sku} na ${store.toUpperCase()}?\n\n` +
+  if (!confirm(`${verb} ${sku} — na SK aj v ${others}?\n\n` +
     (next === 'ACTIVE'
-      ? 'Produkt sa okamžite objaví v predaji na tom trhu.'
-      : 'Produkt sa okamžite prestane predávať na tom trhu. Sklad ani ceny sa nemenia.'))) return;
+      ? 'Produkt sa okamžite objaví v predaji na všetkých trhoch, kde je založený.'
+      : 'Produkt sa okamžite prestane predávať na všetkých trhoch. Sklad ani ceny sa nemenia.') +
+    '\n\nNetýka sa to unlisted a archivovaných listingov — tie ostávajú, ako sú.')) return;
 
   const password = editPassword();
   if (!password) return;
@@ -686,9 +706,18 @@ async function toggleStatus(dot) {
       if (res.status === 403) sessionStorage.removeItem('editpw');
       throw new Error(out.error ?? 'zmena zlyhala');
     }
-    // The catalog copy only refreshes on the next sync, so move the dot now.
-    for (const l of listings) if (l.sku === sku && l.store === store) l.status = next;
-    toast(`${sku} — ${store.toUpperCase()} ${next === 'ACTIVE' ? 'zapnuté' : 'vypnuté'}`);
+    // The catalog copy only refreshes on the next sync, so move the dots now —
+    // in every store the function actually switched, not just the one clicked.
+    const applied = out.applied ?? [store];
+    for (const l of listings) {
+      if (l.sku === sku && applied.includes(l.store) && (l.status === 'ACTIVE' || l.status === 'DRAFT')) {
+        l.status = next;
+      }
+    }
+    const word = next === 'ACTIVE' ? 'zapnuté' : 'vypnuté';
+    toast(applied.length > 1
+      ? `${sku} ${word} — ${applied.map((s) => s.toUpperCase()).join(', ')}`
+      : `${sku} — ${store.toUpperCase()} ${word}`);
     render();
   } catch (err) {
     toast(`Chyba: ${err.message}`, true);
@@ -699,7 +728,14 @@ async function toggleStatus(dot) {
 
 $('rows').addEventListener('click', (e) => {
   const dot = e.target.closest('button.dot');
-  if (dot && !dot.disabled) toggleStatus(dot);
+  if (!dot || dot.disabled) return;
+  // Foreign dots stay visible but are not switches — say why rather than
+  // letting the click do nothing.
+  if (dot.dataset.locked) {
+    toast('Stav sa zrkadlí zo SK — prepni bodku v stĺpci SK a zmení sa všade.');
+    return;
+  }
+  toggleStatus(dot);
 });
 
 $('rows').addEventListener('change', (e) => {
@@ -743,9 +779,13 @@ $('sync').addEventListener('click', () =>
     (out) => `Načítané: ${out.listings} listingov, ${out.skus} SKU`));
 
 $('mirror').addEventListener('click', () => {
-  if (!confirm('Prepísať sklady na CZ, RO, PL a HU podľa SK?')) return;
-  return runFunction('mirror', 'inventory-mirror', {}, 'Zrkadlím…', (out) =>
-    out.written ? `Zrkadlené: ${out.written} variantov upravených` : 'Všetky sklady už sedeli so SK');
+  if (!confirm('Prepísať sklady aj zapnutie produktov na CZ, RO, PL a HU podľa SK?')) return;
+  return runFunction('mirror', 'inventory-mirror', {}, 'Zrkadlím…', (out) => {
+    const parts = [];
+    if (out.written) parts.push(`${out.written} skladov`);
+    if (out.statusWritten) parts.push(`${out.statusWritten} zapnutí/vypnutí`);
+    return parts.length ? `Zrkadlené: ${parts.join(', ')}` : 'Všetko už sedelo so SK';
+  });
 });
 
 // ---- reference sheets ----------------------------------------------------
