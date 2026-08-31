@@ -30,15 +30,18 @@
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
      "from": "sk"
     },
+    "9": {
+     "figmaNode": "5167:9031",
+     "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
+     "from": "bežná recenzia"
+    },
     "10": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
      "from": "sk"
     }
    },
-   "skip": [
-    9
-   ],
+   "skip": [],
    "keep": 3
   },
   {
