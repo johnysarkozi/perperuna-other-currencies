@@ -63,7 +63,18 @@
   th.sep, td.sep { border-left: 1px solid var(--line); }
   tbody tr:hover td { background: var(--panel); }
   td.sku { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; }
-  td.title { max-width: 300px; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+  /* Width of the name column, dragged by the grip in its header and kept in
+     localStorage — long product names are otherwise cut off. */
+  td.title { max-width: var(--title-w, 300px); overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+  /* No `position: relative` here — it would beat the sticky header and unstick
+     this one cell. A sticky box is already a containing block for the grip. */
+  th.title-col { width: var(--title-w, 300px); }
+  .grip { position: absolute; top: 0; right: 0; width: 11px; height: 100%; cursor: col-resize; }
+  .grip::after {
+    content: ''; position: absolute; right: 4px; top: 5px; bottom: 5px;
+    width: 2px; border-radius: 1px; background: var(--line);
+  }
+  .grip:hover::after, .grip.dragging::after { background: var(--accent); }
   td.num { text-align: right; }
   .absent { color: var(--faint); }
   .chip { display: inline-block; padding: 0 5px; border-radius: 4px; font-size: 11px; font-weight: 600; }
@@ -322,6 +333,10 @@
   </table>
   <p>Zoradiť sa dá kliknutím na hlavičku ktoréhokoľvek stĺpca, druhý klik
      otočí smer.</p>
+  <p>Stĺpec <strong>Názov</strong> sa dá roztiahnuť — chyť zvislú čiarku na
+     pravom okraji jeho hlavičky a potiahni. Dlhé názvy tak nie sú orezané.
+     Dvojklik na tú čiarku vráti pôvodnú šírku. Nastavenie si prehliadač
+     pamätá.</p>
 
   <h3>Na čo si dať pozor</h3>
   <p>Zrkadlenie je <strong>kópia v čase, nie zdieľaný sklad</strong>. Medzi
@@ -715,12 +730,64 @@ function buildHeader() {
     `<th class="${cls}" data-sort="${key}">${label}<span class="arrow"></span></th>`;
 
   $('colRow').innerHTML =
-    col('sku', 'SKU') + col('title', 'Názov') +
+    col('sku', 'SKU') +
+    '<th class="title-col" data-sort="title">Názov<span class="arrow"></span>' +
+    '<span class="grip" title="Potiahni a rozšír stĺpec · dvojklik vráti pôvodnú šírku"></span></th>' +
     STORES.map((s) => col(`${s}:price`, 'cena', 'num sep') + col(`${s}:stock`, 'sklad', 'num')).join('');
 
   for (const th of $('colRow').querySelectorAll('th[data-sort]')) {
     th.addEventListener('click', () => setSort(th.dataset.sort));
   }
+  wireTitleGrip();
+}
+
+// ---- width of the name column --------------------------------------------
+
+const TITLE_WIDTH = 'titleWidth';
+const TITLE_DEFAULT = 300;
+
+function setTitleWidth(px, remember = true) {
+  const width = Math.round(Math.min(900, Math.max(120, px)));
+  document.documentElement.style.setProperty('--title-w', `${width}px`);
+  if (remember) { try { localStorage.setItem(TITLE_WIDTH, String(width)); } catch { /* private mode */ } }
+}
+
+/**
+ * Drag the right edge of the "Názov" header to widen the column. The grip sits
+ * inside a header that sorts on click, so every pointer event it handles is
+ * kept from bubbling — otherwise every resize would also reorder the table.
+ */
+function wireTitleGrip() {
+  const grip = $('colRow').querySelector('.grip');
+  const th = grip.closest('th');
+
+  grip.addEventListener('click', (e) => e.stopPropagation());
+  grip.addEventListener('dblclick', (e) => {
+    e.stopPropagation();
+    setTitleWidth(TITLE_DEFAULT, false);
+    try { localStorage.removeItem(TITLE_WIDTH); } catch { /* private mode */ }
+  });
+
+  grip.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const startX = e.clientX;
+    const startWidth = th.getBoundingClientRect().width;
+    grip.classList.add('dragging');
+    grip.setPointerCapture(e.pointerId);
+
+    const move = (ev) => setTitleWidth(startWidth + (ev.clientX - startX), false);
+    const up = (ev) => {
+      move(ev);
+      setTitleWidth(th.getBoundingClientRect().width);
+      grip.classList.remove('dragging');
+      grip.releasePointerCapture(ev.pointerId);
+      grip.removeEventListener('pointermove', move);
+      grip.removeEventListener('pointerup', up);
+    };
+    grip.addEventListener('pointermove', move);
+    grip.addEventListener('pointerup', up);
+  });
 }
 
 function paintSortArrows() {
@@ -1243,6 +1310,11 @@ function measureChrome() {
   root.setProperty('--head-h', `${document.querySelector('header').offsetHeight}px`);
   root.setProperty('--group-h', `${$('groupRow').offsetHeight}px`);
 }
+
+try {
+  const saved = Number(localStorage.getItem(TITLE_WIDTH));
+  if (saved) setTitleWidth(saved, false);
+} catch { /* private mode: fall back to the default width */ }
 
 buildHeader();
 measureChrome();
