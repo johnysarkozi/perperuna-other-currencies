@@ -6,6 +6,7 @@
  *   node scripts/gallery-localize.mjs                  # dry run
  *   node scripts/gallery-localize.mjs --apply
  *   node scripts/gallery-localize.mjs --locale=bg --handle=10-sprchovych-kociek-2x-kazda-vona
+ *   node scripts/gallery-localize.mjs --handle=… --overwrite   # rebuild an existing list
  *
  * The theme picks a gallery from custom.<locale>_images — a list of file
  * references in the same order as product.media. Where a product's gallery is
@@ -79,10 +80,105 @@ async function contentHash(url) {
   return digest;
 }
 
+/**
+ * Artwork that exists as several separate files, exported at different times so
+ * the bytes differ even though the picture is the same. Found by comparing the
+ * images perceptually and confirmed by eye; kept as a table rather than
+ * recomputed, so a run needs nothing but the Admin API.
+ *
+ * Without this the new products fall back to the Slovak file for artwork whose
+ * translation does exist — just attached to a different copy of the original.
+ */
+const ALIASES = [
+  // 3, 6
+  [
+    'gid://shopify/MediaImage/55929210601799',
+    'gid://shopify/MediaImage/55936278495559',
+  ],
+  // 6
+  [
+    'gid://shopify/MediaImage/55929241633095',
+    'gid://shopify/MediaImage/61034749755719',
+    'gid://shopify/MediaImage/61034750083399',
+    'gid://shopify/MediaImage/61034750443847',
+  ],
+  // Frame
+  [
+    'gid://shopify/MediaImage/55929319915847',
+    'gid://shopify/MediaImage/61034749722951',
+    'gid://shopify/MediaImage/61034750050631',
+    'gid://shopify/MediaImage/61034750411079',
+  ],
+  // 7
+  [
+    'gid://shopify/MediaImage/55936137986375',
+    'gid://shopify/MediaImage/61034749854023',
+    'gid://shopify/MediaImage/61034750542151',
+  ],
+  // 22, 5, 8
+  [
+    'gid://shopify/MediaImage/55929210667335',
+    'gid://shopify/MediaImage/55936201621831',
+    'gid://shopify/MediaImage/57888601604423',
+  ],
+  // 3
+  [
+    'gid://shopify/MediaImage/55929210503495',
+    'gid://shopify/MediaImage/55936201883975',
+    'gid://shopify/MediaImage/61034749690183',
+    'gid://shopify/MediaImage/61034749985095',
+  ],
+  // 3, 5
+  [
+    'gid://shopify/MediaImage/55929210569031',
+    'gid://shopify/MediaImage/55936175243591',
+  ],
+  // 4
+  [
+    'gid://shopify/MediaImage/55936188711239',
+    'gid://shopify/MediaImage/61034749821255',
+    'gid://shopify/MediaImage/61034750148935',
+    'gid://shopify/MediaImage/61034750509383',
+  ],
+  // 38
+  [
+    'gid://shopify/MediaImage/56717111624007',
+    'gid://shopify/MediaImage/56717123125575',
+    'gid://shopify/MediaImage/56717133513031',
+  ],
+  // 14
+  [
+    'gid://shopify/MediaImage/56717111525703',
+    'gid://shopify/MediaImage/56717133218119',
+  ],
+  // 2
+  [
+    'gid://shopify/MediaImage/55936134349127',
+    'gid://shopify/MediaImage/61034749788487',
+    'gid://shopify/MediaImage/61034750116167',
+    'gid://shopify/MediaImage/61034750476615',
+  ],
+  // 52
+  [
+    'gid://shopify/MediaImage/59051612012871',
+    'gid://shopify/MediaImage/61034750312775',
+  ],
+  // CAJ
+  [
+    'gid://shopify/MediaImage/58863073788231',
+    'gid://shopify/MediaImage/58863128871239',
+  ],
+];
+
+const aliasOf = new Map();
+ALIASES.forEach((group, i) => group.forEach((id) => aliasOf.set(id, `alias:${i}`)));
+
 const args = process.argv.slice(2);
 const apply = args.includes('--apply');
 const onlyLocale = args.find((a) => a.startsWith('--locale='))?.slice('--locale='.length);
 const onlyHandle = args.find((a) => a.startsWith('--handle='))?.slice('--handle='.length);
+// Existing lists were placed by hand, so they are left alone unless asked for.
+const overwrite = args.includes('--overwrite');
 const locales = LOCALES.filter((l) => !onlyLocale || l === onlyLocale);
 
 console.log(apply ? '*** APPLY — writing to Shopify ***\n' : 'dry run — nothing will be written\n');
@@ -106,6 +202,8 @@ const listOf = (p, locale) => {
 const byId = {};
 /** locale -> hash of the Slovak artwork -> { localized id -> count } */
 const byHash = {};
+/** locale -> alias group -> { localized id -> count } — same picture, other file */
+const byAlias = {};
 /** Localized ids we have seen, so a lookup can be reported as a real file. */
 const seenNames = new Map();
 
@@ -124,18 +222,29 @@ for (const list of media.values()) {
 }
 process.stderr.write('\n\n');
 
+// A product being rebuilt must not be part of the training set: its own list is
+// what is in question, and letting it vote would make any answer self-confirming.
+const rebuilding = new Set(
+  overwrite ? products.filter((p) => !onlyHandle || p.handle === onlyHandle).map((p) => p.handle) : [],
+);
+
 for (const p of products) {
+  if (rebuilding.has(p.handle)) continue;
   const own = media.get(p.handle);
   for (const locale of LOCALES) {
     const list = listOf(p, locale);
     if (!list || list.length !== own.length) continue;
     byId[locale] ??= {};
     byHash[locale] ??= {};
+    byAlias[locale] ??= {};
     own.forEach((m, i) => {
       const target = list[i];
       if (!target) return;
-      ((byId[locale][m.id] ??= {})[target] ??= []).push(p.handle);
-      if (m.hash) ((byHash[locale][m.hash] ??= {})[target] ??= []).push(p.handle);
+      const where = `${p.handle}#${i + 1}`;
+      ((byId[locale][m.id] ??= {})[target] ??= []).push(where);
+      if (m.hash) ((byHash[locale][m.hash] ??= {})[target] ??= []).push(where);
+      const alias = aliasOf.get(m.id);
+      if (alias) ((byAlias[locale][alias] ??= {})[target] ??= []).push(where);
     });
   }
 }
@@ -192,18 +301,21 @@ const best = (votes) => {
  * says the same artwork maps to, that product's list is the odd one out — most
  * likely built by hand against a gallery that has since been reordered.
  */
+const offPositions = new Set();
+
 function auditExisting(locale) {
   const off = {};
   for (const p of products) {
     const list = listOf(p, locale);
     const own = media.get(p.handle);
-    if (!list || !own || list.length !== own.length) continue;
+    if (rebuilding.has(p.handle) || !list || !own || list.length !== own.length) continue;
     own.forEach((m, i) => {
       if (!m.hash) return;
       const hit = best(byHash[locale][m.hash]);
       if (!hit || !hit.outvoted) return;
       if (list[i] !== hit.id && !sameArtwork([list[i], hit.id])) {
         (off[p.handle] ??= []).push(i + 1);
+        offPositions.add(`${p.handle}#${i + 1}`);
       }
     });
   }
@@ -226,7 +338,7 @@ const suspect = Object.fromEntries(LOCALES.map((l) => [l, auditExisting(l)]));
 const targets = products.filter((p) => {
   if (onlyHandle && p.handle !== onlyHandle) return false;
   if (!p.media.nodes.length) return false;
-  return locales.some((l) => !listOf(p, l));
+  return overwrite ? locales.some((l) => listOf(p, l)) : locales.some((l) => !listOf(p, l));
 });
 
 let writes = 0;
@@ -236,17 +348,23 @@ for (const p of targets) {
   console.log(`=== ${p.handle}  [${p.status}]  ${own.length} pozícií`);
 
   for (const locale of locales) {
-    if (listOf(p, locale)) { console.log(`    ${locale}: už existuje — nechávam`); continue; }
+    if (listOf(p, locale) && !overwrite) { console.log(`    ${locale}: už existuje — nechávam`); continue; }
 
     const rows = own.map((m, i) => {
       // Same file on both products is certain; same artwork re-uploaded is
       // matched on the render hash, which is just as exact.
-      let hit = best(byId[locale]?.[m.id]) ?? best(byHash[locale]?.[m.hash]);
+      let hit = best(byId[locale]?.[m.id]) ?? best(byHash[locale]?.[m.hash])
+        ?? best(byAlias[locale]?.[aliasOf.get(m.id)]);
       // A single vote coming only from a product whose own list is out of step
       // is worse than no answer: better a Slovak image than the wrong one.
-      const shaky = hit && hit.votes <= 1 && hit.from.every((h) => suspect[locale][h]);
+      // A single vote coming only from a product whose own list is out of step
+      // is worse than no answer: better a Slovak image than the wrong one.
+      const shaky = hit && hit.votes <= 1
+        && hit.from.every((w) => suspect[locale][w.split('#')[0]]);
       if (shaky) hit = null;
-      const matchedBy = hit ? (byId[locale]?.[m.id] ? 'ten istý súbor' : 'zhodná grafika') : null;
+      const matchedBy = hit
+        ? (byId[locale]?.[m.id] ? 'ten istý súbor' : byHash[locale]?.[m.hash] ? 'zhodná grafika' : 'iná kópia tej istej grafiky')
+        : null;
       // Falling back to the Slovak file is what the hand-built lists do for
       // artwork with no text on it.
       let target = hit?.id ?? m.id;
