@@ -77,10 +77,24 @@ Zdroj obrázkov je voliteľný:
 
 ### Pozor na limit Figma API
 
-Renderovací endpoint `/v1/images` má na pláne Pro prísny, pomaly sa obnovujúci
-limit (`x-figma-rate-limit-type: low`). Rádovo stovka renderov ho vyčerpá
-a `retry-after` potom vracia dni. Čítanie štruktúry (`/v1/files`) má limit
-vlastný a ostáva funkčné.
+Limit renderovacieho endpointu `/v1/images` sa neviaže na plán, ale na **typ
+sedadla** účtu, ktorému patrí token:
 
-Keď je limit vyčerpaný, použi `--source=<dir>` s ručným exportom sekcie
-z Figmy — výsledok je rovnaký.
+| Sedadlo | Limit na `/v1/images` |
+|---------|-----------------------|
+| View / Collab | 20 requestov **za mesiac** |
+| Dev / Full | 15 requestov **za minútu** (plán Professional) |
+
+Hlavička `x-figma-rate-limit-type: low` v odpovedi znamená View/Collab sedadlo.
+Kúpa vyššieho plánu s tým nespraví nič — viewer na Organization má rovnaké
+mesačné limity ako viewer na Starteri. Musí sa zmeniť sedadlo.
+
+Použi preto token účtu s Dev/Full sedadlom. Do jedného requestu sa zmestí
+viac `ids` naraz (skript posiela po desiatich), takže 44 framov sú 3 requesty
+a všetkých 8 jazykov zhruba 25.
+
+Čítanie štruktúry (`/v1/files`) má limit vlastný a ostáva funkčné aj po
+vyčerpaní renderovacieho.
+
+Keď token s Dev/Full sedadlom nie je po ruke, použi `--source=<dir>` s ručným
+exportom sekcie z Figmy — výsledok je rovnaký.
