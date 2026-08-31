@@ -76,6 +76,33 @@
   .eur { cursor: help; }
   .eur.off { color: var(--warn); font-weight: 600; }
 
+  /* The price doubles as the way into the price editor, so it looks like text
+     until you point at it. */
+  button.price {
+    padding: 1px 4px; border: 1px solid transparent; border-radius: 5px;
+    background: none; color: inherit; font: inherit;
+    font-variant-numeric: tabular-nums; cursor: pointer;
+  }
+  button.price:hover { border-color: var(--line); background: var(--edit-bg); }
+  .was { color: var(--faint); font-size: 11.5px; text-decoration-thickness: 1px; }
+
+  .grid-prices { width: 100%; }
+  .grid-prices th { font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600; }
+  .grid-prices td, .grid-prices th { padding: 6px 10px 6px 0; white-space: nowrap; }
+  .grid-prices input {
+    width: 110px; padding: 5px 7px; text-align: right; font: inherit;
+    font-variant-numeric: tabular-nums;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--edit-bg); color: var(--text);
+  }
+  .grid-prices input:focus { border-color: var(--accent); outline: none; }
+  .grid-prices input.touched { border-color: var(--accent); }
+  .grid-prices .cur { color: var(--muted); font-size: 12px; }
+  .grid-prices .hint { color: var(--muted); font-size: 12px; }
+  .grid-prices .hint.off { color: var(--warn); font-weight: 600; }
+  .sheet .actions { display: flex; gap: 10px; align-items: center; margin-top: 18px; }
+  .sheet .actions .grow { flex: 1; }
+
   /* Whether a SKU is switched on in a market — the thing you scan for down a
      column, so it is a shape rather than a word. */
   .dot {
@@ -196,6 +223,23 @@
      zrkadlenie — zapíše sa okamžite na SK aj do všetkých ostatných obchodov.
      Pýta si heslo, lebo mení produkčný sklad na piatich obchodoch naraz.</p>
 
+  <h3>Ceny a zľavy</h3>
+  <p><strong>Klik na ktorúkoľvek cenu</strong> otvorí editor cien pre to SKU —
+     všetkých päť trhov naraz, v každom dva údaje: <strong>cena</strong> a
+     <strong>cena pred zľavou</strong>. Prečiarknutá cena v tabuľke znamená, že
+     tam produkt beží ako zľavnený.</p>
+  <p>Ceny sa <em>nezrkadlia</em> zo SK — každý trh má vlastnú menu aj cenovú
+     hladinu, takže nie je čo kopírovať. Tlačidlo <strong>Prepočítať zo SK</strong>
+     len predvyplní zahraničné polia zo slovenskej ceny kurzom ECB a zaokrúhli
+     tak, ako je v tom obchode zvykom (CZK na celé, PLN a RON na ,90, HUF na
+     desiatky). Je to návrh — zapíše sa presne to, čo necháš v poli.</p>
+  <p>Prázdna „cena pred zľavou“ ju zruší, teda produkt sa prestane tváriť ako
+     zľavnený. Nižšia cena pred zľavou než samotná cena sa nezapíše — v obchode
+     by sa neukázala a vyzeralo by to rozbito.</p>
+  <p>Zapisuje sa len to, čo naozaj zmeníš, a mení sa <strong>ten listing, ktorý
+     vidíš v tabuľke</strong> — nie prípadná „(-50%)“ kópia toho istého SKU.
+     Pýta si to isté heslo ako sklad.</p>
+
   <h3>Tlačidlá</h3>
   <table>
     <tr><td><strong>Zrkadliť zo SK</strong></td>
@@ -280,6 +324,33 @@
      behmi sa čísla rozchádzajú — predaj na PL neodpočíta sklad na CZ. Pri
      bežnej prevádzke je rozdiel malý, ale keď sa na dvoch trhoch naraz
      dopredávajú posledné kusy, dá sa predať viac, než je fyzicky na sklade.</p>
+</div></dialog>
+
+<dialog id="priceDialog"><div class="sheet">
+  <div class="closebar">
+    <h2 id="priceTitle">Ceny</h2>
+    <button id="priceClose">Zavrieť</button>
+  </div>
+  <p id="priceSub" class="meta"></p>
+
+  <table class="grid-prices">
+    <thead>
+      <tr>
+        <th>Trh</th><th>Cena</th><th>Cena pred zľavou</th><th></th>
+      </tr>
+    </thead>
+    <tbody id="priceRows"></tbody>
+  </table>
+
+  <p class="meta" id="priceNote">Prázdna „cena pred zľavou“ ju zruší — produkt sa
+     prestane tváriť ako zľavnený. Zapisuje sa len to, čo naozaj zmeníš.</p>
+
+  <div class="actions">
+    <button id="priceFill" title="Predvyplní zahraničné trhy zo slovenskej ceny cez kurz ECB">Prepočítať zo SK</button>
+    <span class="grow"></span>
+    <button id="priceCancel">Zrušiť</button>
+    <button id="priceSave">Uložiť</button>
+  </div>
 </div></dialog>
 
 <dialog id="skuDialog"><div class="sheet">
@@ -451,9 +522,16 @@ function toast(text, bad = false, ms = 3600) {
 async function load() {
   const { data, error } = await sb
     .from('catalog_listings')
-    .select('sku, store, title, variant_title, status, currency, price, inventory_quantity, inventory_policy, synced_at');
+    .select('sku, store, title, variant_title, status, currency, price, compare_at_price, ' +
+            'shopify_variant_id, inventory_quantity, inventory_policy, synced_at');
   if (error) { toast(`Chyba načítania: ${error.message}`, true); return; }
-  listings = data ?? [];
+  // PostgREST hands numerics back as strings; making them numbers here keeps
+  // every comparison, sort and conversion downstream honest.
+  listings = (data ?? []).map((l) => ({
+    ...l,
+    price: l.price === null ? null : Number(l.price),
+    compare_at_price: l.compare_at_price === null ? null : Number(l.compare_at_price),
+  }));
   render();
 }
 
@@ -715,7 +793,15 @@ function render() {
               .join('&#10;').replace(/"/g, '&quot;')}">${twins.length}×</span>`
         : '';
 
-      const price = `<td class="num sep${oddCls}"><div class="cell">${dot}<span>${money(cell.price, cell.currency)}</span>${twin}</div>${status}</td>`;
+      // The price opens the editor for the whole row: prices are per-currency,
+      // so they are set market by market rather than mirrored, and seeing all
+      // five side by side is the only way to set them sensibly.
+      const was = cell.compare_at_price
+        ? `<s class="was" title="cena pred zľavou">${money(cell.compare_at_price, cell.currency)}</s> `
+        : '';
+      const price = `<td class="num sep${oddCls}"><div class="cell">${dot}` +
+        `<button class="price" data-sku="${row.sku}" title="${store.toUpperCase()}: upraviť ceny na všetkých trhoch">` +
+        `${was}${money(cell.price, cell.currency)}</button>${twin}</div>${status}</td>`;
 
       // Stock is edited on SK only; the rest follow from the mirror, so an edit
       // there would just be overwritten.
@@ -856,7 +942,210 @@ async function toggleStatus(dot) {
   }
 }
 
+// ---- editing prices ------------------------------------------------------
+
+/**
+ * How each market rounds a price, read off what is already in the catalogue:
+ * CZK runs on whole crowns, PLN and RON end in ,90 and HUF in a round ten.
+ * Only used to pre-fill a suggestion — the number that gets saved is whatever
+ * stands in the field.
+ */
+const ROUNDING = {
+  EUR: (v) => Math.round(v * 100) / 100,
+  CZK: (v) => Math.max(1, Math.round(v)),
+  PLN: (v) => Math.max(0.9, Math.round(v) - 0.1),
+  RON: (v) => Math.max(0.9, Math.round(v) - 0.1),
+  HUF: (v) => Math.max(10, Math.round(v / 10) * 10),
+};
+
+const priceStep = (cur) => (cur === 'HUF' || cur === 'CZK' ? '1' : '0.01');
+
+/** null for an empty field, NaN for something that is not a number. */
+function parseAmount(text) {
+  const trimmed = (text ?? '').trim().replace(',', '.');
+  if (trimmed === '') return null;
+  const value = Number(trimmed);
+  return Number.isFinite(value) && value >= 0 ? value : NaN;
+}
+
+let editing = null;
+
+function openPrices(sku) {
+  const row = pivot().find((r) => r.sku === sku);
+  if (!row) return;
+
+  editing = { sku, cells: {} };
+  $('priceTitle').textContent = `Ceny — ${sku}`;
+  $('priceSub').textContent = row.title ?? '';
+
+  $('priceRows').innerHTML = STORES.filter((s) => row.stores[s]).map((s) => {
+    const cell = row.stores[s];
+    editing.cells[s] = cell;
+    const num = (v) => (v === null || v === undefined ? '' : v);
+    return `<tr data-store="${s}">
+      <td><strong>${s.toUpperCase()}</strong>${s === TRUTH ? ' <span class="cur">· pravda</span>' : ''}</td>
+      <td><input class="p" type="number" min="0" step="${priceStep(cell.currency)}"
+            value="${num(cell.price)}"> <span class="cur">${cell.currency ?? ''}</span></td>
+      <td><input class="c" type="number" min="0" step="${priceStep(cell.currency)}"
+            value="${num(cell.compare_at_price)}"> <span class="cur">${cell.currency ?? ''}</span></td>
+      <td class="hint"></td>
+    </tr>`;
+  }).join('');
+
+  paintPriceHints();
+  $('priceDialog').showModal();
+}
+
+/** Live euro value and distance from the SK price, as the fields are typed. */
+function paintPriceHints() {
+  const skInput = $('priceRows').querySelector('tr[data-store="sk"] input.p');
+  const skPrice = skInput ? parseAmount(skInput.value) : null;
+
+  for (const tr of $('priceRows').querySelectorAll('tr')) {
+    const store = tr.dataset.store;
+    const currency = editing.cells[store].currency;
+    const price = parseAmount(tr.querySelector('input.p').value);
+    const compare = parseAmount(tr.querySelector('input.c').value);
+    const hint = tr.querySelector('.hint');
+
+    if (Number.isNaN(price) || Number.isNaN(compare)) {
+      hint.textContent = 'neplatné číslo';
+      hint.classList.add('off');
+      continue;
+    }
+    if (compare !== null && price !== null && compare < price) {
+      hint.textContent = 'cena pred zľavou je nižšia než cena';
+      hint.classList.add('off');
+      continue;
+    }
+
+    const parts = [];
+    let off = false;
+    const eur = price === null ? null : toEur(price, currency);
+    if (eur !== null) {
+      parts.push(`≈ ${money(eur, 'EUR')}`);
+      if (skPrice && store !== TRUTH) {
+        const gap = Math.round(((eur - skPrice) / skPrice) * 100);
+        parts.push(gap === 0 ? '0 %' : `${gap > 0 ? '+' : '−'}${Math.abs(gap)} %`);
+        off = Math.abs(gap) >= PRICE_GAP;
+      }
+      if (compare) {
+        const eurCompare = toEur(compare, currency);
+        if (eurCompare !== null) parts.push(`· pred zľavou ≈ ${money(eurCompare, 'EUR')}`);
+      }
+    }
+    hint.textContent = parts.join(' ');
+    hint.classList.toggle('off', off);
+  }
+}
+
+/** Pre-fill the other markets from the SK figures through the ECB rate. */
+function fillFromSk() {
+  if (!fx.rates) { toast('Kurzy nie sú načítané, prepočet sa nedá spraviť.', true); return; }
+  const skRow = $('priceRows').querySelector('tr[data-store="sk"]');
+  if (!skRow) { toast('Toto SKU na SK nie je, nie je z čoho prepočítať.', true); return; }
+
+  const skPrice = parseAmount(skRow.querySelector('input.p').value);
+  const skCompare = parseAmount(skRow.querySelector('input.c').value);
+  if (skPrice === null || Number.isNaN(skPrice)) { toast('Najprv vyplň cenu na SK.', true); return; }
+
+  for (const tr of $('priceRows').querySelectorAll('tr')) {
+    const store = tr.dataset.store;
+    if (store === TRUTH) continue;
+    const currency = editing.cells[store].currency;
+    const rate = fx.rates[currency];
+    if (!rate) continue;
+    const round = ROUNDING[currency] ?? ((v) => Math.round(v * 100) / 100);
+    tr.querySelector('input.p').value = round(skPrice * rate);
+    tr.querySelector('input.c').value = skCompare === null || Number.isNaN(skCompare)
+      ? '' : round(skCompare * rate);
+  }
+  paintPriceHints();
+  toast('Predvyplnené kurzom ECB — pozri sa na čísla a uprav, čo treba.');
+}
+
+async function savePrices() {
+  const changes = [];
+  const summary = [];
+
+  for (const tr of $('priceRows').querySelectorAll('tr')) {
+    const store = tr.dataset.store;
+    const cell = editing.cells[store];
+    const price = parseAmount(tr.querySelector('input.p').value);
+    const compare = parseAmount(tr.querySelector('input.c').value);
+
+    if (Number.isNaN(price) || Number.isNaN(compare)) { toast(`${store.toUpperCase()}: neplatné číslo`, true); return; }
+    if (price === null) { toast(`${store.toUpperCase()}: cena nemôže byť prázdna`, true); return; }
+    if (compare !== null && compare < price) {
+      toast(`${store.toUpperCase()}: cena pred zľavou je nižšia než cena`, true);
+      return;
+    }
+
+    const change = { store, variantId: cell.shopify_variant_id };
+    let touched = false;
+    if (price !== (cell.price ?? null)) { change.price = price; touched = true; }
+    if (compare !== (cell.compare_at_price ?? null)) { change.compareAtPrice = compare; touched = true; }
+    if (!touched) continue;
+
+    if (!cell.shopify_variant_id) { toast(`${store.toUpperCase()}: chýba variant, načítaj zo Shopify`, true); return; }
+    changes.push(change);
+    summary.push(`${store.toUpperCase()}: ${money(price, cell.currency)}` +
+      (compare === null ? ' bez zľavy' : ` (pred zľavou ${money(compare, cell.currency)})`));
+  }
+
+  if (!changes.length) { toast('Nič sa nezmenilo.'); return; }
+  if (!confirm(`Zapísať ceny ${editing.sku}?\n\n${summary.join('\n')}`)) return;
+
+  const password = editPassword();
+  if (!password) return;
+
+  const btn = $('priceSave');
+  btn.disabled = true;
+  btn.textContent = 'Ukladám…';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/price-set`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sku: editing.sku, changes, password }),
+    });
+    const out = await res.json();
+    if (!out.ok) {
+      if (res.status === 403) sessionStorage.removeItem('editpw');
+      throw new Error(out.error ?? 'zápis zlyhal');
+    }
+    // The catalog copy only refreshes on the next sync, so show what was
+    // written straight away.
+    for (const change of changes) {
+      for (const l of listings) {
+        if (l.shopify_variant_id !== change.variantId) continue;
+        if (change.price !== undefined) l.price = change.price;
+        if (change.compareAtPrice !== undefined) l.compare_at_price = change.compareAtPrice;
+      }
+    }
+    toast(`${editing.sku} — ceny upravené na ${changes.length} ${changes.length === 1 ? 'trhu' : 'trhoch'}`);
+    $('priceDialog').close();
+    render();
+  } catch (err) {
+    toast(`Chyba: ${err.message}`, true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Uložiť';
+  }
+}
+
+$('priceRows').addEventListener('input', (e) => {
+  if (e.target.tagName === 'INPUT') paintPriceHints();
+});
+$('priceFill').addEventListener('click', fillFromSk);
+$('priceSave').addEventListener('click', savePrices);
+$('priceCancel').addEventListener('click', () => $('priceDialog').close());
+$('priceClose').addEventListener('click', () => $('priceDialog').close());
+$('priceDialog').addEventListener('click', (e) => { if (e.target === $('priceDialog')) $('priceDialog').close(); });
+
 $('rows').addEventListener('click', (e) => {
+  const priceBtn = e.target.closest('button.price');
+  if (priceBtn) { openPrices(priceBtn.dataset.sku); return; }
+
   const dot = e.target.closest('button.dot');
   if (!dot || dot.disabled) return;
   // Foreign dots stay visible but are not switches — say why rather than

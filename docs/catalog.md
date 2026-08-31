@@ -101,6 +101,7 @@ a SKU, ktoré v niektorom obchode chýba.
   (obsah zrkadlí [`docs/sku.md`](sku.md); pri zmene uprav oboje)
 - tlačidlá **Zrkadliť zo SK** a **Načítať zo Shopify**
 - **prepočet zahraničných cien do €** pod cenou, aj s odchýlkou od SK
+- **úprava cien** (aj ceny pred zľavou) pre všetkých päť trhov — klik na cenu
 
 ### Prístup
 
@@ -240,6 +241,45 @@ ostatných.
   premietne do `catalog_listings` (len do `ACTIVE`/`DRAFT` riadkov), aby bodky
   preskočili bez čakania na sync.
 
+## Úprava cien z appky
+
+Klik na ktorúkoľvek cenu v matici otvorí editor cien pre to SKU — **všetkých
+päť trhov naraz**, v každom `cena` a `cena pred zľavou` (Shopify
+`compareAtPrice`). Prečiarknutá cena v tabuľke znamená, že tam produkt beží ako
+zľavnený. Zapisuje Edge Function **`price-set`**.
+
+```
+POST /functions/v1/price-set
+{
+  "sku": "PP-CUBE-CALM-004",
+  "changes": [
+    { "store": "sk", "variantId": "gid://shopify/ProductVariant/1", "price": 4.49, "compareAtPrice": 5.99 },
+    { "store": "cz", "variantId": "gid://shopify/ProductVariant/2", "price": 109 }
+  ],
+  "password": "…"
+}
+```
+
+Ceny sa **nezrkadlia zo SK** — každý backend má vlastnú menu aj cenovú hladinu,
+takže nie je čo kopírovať. Tlačidlo **Prepočítať zo SK** len predvyplní
+zahraničné polia kurzom ECB a zaokrúhli podľa zvyklosti obchodu (CZK na celé,
+PLN a RON na `,90`, HUF na desiatky). Je to návrh — zapíše sa presne to, čo
+zostane v poli.
+
+### Poistky
+
+- Heslo je to isté ako pri sklade (`catalog_settings.edit_password_sha256`).
+- Každá zmena nesie `variantId` toho listingu, ktorý bol v tabuľke, a funkcia
+  overí, že ten variant naozaj nesie dané SKU. Preto sa nedá omylom precenať
+  „(-50%)" kópia toho istého SKU.
+- Najprv sa načítajú a skontrolujú **všetky** trhy a až potom sa zapisuje —
+  preklep v poslednom trhu nenechá predošlé už precenené.
+- `compareAtPrice` nižšia než `price` sa odmietne; v obchode by sa neukázala
+  a vyzeralo by to rozbito. `null` ju zruší, vynechaný kľúč ju nechá tak.
+- Zapisuje sa len to, čo sa naozaj líši; každé pole ide do `catalog_sync_log`
+  ako `price` alebo `compare_at_price` s `actor = 'price-set'` a rovno sa
+  premietne do `catalog_listings`.
+
 ## Prepočet zahraničných cien do €
 
 Pod každou cenou v CZ/PL/RO/HU je `≈` suma v eurách a odchýlka od ceny na SK
@@ -369,9 +409,10 @@ najbližší beh prepíše.
    pri cene + filter rozdielov. Riadi sa zo SK a rozpošle sa do všetkých
    obchodov.
 6c. ✅ **Hmotnosti** — `scripts/weight-mirror.mjs`, jednorazovo zo SK.
-7. ⏳ **Ceny** — katalóg ich ukazuje, ale nemení. Zrkadlenie cien nedáva
-   zmysel priamo (iné meny), chcelo by to prepočet cez kurz + pravidlá
-   zaokrúhlenia.
+7. ✅ **Ceny** — Edge Function `price-set`, editor cien pre všetkých päť trhov
+   naraz vrátane ceny pred zľavou, plus prepočet do € kurzom ECB s návrhom
+   zaokrúhlenia. Zrkadliť sa zámerne nezrkadlia — každý trh má vlastnú menu
+   aj cenovú hladinu.
 8. ⏳ **Zdieľaný sklad namiesto kópie** — webhooky `inventory_levels/update`
    zo SK namiesto pollovania.
 
