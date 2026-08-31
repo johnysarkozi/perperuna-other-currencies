@@ -5,34 +5,38 @@
   {
    "handle": "set-sprchoveho-ritualu-4-ks-rise-shine",
    "positions": {
+    "4": {
+     "figmaNode": "5167:8899",
+     "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 5",
+     "from": "sk"
+    },
     "5": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9137",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:8846",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 3"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     }
    },
    "skip": [
-    4,
     9
    ],
    "keep": 3
@@ -40,40 +44,43 @@
   {
    "handle": "set-sprchoveho-ritualu-4-ks-sweet-dreams",
    "positions": {
+    "4": {
+     "figmaNode": "5167:8929",
+     "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 5",
+     "from": "sk"
+    },
     "5": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     }
    },
-   "skip": [
-    4
-   ],
+   "skip": [],
    "keep": 3
   },
   {
@@ -94,42 +101,42 @@
     "4": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:8846",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 3"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9137",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -141,37 +148,37 @@
     "2": {
      "figmaNode": "5167:8846",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 3"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:8914",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 2"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9146",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 4"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -183,37 +190,40 @@
     "2": {
      "figmaNode": "5167:9137",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:8899",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 2"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:9154",
+     "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 7",
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     }
    },
-   "skip": [
-    8
-   ],
+   "skip": [],
    "keep": 3
   },
   {
@@ -222,37 +232,37 @@
     "2": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:8854",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 2"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9134",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 4"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -264,37 +274,37 @@
     "2": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:8929",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 2"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9157",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 4"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -306,62 +316,62 @@
     "2": {
      "figmaNode": "5167:8846",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 3"
+     "from": "sk"
     },
     "3": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:9137",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9120",
      "figmaName": "PG PERPERUNA/KOCKY/SI/LOVE/3",
-     "from": "PG PERPERUNA/KOCKY/SK/LOVE/3"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9184",
      "figmaName": "PG PERPERUNA/KOCKY/SI/REFRESH/3",
-     "from": "PG PERPERUNA/KOCKY/SK/REFRESH/3"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:9157",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 4"
+     "from": "sk"
     },
     "12": {
      "figmaNode": "5167:8929",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 2"
+     "from": "sk"
     },
     "13": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "14": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "15": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -373,37 +383,40 @@
     "2": {
      "figmaNode": "5167:9120",
      "figmaName": "PG PERPERUNA/KOCKY/SI/LOVE/3",
-     "from": "PG PERPERUNA/KOCKY/SK/LOVE/3"
+     "from": "sk"
+    },
+    "4": {
+     "figmaNode": "5167:8884",
+     "figmaName": "PG PERPERUNA/KOCKY/SI/LOVE/2",
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9149",
      "figmaName": "PG PERPERUNA/KOCKY/SI/LOVE/4",
-     "from": "PG PERPERUNA/KOCKY/SK/LOVE/4"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     }
    },
-   "skip": [
-    4
-   ],
+   "skip": [],
    "keep": 2
   },
   {
@@ -412,42 +425,42 @@
     "4": {
      "figmaNode": "5167:9120",
      "figmaName": "PG PERPERUNA/KOCKY/SI/LOVE/3",
-     "from": "PG PERPERUNA/KOCKY/SK/LOVE/3"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9149",
      "figmaName": "PG PERPERUNA/KOCKY/SI/LOVE/4",
-     "from": "PG PERPERUNA/KOCKY/SK/LOVE/4"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -459,42 +472,42 @@
     "5": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9120",
      "figmaName": "PG PERPERUNA/KOCKY/SI/LOVE/3",
-     "from": "PG PERPERUNA/KOCKY/SK/LOVE/3"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9157",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 4"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     },
     "12": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -506,51 +519,51 @@
     "4": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9137",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:8846",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 3"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:9157",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 4"
+     "from": "sk"
+    },
+    "11": {
+     "figmaNode": "5167:8929",
+     "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 5",
+     "from": "sk"
     },
     "12": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     }
    },
-   "skip": [
-    1,
-    2,
-    3,
-    11
-   ],
-   "keep": 1
+   "skip": [],
+   "keep": 4
   },
   {
    "handle": "love-ritual-essential-set-s-bavlnenym-vreckom",
@@ -558,42 +571,42 @@
     "5": {
      "figmaNode": "5167:9184",
      "figmaName": "PG PERPERUNA/KOCKY/SI/REFRESH/3",
-     "from": "PG PERPERUNA/KOCKY/SK/REFRESH/3"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:8846",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 3"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:9157",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 4"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     },
     "12": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -605,37 +618,37 @@
     "6": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:9157",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 4"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "12": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -647,52 +660,52 @@
     "7": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:8846",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 3"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:9184",
      "figmaName": "PG PERPERUNA/KOCKY/SI/REFRESH/3",
-     "from": "PG PERPERUNA/KOCKY/SK/REFRESH/3"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "12": {
      "figmaNode": "5167:9137",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+     "from": "sk"
     },
     "13": {
      "figmaNode": "5167:9157",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 4"
+     "from": "sk"
     },
     "14": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "15": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "16": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -704,47 +717,50 @@
     "4": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9157",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 4"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
+    },
+    "8": {
+     "figmaNode": "5167:8899",
+     "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 5",
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:8846",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 3"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:9137",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+     "from": "sk"
     },
     "12": {
      "figmaNode": "5167:8944",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/BENEFITY",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/BENEFITY"
+     "from": "sk"
     },
     "13": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     }
    },
-   "skip": [
-    8
-   ],
+   "skip": [],
    "keep": 5
   },
   {
@@ -753,43 +769,50 @@
     "3": {
      "figmaNode": "5167:8396",
      "figmaName": "PG PERPERUNA/CAJE/SI/Dream Valley/05",
-     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/05"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:8350",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Ako to funguje",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:8415",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Dream Valley/04",
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:8332",
      "figmaName": "PG PERPERUNA/CAJE/SI/Dream Valley/06",
-     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/06"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:8326",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Vrecko",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:8573",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Recenzie",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Recenzie"
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:8447",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Dream Valley/02",
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:8527",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Benefity",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:8474",
      "figmaName": "PG PERPERUNA/CAJE/SI/Dream Valley/01",
-     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/01"
+     "from": "sk"
     }
    },
-   "skip": [
-    5,
-    9
-   ],
+   "skip": [],
    "keep": 2
   },
   {
@@ -798,48 +821,55 @@
     "3": {
      "figmaNode": "5167:8775",
      "figmaName": "PG PERPERUNA/CAJE/SI/Secret Garden/04",
-     "from": "PG PERPERUNA/CAJE/SK/Secret Garden/04"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:8762",
      "figmaName": "PG PERPERUNA/CAJE/SI/Secret Garden/05",
-     "from": "PG PERPERUNA/CAJE/SK/Secret Garden/05"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:8350",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Ako to funguje",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:8784",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Secret Garden/03",
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:8326",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Vrecko",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:8714",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Zena",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Zena"
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:8447",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Dream Valley/02",
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:8573",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Recenzie",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Recenzie"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:8798",
      "figmaName": "PG PERPERUNA/CAJE/SI/Secret Garden/01",
-     "from": "PG PERPERUNA/CAJE/SK/Secret Garden/01"
+     "from": "sk"
     },
     "12": {
      "figmaNode": "5167:8527",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Benefity",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+     "from": "sk"
     }
    },
-   "skip": [
-    6,
-    9
-   ],
+   "skip": [],
    "keep": 2
   },
   {
@@ -848,43 +878,50 @@
     "3": {
      "figmaNode": "5167:8692",
      "figmaName": "PG PERPERUNA/CAJE/SI/Herbal Spring/04",
-     "from": "PG PERPERUNA/CAJE/SK/Herbal Spring/04"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:8314",
      "figmaName": "PG PERPERUNA/CAJE/SI/Herbal Spring/06",
-     "from": "PG PERPERUNA/CAJE/SK/Herbal Spring/06"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:8350",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Ako to funguje",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:8700",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Herbal Spring/03",
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:8326",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Vrecko",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:8714",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Zena",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Zena"
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:8447",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Dream Valley/02",
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:8721",
      "figmaName": "PG PERPERUNA/CAJE/SI/Herbal Spring/01",
-     "from": "PG PERPERUNA/CAJE/SK/Herbal Spring/01"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:8527",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Benefity",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+     "from": "sk"
     }
    },
-   "skip": [
-    6,
-    9
-   ],
+   "skip": [],
    "keep": 2
   },
   {
@@ -893,48 +930,55 @@
     "3": {
      "figmaNode": "5167:8439",
      "figmaName": "PG PERPERUNA/CAJE/SI/Nordic Forest/05",
-     "from": "PG PERPERUNA/CAJE/SK/Nordic Forest/05"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:8402",
      "figmaName": "PG PERPERUNA/CAJE/SI/Nordic Forest/06",
-     "from": "PG PERPERUNA/CAJE/SK/Nordic Forest/06"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:8350",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Ako to funguje",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+     "from": "sk"
+    },
+    "6": {
+     "figmaNode": "5167:8515",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Nordic Forest/03",
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:8326",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Vrecko",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:8714",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Zena",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Zena"
+     "from": "sk"
+    },
+    "9": {
+     "figmaNode": "5167:8447",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Dream Valley/02",
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:8573",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Recenzie",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Recenzie"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:8652",
      "figmaName": "PG PERPERUNA/CAJE/SI/Nordic Forest/01",
-     "from": "PG PERPERUNA/CAJE/SK/Nordic Forest/01"
+     "from": "sk"
     },
     "12": {
      "figmaNode": "5167:8527",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Benefity",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+     "from": "sk"
     }
    },
-   "skip": [
-    6,
-    9
-   ],
+   "skip": [],
    "keep": 2
   },
   {
@@ -943,114 +987,132 @@
     "3": {
      "figmaNode": "5167:8431",
      "figmaName": "PG PERPERUNA/CAJE/SI/Mount Chocolate/06",
-     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/06"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:8350",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Ako to funguje",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:8384",
      "figmaName": "PG PERPERUNA/CAJE/SI/Mount Chocolate/07",
-     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/07"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:8838",
      "figmaName": "PG PERPERUNA/CAJE/SI/Mount Chocolate/01",
-     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/01"
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:8462",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Mount Chocolate/04",
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:8326",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Vrecko",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:8714",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Zena",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Zena"
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:8447",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Dream Valley/02",
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:8612",
      "figmaName": "PG PERPERUNA/CAJE/SI/Mount Chocolate/02",
-     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/02"
+     "from": "sk"
     },
     "12": {
      "figmaNode": "5167:8573",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Recenzie",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Recenzie"
+     "from": "sk"
     },
     "13": {
      "figmaNode": "5167:8527",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Benefity",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+     "from": "sk"
     }
    },
-   "skip": [
-    7,
-    10
-   ],
+   "skip": [],
    "keep": 2
   },
   {
    "handle": "kompletna-kolekcia-aromaticke-caje-do-kupela-5-ks",
    "positions": {
+    "3": {
+     "figmaNode": "5167:8569",
+     "figmaName": "PG PERPERUNA/KEFA/SI/4",
+     "from": "de"
+    },
     "4": {
      "figmaNode": "5167:8431",
      "figmaName": "PG PERPERUNA/CAJE/SI/Mount Chocolate/06",
-     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/06"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:8775",
      "figmaName": "PG PERPERUNA/CAJE/SI/Secret Garden/04",
-     "from": "PG PERPERUNA/CAJE/SK/Secret Garden/04"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:8396",
      "figmaName": "PG PERPERUNA/CAJE/SI/Dream Valley/05",
-     "from": "PG PERPERUNA/CAJE/SK/Dream Valley/05"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:8692",
      "figmaName": "PG PERPERUNA/CAJE/SI/Herbal Spring/04",
-     "from": "PG PERPERUNA/CAJE/SK/Herbal Spring/04"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:8439",
      "figmaName": "PG PERPERUNA/CAJE/SI/Nordic Forest/05",
-     "from": "PG PERPERUNA/CAJE/SK/Nordic Forest/05"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:8350",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Ako to funguje",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+     "from": "sk"
+    },
+    "10": {
+     "figmaNode": "5167:8462",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Mount Chocolate/04",
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:8326",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Vrecko",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Vrecko"
+     "from": "sk"
     },
     "12": {
      "figmaNode": "5167:8714",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Zena",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Zena"
+     "from": "sk"
+    },
+    "13": {
+     "figmaNode": "5167:8447",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Dream Valley/02",
+     "from": "sk"
     },
     "14": {
      "figmaNode": "5167:8612",
      "figmaName": "PG PERPERUNA/CAJE/SI/Mount Chocolate/02",
-     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/02"
+     "from": "sk"
     },
     "15": {
      "figmaNode": "5167:8573",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Recenzie",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Recenzie"
+     "from": "sk"
     }
    },
-   "skip": [
-    3,
-    10,
-    13
-   ],
+   "skip": [],
    "keep": 3
   },
   {
@@ -1059,17 +1121,17 @@
     "3": {
      "figmaNode": "5167:8560",
      "figmaName": "PG PERPERUNA/KEFA/SI/2",
-     "from": "PG PERPERUNA/KEFA/SK/2"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:8555",
      "figmaName": "PG PERPERUNA/KEFA/SI/3",
-     "from": "PG PERPERUNA/KEFA/SK/3"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:8564",
      "figmaName": "PG PERPERUNA/KEFA/SI/4",
-     "from": "PG PERPERUNA/KEFA/SK/4"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -1081,32 +1143,32 @@
     "2": {
      "figmaNode": "5167:9184",
      "figmaName": "PG PERPERUNA/KOCKY/SI/REFRESH/3",
-     "from": "PG PERPERUNA/KOCKY/SK/REFRESH/3"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:9169",
      "figmaName": "PG PERPERUNA/KOCKY/SI/REFRESH/2",
-     "from": "PG PERPERUNA/KOCKY/SK/REFRESH/2"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:9189",
      "figmaName": "PG PERPERUNA/KOCKY/SI/REFRESH/4",
-     "from": "PG PERPERUNA/KOCKY/SK/REFRESH/4"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     }
    },
    "skip": [],
@@ -1115,31 +1177,38 @@
   {
    "handle": "poharik-a-lyzicka-na-cajovy-ritual",
    "positions": {
+    "3": {
+     "figmaNode": "5167:8569",
+     "figmaName": "PG PERPERUNA/KEFA/SI/4",
+     "from": "de"
+    },
     "4": {
      "figmaNode": "5167:8350",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Ako to funguje",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Ako to funguje"
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:8462",
+     "figmaName": "PG PERPERUNA/CAJE/SI/Mount Chocolate/04",
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:8612",
      "figmaName": "PG PERPERUNA/CAJE/SI/Mount Chocolate/02",
-     "from": "PG PERPERUNA/CAJE/SK/Mount Chocolate/02"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:8573",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Recenzie",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Recenzie"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:8527",
      "figmaName": "PG PERPERUNA/CAJE/SI/Spolocne/Benefity",
-     "from": "PG PERPERUNA/CAJE/SK/Spolocne/Benefity"
+     "from": "sk"
     }
    },
-   "skip": [
-    3,
-    5
-   ],
+   "skip": [],
    "keep": 3
   },
   {
@@ -1148,47 +1217,50 @@
     "3": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:9157",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 4"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:8929",
+     "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 5",
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:8846",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 3"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:9184",
      "figmaName": "PG PERPERUNA/KOCKY/SI/REFRESH/3",
-     "from": "PG PERPERUNA/KOCKY/SK/REFRESH/3"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     }
    },
-   "skip": [
-    7
-   ],
+   "skip": [],
    "keep": 3
   },
   {
@@ -1197,47 +1269,50 @@
     "3": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:9157",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 4"
+     "from": "sk"
+    },
+    "5": {
+     "figmaNode": "5167:8929",
+     "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 5",
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
     },
     "7": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9137",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:9184",
      "figmaName": "PG PERPERUNA/KOCKY/SI/REFRESH/3",
-     "from": "PG PERPERUNA/KOCKY/SK/REFRESH/3"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:8846",
      "figmaName": "PG PERPERUNA/KOCKY/SI/UPLIFT/ 5",
-     "from": "PG PERPERUNA/KOCKY/SK/UPLIFT/ 3"
+     "from": "sk"
     }
    },
-   "skip": [
-    5
-   ],
+   "skip": [],
    "keep": 3
   },
   {
@@ -1246,47 +1321,50 @@
     "3": {
      "figmaNode": "5167:9157",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 7",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 4"
+     "from": "sk"
     },
     "4": {
      "figmaNode": "5167:9075",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/AKO FUNGUJE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/AKO FUNGUJE"
+     "from": "sk"
     },
     "5": {
      "figmaNode": "5167:9031",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/RECENZIE",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/RECENZIE"
+     "from": "sk"
     },
     "6": {
      "figmaNode": "5167:9010",
      "figmaName": "PG PERPERUNA/KOCKY/SI/SPOLOCNE/MUZ",
-     "from": "PG PERPERUNA/KOCKY/SK/SPOLOCNE/MUZ"
+     "from": "sk"
+    },
+    "7": {
+     "figmaNode": "5167:8929",
+     "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 5",
+     "from": "sk"
     },
     "8": {
      "figmaNode": "5167:9184",
      "figmaName": "PG PERPERUNA/KOCKY/SI/REFRESH/3",
-     "from": "PG PERPERUNA/KOCKY/SK/REFRESH/3"
+     "from": "sk"
     },
     "9": {
      "figmaNode": "5167:9137",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BREATHE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BREATHE/ 3"
+     "from": "sk"
     },
     "10": {
      "figmaNode": "5167:9112",
      "figmaName": "PG PERPERUNA/KOCKY/SI/BALANCE/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/BALANCE/ 3"
+     "from": "sk"
     },
     "11": {
      "figmaNode": "5167:9125",
      "figmaName": "PG PERPERUNA/KOCKY/SI/CALM/ 6",
-     "from": "PG PERPERUNA/KOCKY/SK/CALM/ 3"
+     "from": "sk"
     }
    },
-   "skip": [
-    7
-   ],
+   "skip": [],
    "keep": 3
   }
  ]

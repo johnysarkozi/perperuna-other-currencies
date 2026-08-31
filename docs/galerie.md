@@ -47,17 +47,38 @@ a na DE `5.png`. Používa sa preto perceptuálny hash (16×16 dHash) renderu
 framu proti médiu produktu.
 
 Rozhoduje **odstup od druhého kandidáta**, nie absolútna vzdialenosť: správny
-fram býva ďaleko (iná revízia grafiky), ale s veľkým náskokom. Kalibrované na
-`odstup ≥ 18 a vzdialenosť ≤ 60`.
+fram býva ďaleko (iná revízia grafiky), ale s veľkým náskokom. Prah je
+`odstup ≥ 18`. Keď odstup chýba, rozhodujú dve poistky:
 
-Či pozícia vôbec nesie text, sa berie z hotových nemeckých galérií: keď sa DE
-súbor líši od SK média, obrázok text nesie.
+- **Sú kandidáti vôbec rozlíšiteľní?** Zostava piatich čajov je vo Figme
+  v každom riadku znova a všetky kópie sú totožné — vtedy je jedno, ktorú
+  vezmeme, a nerozhodný výsledok je neškodný.
+- **Patrí kandidát k tomuto produktu?** Grafika „Spremenite svojo kopel" má
+  naprieč čajmi rovnaký layout a líši sa len sáčkom. Kandidát z tej istej
+  skupiny (a do vzdialenosti 60) rozhodne.
+
+Hodnotia sa **obe strany**: slovenské médium proti slovenským framom
+a nemecký súbor proti nemeckým. Slovenská strana hovorí, čo stránka ukazuje;
+nemecká pomôže tam, kde je slovenské médium starší export, ktorý sa už do
+Figmy nepreniesol. Nemecká sekcia má jeden fram posunutý oproti slovenskej,
+takže nemecká geometria sa najprv prevádza na slovenskú.
+
+Overené proti šiestim ručne pripraveným slovinským galériám kociek: 6/6.
 
 ## Čo sa stane s pozíciou bez prekladu
 
-- **bez textu** → ponechá sa slovenské médium (fotka je jazykovo neutrálna),
+- **bez textu** → ponechá sa slovenské médium (fotka je jazykovo neutrálna).
+  Rozpozná sa podľa sekcie `Doplnujuce` — hero zábery, misky, aranžmány. Nedá
+  sa na to použiť pravidlo „DE sa líši od SK": napríklad The Ritual set má
+  v nemčine tie isté univerzálne fotky nahraté ako samostatné kópie.
+- **to isté médium už preložené na inom produkte** → prevezme sa hotový súbor,
+  nerenderuje sa znova.
 - **s textom, preklad chýba** → pozícia sa z galérie **vynechá**. Radšej menej
   fotiek než fotka s cudzím textom.
+
+Grafiky, ktoré existujú len v `sk/de/pl/bg` a v ostatných jazykoch chýbajú:
+`OPRAVA SKIBIDI` („Premeň sprchovú rutinu") a `KOCKY/*/OPRAVA/RECENZIE`
+(prepracovaná verzia recenzií bez nadpisu).
 
 ## Postup
 

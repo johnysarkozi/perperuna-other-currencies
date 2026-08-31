@@ -75,6 +75,8 @@ supabase/functions/inventory-mirror/ Edge Function — zrkadlí sklady zo SK (cr
 supabase/functions/inventory-set/    Edge Function — nastaví sklad SKU vo všetkých obchodoch
 scripts/inventory-mirror.mjs   lokálne zrkadlenie skladov (dry-run, --apply)
 scripts/figma-scan.mjs         read-only strom Figma súboru (názvy a geometria framov)
+scripts/gallery-hash.py        perceptuálne párovanie médium ↔ Figma fram (jediný Python v repe)
+scripts/gallery-plan.mjs       plán galérie pre jazyk → plan/<locale>-figma.json
 scripts/gallery-from-figma.mjs jazykové galérie z Figmy → custom.<locale>_images
 plan/sl-figma.json             plán slovinských galérií (pozícia → Figma fram)
 docs/galerie.md                ako fungujú jazykové galérie a odkiaľ sa berú obrázky
@@ -88,7 +90,9 @@ docs/launch-audit.json         posledný audit
 
 ## Konvencie
 
-- Node ESM (`.mjs`), bez závislostí — len vstavaný `fetch`.
+- Node ESM (`.mjs`), bez závislostí — len vstavaný `fetch`. Jedinou výnimkou
+  je `scripts/gallery-hash.py`: perceptuálny hash potrebuje dekodér obrázkov,
+  ktorý sa v čistom Node bez závislostí spraviť nedá.
 - Admin API verzia je jedna konštanta: `API_VERSION` v `lib/shopify.mjs`.
 - Skripty, ktoré čokoľvek menia, musia mať dry-run režim a vypísať, čo by spravili.
 - Backend sa vždy adresuje kľúčom (`cz`, `ro`, `pl`, `hu`), nikdy natvrdo doménou.

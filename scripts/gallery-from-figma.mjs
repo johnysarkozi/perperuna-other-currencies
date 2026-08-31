@@ -72,7 +72,8 @@ console.log(apply ? '*** APPLY — zapisuje sa do Shopify ***\n' : 'dry run — 
 const wanted = new Map();
 for (const p of plan.products) {
   for (const slot of Object.values(p.positions)) {
-    wanted.set(slot.figmaNode, slot.figmaName);
+    // slot.fileId = tá istá grafika už raz preložená inde; netreba ju renderovať
+    if (slot.figmaNode) wanted.set(slot.figmaNode, slot.figmaName);
   }
 }
 
@@ -250,7 +251,7 @@ for (const p of plan.products) {
   let n = 0, dropped = 0;
   skIds.forEach((id, i) => {
     const slot = p.positions[String(i + 1)];
-    const fileId = slot ? uploaded.get(slot.figmaNode) : null;
+    const fileId = slot ? (slot.fileId ?? uploaded.get(slot.figmaNode)) : null;
     if (fileId) { list.push(fileId); n++; }
     else if (slot || skipSet.has(i + 1)) dropped++;   // nesie text, preklad nemáme → vynechať
     else list.push(id);                                // bez textu → slovenské médium
