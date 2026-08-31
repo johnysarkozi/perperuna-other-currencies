@@ -102,6 +102,8 @@ a SKU, ktoré v niektorom obchode chýba.
 - tlačidlá **Zrkadliť zo SK** a **Načítať zo Shopify**
 - **prepočet zahraničných cien do €** pod cenou, aj s odchýlkou od SK
 - **úprava cien** (aj ceny pred zľavou) pre všetkých päť trhov — klik na cenu
+- **zmena stavu** produktu na ktorýkoľvek zo štyroch — klik na bodku
+- **pohľad na jeden obchod** listing po listingu — klik na názov krajiny
 
 ### Prístup
 
@@ -206,26 +208,56 @@ Pri každej cene v matici je bodka so stavom produktu v tom obchode: zelená =
 `ACTIVE`, prázdna = `DRAFT`, oranžová = `UNLISTED`, sivá = `ARCHIVED`,
 bodkovaná = SKU tam vôbec nie je.
 
-Klikateľná je **len bodka v stĺpci SK** a prepne produkt medzi `ACTIVE`
-a `DRAFT` naraz vo všetkých obchodoch — Edge Function **`product-status`**.
-Bodky v CZ/RO/PL/HU sú len zobrazenie; klik na ne vypíše, že sa stav riadi zo
-SK. Je to tá istá logika ako pri sklade: samostatnú zmenu na cudzom trhu by
-mirror do 15 minút vrátil späť.
+Klik na bodku otvorí ponuku **všetkých štyroch stavov** — Edge Function
+**`product-status`**. Rozdiel medzi nimi nie je len vizuálny:
+
+| Stav | Čo znamená | Prenáša sa? |
+|------|------------|-------------|
+| `ACTIVE` | v predaji | rozhodnutie za skupinu — zo SK ide do všetkých |
+| `DRAFT` | mimo predaja, ostáva v admine | rozhodnutie za skupinu — zo SK ide do všetkých |
+| `UNLISTED` | mimo ponuky a vyhľadávania, cez priamy link kupiteľný | len ten listing |
+| `ARCHIVED` | ukončený, URL vráti 404, história ostáva | len ten listing |
 
 ```
 POST /functions/v1/product-status
 { "sku": "PP-CUBE-LOVE-020", "store": "sk", "status": "DRAFT", "password": "…" }
+{ "sku": "PP-CUBE-CALM-004", "store": "cz", "status": "ARCHIVED",
+  "productId": "gid://shopify/Product/123", "password": "…" }
 ```
 
-Endpoint stále vie prepnúť aj jeden konkrétny trh (`"store": "pl"`) — vtedy
-nerozposiela nič, len ten obchod. Appka to nepoužíva.
+`ACTIVE`/`DRAFT` zo SK sa rozpošlú do ostatných backendov, a to len na listingy,
+ktoré sú samy `ACTIVE` alebo `DRAFT`. `UNLISTED` a `ARCHIVED` ostávajú tam, kde
+sa nastavia — sú to rozhodnutia o jednom listingu na jednom trhu a `inventory-mirror`
+sa ich nedotkne. Práve preto sú jediným podporovaným spôsobom, ako mať jeden trh
+zámerne inak, a spôsobom, ako ukončiť kampaňovú kópiu.
 
-`UNLISTED` a `ARCHIVED` sa cez appku nastaviť nedajú. Nie sú to prepínače, ale
-samostatné rozhodnutia o produkte — archivovaný produkt navyše zmizne
-z default pohľadu v Shopify admine, kde by ho už nikto náhodou nenašiel. Preto
-sa pri vypnutí na SK neprepnú ani unlisted/archived kópie v zahraničí; to je
-zároveň jediný podporovaný spôsob, ako mať produkt na jednom trhu inak než na
-ostatných.
+`productId` mieri na konkrétny listing. Bez neho sa SKU dohľadá podľa kódu
+a SKU sediace na viacerých produktoch sa odmietne — čo je pri katalógu plnom
+kampaňových kópií bežné a presne vtedy by hádanie bolelo najviac. Appka
+`productId` posiela vždy, takže sa dá archivovať práve ten duplikát, na ktorý
+klikneš.
+
+> **API verzia.** `UNLISTED` je nový Shopify status, ktorý sa dá *zapisovať* až
+> od `2025-10`; `product-status` preto beží na `2026-07`. Verzia `2025-07`,
+> na ktorej stoja ostatné funkcie, už nie je medzi podporovanými
+> (`{ publicApiVersions }` vracia `2025-10` … `2026-07`) — pri ďalšom zásahu
+> ich treba posunúť tiež.
+
+## Pohľad na jeden obchod
+
+Klik na názov krajiny v hlavičke matice otvorí **všetko, čo v tom obchode je —
+listing po listingu**, nie jeden riadok na SKU. Matica skladá viac listingov
+toho istého SKU do jednej bunky, takže kampaňové kópie, zabudnuté „v2" verzie
+a duplicity v nej z princípu nevidno; tento pohľad je ten druhý koniec.
+
+- riadky s tým istým SKU sú podfarbené a zoradené k sebe, živý listing prvý,
+- poznámky označia `N× rovnaké SKU`, `kampaňová kópia` (názov nesie `(-50%)`,
+  `(−25 %)` alebo `v2`) a `nie je na SK`,
+- stav sa mení priamo tam a mení sa presne ten listing, na ktorý klikneš,
+- filter **len s poznámkou** nechá iba to, čo treba doriešiť.
+
+Na CZ takto vidno 67 listingov na 55 SKU, z toho 23 riadkov v duplicitách —
+proti 61 listingom a žiadnym duplicitám na PL/RO/HU.
 
 ### Poistky
 

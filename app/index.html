@@ -57,6 +57,13 @@
     letter-spacing: .04em; color: var(--muted);
   }
   thead tr.groups th { top: 0; text-align: center; border-bottom: none; padding-bottom: 2px; }
+  /* The country label is the way into that store's own listing view. */
+  th .store-open {
+    padding: 1px 6px; border: 1px solid transparent; border-radius: 5px;
+    background: none; color: inherit; font: inherit; letter-spacing: inherit;
+    text-transform: inherit; cursor: pointer;
+  }
+  th .store-open:hover { color: var(--text); border-color: var(--line); background: var(--panel); }
   thead tr.cols th { top: var(--group-h, 24px); padding-top: 2px; cursor: pointer; user-select: none; }
   thead tr.cols th:hover { color: var(--text); }
   th .arrow { opacity: .55; font-size: 9px; }
@@ -114,6 +121,41 @@
   .sheet .actions { display: flex; gap: 10px; align-items: center; margin-top: 18px; }
   .sheet .actions .grow { flex: 1; }
 
+  /* Status menu — a popover anchored to the dot that was clicked. */
+  .menu {
+    position: fixed; z-index: 40; width: 320px; padding: 10px 12px 8px;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.28);
+  }
+  .menu-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .menu-head strong { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+  .menu-head button { padding: 1px 7px; font-size: 12px; }
+  .menu .choice {
+    display: flex; align-items: flex-start; gap: 8px; width: 100%; margin: 2px 0;
+    padding: 7px 8px; text-align: left; border-color: transparent; background: none;
+  }
+  .menu .choice:hover:not(:disabled) { background: var(--panel); border-color: var(--line); }
+  .menu .choice:disabled { opacity: .55; }
+  .menu .choice .dot { margin-top: 3px; cursor: inherit; }
+  .choice-text { display: flex; flex-direction: column; gap: 1px; white-space: normal; }
+  .choice-text .meta { font-size: 12px; line-height: 1.35; }
+  .menu .meta { margin: 6px 2px 2px; font-size: 12px; line-height: 1.4; }
+
+  /* One store, listing by listing. */
+  .store-tools { display: flex; gap: 14px; align-items: center; margin: 12px 0 6px; flex-wrap: wrap; }
+  .grid-store { width: 100%; font-size: 13px; }
+  .grid-store th { font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600; }
+  .grid-store td, .grid-store th { padding: 5px 10px 5px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  /* The dialog's generic cell rule allows wrapping, which breaks SKUs at their
+     hyphens; only the name column should wrap. */
+  .grid-store td.sku, .grid-store td.num, .grid-store td:first-child { white-space: nowrap; }
+  .grid-store td.name { white-space: normal; min-width: 260px; }
+  #storeDialog { max-width: 1180px; }
+  .grid-store .handle { display: block; color: var(--faint); font-size: 11.5px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .grid-store td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .grid-store .state { color: var(--muted); font-size: 12px; }
+  .grid-store tr.dupe td { background: var(--warn-bg); }
+
   /* Whether a SKU is switched on in a market — the thing you scan for down a
      column, so it is a shape rather than a word. */
   .dot {
@@ -122,8 +164,8 @@
     border-radius: 50%; border: 1.5px solid var(--faint); background: none;
     vertical-align: -1px; cursor: pointer;
   }
-  .dot:hover:not(:disabled):not(.locked) { box-shadow: 0 0 0 3px var(--panel); border-color: var(--text); }
-  .dot:disabled, .dot.locked { cursor: default; }
+  .dot:hover:not(:disabled) { box-shadow: 0 0 0 3px var(--panel); border-color: var(--text); }
+  .dot:disabled { cursor: default; }
   .dot.active   { background: var(--ok);   border-color: var(--ok); }
   .dot.draft    { background: none;        border-color: var(--faint); }
   .dot.unlisted { background: var(--warn); border-color: var(--warn); }
@@ -273,16 +315,34 @@
     <tr><td><span class="dot absent"></span></td>
         <td><strong>Bodkovaná</strong> — SKU v tom obchode vôbec nie je založené.</td></tr>
   </table>
-  <p><strong>Klikateľná je len bodka v stĺpci SK</strong> — a prepne produkt
-     naraz na SK aj vo všetkých ostatných obchodoch. Pýta si to isté heslo ako
-     zmena skladu a nečaká na ďalšie zrkadlenie. Bodky v CZ, RO, PL a HU sú len
-     na pozeranie: stav sa tam riadi zo SK, takže samostatná zmena by sa do 15
-     minút vrátila späť. Ak potrebuješ výnimku pre jeden trh, urob ju priamo
-     v Shopify admine cez unlisted alebo archived — tých sa zrkadlenie nedotkne.</p>
-  <p>Oranžové a sivé bodky sa prepnúť nedajú ani na SK; unlisted a archived nie
-     sú „zapnuté / vypnuté", ale samostatné rozhodnutia o produkte. Preto sa pri
-     vypnutí na SK neprepnú ani ich kópie v zahraničí (napr. „-25 %" listingy).</p>
-  <p>Sklad ani ceny sa vypnutím nemenia — produkt len zmizne z predaja.</p>
+  <p><strong>Klik na bodku otvorí ponuku všetkých štyroch stavov</strong> —
+     zapnutý, vypnutý, unlisted a archivovaný. Pýta si to isté heslo ako zmena
+     skladu a zapisuje sa okamžite.</p>
+  <p>Nie všetky stavy znamenajú to isté pre ostatné trhy:</p>
+  <table>
+    <tr><td><strong>Zapnutý / vypnutý</strong></td>
+        <td>Rozhodnutie za celú skupinu. Zo SK sa hneď prenesie do CZ, RO, PL aj
+            HU. Na cudzom trhu sa dá nastaviť tiež, ale zrkadlenie to do 15 minút
+            dorovná podľa SK.</td></tr>
+    <tr><td><strong>Unlisted / archivovaný</strong></td>
+        <td>Rozhodnutie o jednom listingu na jednom trhu — nikam sa neprenáša
+            a <em>zrkadlenie sa ho nedotkne</em>. Takto sa robí výnimka pre jeden
+            trh a takto sa ukončujú kampaňové kópie.</td></tr>
+  </table>
+  <p>Sklad ani ceny sa zmenou stavu nemenia — produkt len zmizne z predaja.
+     Archivovaný produkt vráti na svojej URL 404, takže ak naň viedla reklama,
+     sprav v Shopify presmerovanie.</p>
+
+  <h3>Pohľad na jeden obchod</h3>
+  <p><strong>Klik na názov krajiny v hlavičke</strong> (SK, CZ, PL, RO, HU)
+     vypíše všetko, čo v tom obchode naozaj je — <em>listing po listingu</em>,
+     nie jeden riadok na SKU. Práve tu vidno kampaňové kópie, zabudnuté „v2"
+     verzie a duplicity, ktoré matica skladá do jednej bunky.</p>
+  <p>Riadky s tým istým SKU sú podfarbené a sú pri sebe, živý listing prvý.
+     Poznámky ukážu, čo je kópia, čo má rovnaké SKU viackrát a čo v danom
+     obchode je, ale na SK nie. Stav sa dá meniť rovno tam — a keďže sa mení
+     presne ten listing, na ktorý klikneš, dá sa takto archivovať konkrétny
+     duplikát.</p>
   <p>Ak sa niektorý trh <strong>stavom líši od SK</strong>, celý ten stĺpec
      v riadku sa podfarbí — a porovnáva sa stav proti stavu, nie „predáva sa /
      nepredáva". Unlisted produkt sa cez priamy link kúpiť dá, takže keď je
@@ -343,6 +403,36 @@
      behmi sa čísla rozchádzajú — predaj na PL neodpočíta sklad na CZ. Pri
      bežnej prevádzke je rozdiel malý, ale keď sa na dvoch trhoch naraz
      dopredávajú posledné kusy, dá sa predať viac, než je fyzicky na sklade.</p>
+</div></dialog>
+
+<div id="statusMenu" class="menu" hidden>
+  <div class="menu-head">
+    <strong id="statusMenuTitle"></strong>
+    <button id="statusMenuClose" title="Zavrieť">✕</button>
+  </div>
+  <div id="statusMenuList"></div>
+  <p class="meta" id="statusMenuNote"></p>
+</div>
+
+<dialog id="storeDialog"><div class="sheet">
+  <div class="closebar">
+    <h2 id="storeTitle">Obchod</h2>
+    <button id="storeClose">Zavrieť</button>
+  </div>
+  <p class="meta" id="storeSummary"></p>
+
+  <div class="store-tools">
+    <input type="search" id="storeQ" placeholder="Hľadať SKU, názov alebo handle…">
+    <label class="check"><input type="checkbox" id="storeOnlyFlagged"> len s poznámkou</label>
+  </div>
+
+  <table class="grid-store">
+    <thead>
+      <tr><th>Stav</th><th>SKU</th><th>Názov</th><th class="num">Cena</th><th class="num">Sklad</th><th>Poznámka</th></tr>
+    </thead>
+    <tbody id="storeRows"></tbody>
+  </table>
+  <p class="meta" id="storeEmpty" hidden>Nič nesedí s filtrom.</p>
 </div></dialog>
 
 <dialog id="priceDialog"><div class="sheet">
@@ -541,8 +631,8 @@ function toast(text, bad = false, ms = 3600) {
 async function load() {
   const { data, error } = await sb
     .from('catalog_listings')
-    .select('sku, store, title, variant_title, status, currency, price, compare_at_price, ' +
-            'shopify_variant_id, inventory_quantity, inventory_policy, synced_at');
+    .select('sku, store, title, handle, variant_title, status, currency, price, compare_at_price, ' +
+            'shopify_variant_id, shopify_product_id, inventory_quantity, inventory_policy, synced_at');
   if (error) { toast(`Chyba načítania: ${error.message}`, true); return; }
   // PostgREST hands numerics back as strings; making them numbers here keeps
   // every comparison, sort and conversion downstream honest.
@@ -724,7 +814,13 @@ function setSort(key) {
 function buildHeader() {
   $('groupRow').innerHTML =
     '<th colspan="2"></th>' +
-    STORES.map((s) => `<th colspan="2" class="sep">${s.toUpperCase()}${s === TRUTH ? ' ·&nbsp;pravda' : ''}</th>`).join('');
+    STORES.map((s) => `<th colspan="2" class="sep"><button class="store-open" data-store="${s}"` +
+      ` title="Zobraziť všetko, čo je v tomto obchode">${s.toUpperCase()}${s === TRUTH ? ' ·&nbsp;pravda' : ''}</button></th>`).join('');
+
+  $('groupRow').addEventListener('click', (e) => {
+    const btn = e.target.closest('button.store-open');
+    if (btn) openStore(btn.dataset.store);
+  });
 
   const col = (key, label, cls = '') =>
     `<th class="${cls}" data-sort="${key}">${label}<span class="arrow"></span></th>`;
@@ -847,19 +943,9 @@ function render() {
       }
       const status = sub.length ? `<div class="status">${sub.join(' · ')}</div>` : '';
 
-      // Only ACTIVE and DRAFT can be switched from here — see the product-status
-      // function for why archived and unlisted are left to the Shopify admin.
-      // And only on SK: the state is mirrored from there, so a dot flipped on
-      // another market would be put back within 15 minutes.
-      const switchable = cell.status === 'ACTIVE' || cell.status === 'DRAFT';
-      const toggleable = switchable && store === TRUTH;
-      const hint = toggleable ? ' — klikni na prepnutie, zmení sa aj v ostatných obchodoch'
-        : switchable ? ' — riadi sa zo SK'
-        : '';
-      const dot = `<button class="dot ${cell.status.toLowerCase()}${toggleable ? '' : ' locked'}"
-          ${switchable ? '' : 'disabled'} ${toggleable ? '' : 'data-locked="1"'}
-          data-sku="${row.sku}" data-store="${store}" data-status="${cell.status}"
-          title="${store.toUpperCase()}: ${STATUS_LABEL[cell.status] ?? cell.status}${hint}"></button>`;
+      // Every status is reachable from the dot now; which of them travel to the
+      // other markets is decided in product-status, and spelled out in the menu.
+      const dot = statusDot(row.sku, store, cell);
 
       // A cell shows one listing, so a second reachable one is called out here
       // — with the whole set in the tooltip, since that is what has to be
@@ -970,30 +1056,100 @@ async function saveQuantity(input) {
   }
 }
 
-// ---- switching a product on or off ---------------------------------------
+// ---- setting a product's status -------------------------------------------
 
-async function toggleStatus(dot) {
+/** One dot, carrying everything the status menu needs to act on that listing. */
+function statusDot(sku, store, cell) {
+  return `<button class="dot ${cell.status.toLowerCase()}"
+      data-sku="${sku}" data-store="${store}" data-status="${cell.status}"
+      data-product="${cell.shopify_product_id ?? ''}"
+      title="${store.toUpperCase()}: ${STATUS_LABEL[cell.status] ?? cell.status} — klikni na zmenu"></button>`;
+}
+
+/**
+ * What each status does, and what it means for the other markets. ACTIVE and
+ * DRAFT are a decision for the whole group and travel from SK; UNLISTED and
+ * ARCHIVED are about one listing and stay put — which is also what makes them
+ * the way to keep one market deliberately different.
+ */
+const STATUS_CHOICES = [
+  { value: 'ACTIVE', label: 'Zapnutý', hint: 'V predaji, v ponuke aj vo vyhľadávaní.' },
+  { value: 'DRAFT', label: 'Vypnutý (draft)', hint: 'Nepredáva sa, ale ostáva po ruke v admine.' },
+  { value: 'UNLISTED', label: 'Unlisted', hint: 'Mimo ponuky a vyhľadávania, cez priamy link sa kúpiť dá.' },
+  { value: 'ARCHIVED', label: 'Archivovaný', hint: 'Ukončený. URL vráti 404, história objednávok ostáva.' },
+];
+
+let statusTarget = null;
+
+function closeStatusMenu() {
+  $('statusMenu').hidden = true;
+  statusTarget?.classList.remove('busy');
+  statusTarget = null;
+}
+
+function openStatusMenu(dot) {
   const { sku, store, status } = dot.dataset;
-  const next = status === 'ACTIVE' ? 'DRAFT' : 'ACTIVE';
-  const verb = next === 'ACTIVE' ? 'Zapnúť' : 'Vypnúť';
+  statusTarget = dot;
+
+  const spreads = store === TRUTH;
+  $('statusMenuTitle').textContent = `${sku} · ${store.toUpperCase()}`;
+  $('statusMenuNote').textContent = spreads
+    ? 'Zapnutie a vypnutie zo SK sa hneď prenesie do ostatných obchodov. Unlisted a archív ostávajú len na SK.'
+    : 'Unlisted a archív sú výnimka pre tento trh — zrkadlenie sa ich nedotkne. Zapnutie a vypnutie sem do 15 minút dorovná SK.';
+
+  $('statusMenuList').innerHTML = STATUS_CHOICES.map((choice) => `
+    <button class="choice" data-status="${choice.value}" ${choice.value === status ? 'disabled' : ''}>
+      <span class="dot ${choice.value.toLowerCase()}"></span>
+      <span class="choice-text"><strong>${choice.label}${choice.value === status ? ' · teraz' : ''}</strong>
+        <span class="meta">${choice.hint}</span></span>
+    </button>`).join('');
+
+  // A modal <dialog> renders in the top layer, above everything in the page, so
+  // the menu has to live inside it while it is open — otherwise picking a status
+  // from the store view would open a menu nobody can see.
+  const menu = $('statusMenu');
+  (dot.closest('dialog') ?? document.body).appendChild(menu);
+  menu.hidden = false;
+  // Anchored to the dot, then pulled back inside the window if it would hang
+  // off the right or bottom edge.
+  const box = dot.getBoundingClientRect();
+  const size = menu.getBoundingClientRect();
+  menu.style.left = `${Math.max(8, Math.min(box.left, innerWidth - size.width - 8))}px`;
+  menu.style.top = box.bottom + size.height + 8 > innerHeight
+    ? `${Math.max(8, box.top - size.height - 6)}px`
+    : `${box.bottom + 6}px`;
+  dot.classList.add('busy');
+}
+
+async function setStatus(dot, next) {
+  const { sku, store, status } = dot.dataset;
+  const productId = dot.dataset.product || undefined;
+  const choice = STATUS_CHOICES.find((c) => c.value === next);
+  const spreads = store === TRUTH && (next === 'ACTIVE' || next === 'DRAFT');
   const others = STORES.filter((s) => s !== TRUTH).map((s) => s.toUpperCase()).join(', ');
 
-  if (!confirm(`${verb} ${sku} — na SK aj v ${others}?\n\n` +
-    (next === 'ACTIVE'
-      ? 'Produkt sa okamžite objaví v predaji na všetkých trhoch, kde je založený.'
-      : 'Produkt sa okamžite prestane predávať na všetkých trhoch. Sklad ani ceny sa nemenia.') +
-    '\n\nNetýka sa to unlisted a archivovaných listingov — tie ostávajú, ako sú.')) return;
+  const consequence = spreads
+    ? `Prenesie sa aj do ${others} — všade tam, kde je SKU zapnuté alebo vypnuté.`
+    : store === TRUTH
+      ? 'Len na SK. Ostatné trhy ostanú, ako sú.'
+      : `Len na ${store.toUpperCase()}.` + (next === 'ACTIVE' || next === 'DRAFT'
+        ? ' Pozor: zrkadlenie zo SK to môže do 15 minút vrátiť späť.'
+        : ' Zrkadlenie sa tohto stavu nedotkne.');
+
+  if (!confirm(`${sku} · ${store.toUpperCase()}\n${STATUS_LABEL[status] ?? status} → ${choice.label.toLowerCase()}\n\n` +
+    `${choice.hint}\n${consequence}`)) return;
 
   const password = editPassword();
   if (!password) return;
 
+  closeStatusMenu();
   dot.disabled = true;
   dot.classList.add('busy');
   try {
     const res = await fetch(`${SUPABASE_URL}/functions/v1/product-status`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sku, store, status: next, password }),
+      body: JSON.stringify({ sku, store, status: next, productId, password }),
     });
     const out = await res.json();
     if (!out.ok) {
@@ -1001,24 +1157,114 @@ async function toggleStatus(dot) {
       throw new Error(out.error ?? 'zmena zlyhala');
     }
     // The catalog copy only refreshes on the next sync, so move the dots now —
-    // in every store the function actually switched, not just the one clicked.
-    const applied = out.applied ?? [store];
-    for (const l of listings) {
-      if (l.sku === sku && applied.includes(l.store) && (l.status === 'ACTIVE' || l.status === 'DRAFT')) {
-        l.status = next;
+    // exactly the listings the function reported, nothing else.
+    for (const applied of out.applied ?? []) {
+      for (const l of listings) {
+        if (l.store === applied.store && l.shopify_product_id === applied.productId) l.status = next;
       }
     }
-    const word = next === 'ACTIVE' ? 'zapnuté' : 'vypnuté';
-    toast(applied.length > 1
-      ? `${sku} ${word} — ${applied.map((s) => s.toUpperCase()).join(', ')}`
-      : `${sku} — ${store.toUpperCase()} ${word}`);
+    const touched = (out.applied ?? []).map((a) => a.store.toUpperCase());
+    toast(`${sku} → ${choice.label.toLowerCase()}${touched.length > 1 ? ` · ${touched.join(', ')}` : ''}`);
     render();
+    if ($('storeDialog').open) renderStore();
   } catch (err) {
     toast(`Chyba: ${err.message}`, true);
+  } finally {
     dot.disabled = false;
     dot.classList.remove('busy');
   }
 }
+
+$('statusMenuList').addEventListener('click', (e) => {
+  const choice = e.target.closest('button.choice');
+  if (choice && statusTarget) setStatus(statusTarget, choice.dataset.status);
+});
+$('statusMenuClose').addEventListener('click', closeStatusMenu);
+addEventListener('keydown', (e) => { if (e.key === 'Escape') closeStatusMenu(); });
+addEventListener('click', (e) => {
+  if (!$('statusMenu').hidden && !e.target.closest('#statusMenu') && !e.target.closest('button.dot')) {
+    closeStatusMenu();
+  }
+}, true);
+
+// ---- one store, listing by listing ---------------------------------------
+
+/** A campaign copy names itself: "(-50%)", "(−25 %)", or a leftover "v2". */
+const isCopy = (title) => /\(\s*[−-]\s*\d+\s*%\s*\)/.test(title ?? '') || /\bv2\b/i.test(title ?? '');
+
+let storeShown = null;
+
+function openStore(store) {
+  storeShown = store;
+  $('storeTitle').textContent = `${store.toUpperCase()} — všetko, čo je v obchode`;
+  $('storeQ').value = '';
+  $('storeOnlyFlagged').checked = false;
+  renderStore();
+  $('storeDialog').showModal();
+}
+
+/**
+ * Every listing in one store, not one per SKU: this is the view that shows
+ * campaign copies, leftovers and duplicates, which the matrix folds away.
+ */
+function renderStore() {
+  const store = storeShown;
+  const q = $('storeQ').value.trim().toLowerCase();
+  const onlyFlagged = $('storeOnlyFlagged').checked;
+
+  const mine = listings.filter((l) => l.store === store);
+  const perSku = new Map();
+  for (const l of mine) perSku.set(l.sku, (perSku.get(l.sku) ?? 0) + 1);
+  const onTruth = new Set(listings.filter((l) => l.store === TRUTH).map((l) => l.sku));
+
+  const counts = { ACTIVE: 0, DRAFT: 0, UNLISTED: 0, ARCHIVED: 0 };
+  for (const l of mine) counts[l.status] = (counts[l.status] ?? 0) + 1;
+  $('storeSummary').textContent =
+    `${mine.length} listingov · ${perSku.size} SKU · ` +
+    `${counts.ACTIVE} zapnutých · ${counts.DRAFT} draft · ${counts.UNLISTED} unlisted · ${counts.ARCHIVED} archív`;
+
+  const rows = mine
+    .map((l) => {
+      const notes = [];
+      if (perSku.get(l.sku) > 1) notes.push(`<span class="chip warn">${perSku.get(l.sku)}× rovnaké SKU</span>`);
+      if (isCopy(l.title)) notes.push('<span class="chip warn">kampaňová kópia</span>');
+      if (store !== TRUTH && !onTruth.has(l.sku)) notes.push('<span class="chip warn">nie je na SK</span>');
+      return { l, notes };
+    })
+    .filter(({ l, notes }) => {
+      if (onlyFlagged && !notes.length) return false;
+      if (!q) return true;
+      return [l.sku, l.title, l.handle].some((v) => (v ?? '').toLowerCase().includes(q));
+    })
+    // Listings of one SKU land next to each other, the live one first — that is
+    // the comparison you make when deciding which copy to retire.
+    .sort((a, b) => a.l.sku.localeCompare(b.l.sku)
+      || (b.l.status === 'ACTIVE') - (a.l.status === 'ACTIVE')
+      || (a.l.title ?? '').localeCompare(b.l.title ?? ''));
+
+  $('storeRows').innerHTML = rows.map(({ l, notes }) => {
+    const was = l.compare_at_price ? `<s class="was">${money(l.compare_at_price, l.currency)}</s> ` : '';
+    return `<tr class="${perSku.get(l.sku) > 1 ? 'dupe' : ''}">
+      <td>${statusDot(l.sku, store, l)}<span class="state">${(STATUS_LABEL[l.status] ?? l.status).split(',')[0]}</span></td>
+      <td class="sku">${l.sku}</td>
+      <td class="name">${l.title ?? ''}<span class="handle">${l.handle ?? ''}</span></td>
+      <td class="num">${was}${money(l.price, l.currency)}</td>
+      <td class="num">${l.inventory_quantity ?? '—'}</td>
+      <td>${notes.join(' ')}</td>
+    </tr>`;
+  }).join('');
+
+  $('storeEmpty').hidden = rows.length > 0;
+}
+
+$('storeQ').addEventListener('input', renderStore);
+$('storeOnlyFlagged').addEventListener('change', renderStore);
+$('storeClose').addEventListener('click', () => $('storeDialog').close());
+$('storeDialog').addEventListener('click', (e) => { if (e.target === $('storeDialog')) $('storeDialog').close(); });
+$('storeRows').addEventListener('click', (e) => {
+  const dot = e.target.closest('button.dot');
+  if (dot && !dot.disabled) openStatusMenu(dot);
+});
 
 // ---- editing prices ------------------------------------------------------
 
@@ -1225,14 +1471,7 @@ $('rows').addEventListener('click', (e) => {
   if (priceBtn) { openPrices(priceBtn.dataset.sku); return; }
 
   const dot = e.target.closest('button.dot');
-  if (!dot || dot.disabled) return;
-  // Foreign dots stay visible but are not switches — say why rather than
-  // letting the click do nothing.
-  if (dot.dataset.locked) {
-    toast('Stav sa zrkadlí zo SK — prepni bodku v stĺpci SK a zmení sa všade.');
-    return;
-  }
-  toggleStatus(dot);
+  if (dot && !dot.disabled) openStatusMenu(dot);
 });
 
 $('rows').addEventListener('change', (e) => {
