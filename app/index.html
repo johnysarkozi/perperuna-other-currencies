@@ -675,6 +675,11 @@ function pivot() {
 /** A customer can reach the product: ACTIVE, or UNLISTED via a direct link. */
 const sellable = (status) => status === 'ACTIVE' || status === 'UNLISTED';
 
+/** A real discount — Shopify only strikes the price through when it is higher. */
+const discounted = (cell) => cell.compare_at_price !== null
+  && cell.compare_at_price !== undefined
+  && cell.compare_at_price > cell.price;
+
 /** Listings of this SKU a customer can actually reach in one store. */
 const reachable = (row, store) => (row.all[store] ?? []).filter((l) => sellable(l.status));
 
@@ -960,7 +965,10 @@ function render() {
       // The price opens the editor for the whole row: prices are per-currency,
       // so they are set market by market rather than mirrored, and seeing all
       // five side by side is the only way to set them sensibly.
-      const was = cell.compare_at_price
+      // Only a compare-at *above* the price is a discount. Plenty of listings
+      // carry one equal to the price, which Shopify renders as nothing — so
+      // showing it struck through here would invent a sale that isn't running.
+      const was = discounted(cell)
         ? `<s class="was" title="cena pred zľavou">${money(cell.compare_at_price, cell.currency)}</s> `
         : '';
       const price = `<td class="num sep${oddCls}"><div class="cell">${dot}` +
@@ -1243,7 +1251,7 @@ function renderStore() {
       || (a.l.title ?? '').localeCompare(b.l.title ?? ''));
 
   $('storeRows').innerHTML = rows.map(({ l, notes }) => {
-    const was = l.compare_at_price ? `<s class="was">${money(l.compare_at_price, l.currency)}</s> ` : '';
+    const was = discounted(l) ? `<s class="was">${money(l.compare_at_price, l.currency)}</s> ` : '';
     return `<tr class="${perSku.get(l.sku) > 1 ? 'dupe' : ''}">
       <td>${statusDot(l.sku, store, l)}<span class="state">${(STATUS_LABEL[l.status] ?? l.status).split(',')[0]}</span></td>
       <td class="sku">${l.sku}</td>
