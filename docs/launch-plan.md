@@ -1,38 +1,70 @@
 # Plán spustenia RO / PL / HU
 
-Stav k 2026-08-22. Zdroj: `node scripts/audit-launch.mjs`, plné dáta
-v [`launch-audit.json`](launch-audit.json).
+Stav k 2026-09-01. Zdroj: `node scripts/audit-launch.mjs`, plné dáta
+v [`launch-audit.json`](launch-audit.json). Pôvodná verzia tohto plánu bola
+k 2026-08-22 — odvtedy sa doprava, platby (čiastočne), obrázky na HU aj
+portfólio na PL reálne dorobili. Nechávam pôvodné sekcie nižšie ako referenciu
+(ceny dopravcov, odporúčania), ale tabuľka a blockery odrážajú dnešný stav.
 
 ## Zhrnutie
 
 **Preklady sú v poriadku.** Prekontroloval som každý zákazníkovi viditeľný text
 — názvy a popisy produktov, kolekcie, stránky, menu, dopravné sadzby, právne
 dokumenty a obsah témy — a slovenčina nikde nepresakuje do RO/PL/HU. Ceny sú
-reálne prepočítané do miestnych mien vrátane psychologických koncoviek
-(RON 78,90 / PLN 64,90 / HUF 5 390), nie skopírované čísla.
+reálne prepočítané do miestnych mien vrátane psychologických koncoviek.
 
-**Čo bráni spusteniu, je logistika a platby, nie obsah.** Doprava na všetkých
-troch obchodoch je nedotknutá kópia zo SK: zóna „Domestic" obsahuje **len SK**
-a všetky sadzby sú **v eurách**. Zóna „International" nezahŕňa RO ani HU.
+**Doprava a obrázky sú hotové na všetkých troch.** Každý obchod má vlastnú
+domácu zónu s lokálnym dopravcom v miestnej mene (PL: Kurier DPD 15,90 zł /
+InPost Paczkomat 13,90 zł; RO: FAN Courier 19 RON / Packeta Z-Box 16 RON /
+Sameday easybox 15 RON; HU: Express One 1490 Ft / FoxPost 990 Ft) — presne
+podľa odporúčania nižšie. HU obrázky produktov sú doplnené (predtým 0/28).
+
+**Jediný skutočný blocker pre PL je teraz heslo na obchode**, nič v katalógu,
+doprave ani platbách. RO a HU majú navyše ešte vlastné veci — pozri tabuľku.
 
 | | RO | PL | HU |
 |---|---|---|---|
-| Zákazník prejde checkoutom | **nie** — krajina mimo zón | áno, ale za 17 € „international" | **nie** — krajina mimo zón |
-| Sadzby v mene obchodu | nie (EUR) | nie (EUR) | nie (EUR) |
-| Platobná brána | nezistená | nezistená | nezistená |
-| Vlastná doména | ✅ perperuna.ro | ✅ www.perperuna.pl | **nie** — stále myshopify |
-| Obrázky produktov | ✅ | ✅ | **nie — 0 obrázkov** |
+| Obchod chránený heslom | 🔴 áno | 🔴 áno | 🔴 áno |
+| Doprava v miestnej mene | ✅ | ✅ | ✅ |
+| Apple/Google Pay | 🔴 nezistené | ✅ aktívne | 🔴 nezistené |
+| Vlastná doména | ✅ perperuna.ro | ✅ www.perperuna.pl | 🔴 stále myshopify |
+| Obrázky produktov | ✅ | ✅ | ✅ (doplnené) |
+| Katalóg zosúladený so SK | ✅ | ✅ | neoverované teraz |
 
 CZ pre porovnanie funguje správne: zóna „Czechia", sadzby v CZK, Packeta +
 kuriér, Apple/Google Pay aktívne. Je to použiteľná predloha pre ostatné tri.
+
+### PL: heslo na obchode je teraz jediné, čo bráni spusteniu
+
+`www.perperuna.pl/` presmerúva na `/password` — nezávisle od toho, aké
+pripravené je všetko ostatné, žiadny zákazník sa cez túto stránku nedostane.
+Toto je nastavenie **Online Store → Preferences → Password protection**, cez
+Admin API sa nedá prečítať ani zmeniť — treba to vypnúť ručne. Skontrolované
+aj RO a HU: majú ho zapnuté tiež. `audit-launch.mjs` to od teraz kontroluje
+priamo (jeden nezautentifikovaný `fetch` na domovskú stránku), takže sa to už
+nebude dať prehliadnuť.
 
 ---
 
 ## Blockery — bez týchto sa spustiť nedá
 
-### 1. Doprava (všetky tri)
+### 0. Heslo na obchode (RO, PL, HU)
 
-Aktuálny stav na RO/PL/HU je identický:
+Pozri zhrnutie vyššie. Vypnúť v **Online Store → Preferences** na každom z
+troch obchodov. Toto je jediná vec, ktorú `audit-launch.mjs` overuje naživo
+(zvyšok číta z Admin API) — spustiť znova po vypnutí, aby sa potvrdilo, že
+zmizlo z výstupu.
+
+### 1. Doprava — ✅ vyriešené (RO, PL, HU)
+
+Každý obchod má teraz vlastnú domácu zónu v miestnej mene s rovnakým
+dopravcom, aký odporúča sekcia nižšie (PL: DPD/InPost Paczkomat, RO: FAN
+Courier/Packeta Z-Box/Sameday easybox, HU: Express One/FoxPost). Pôvodný stav
+(nedotknutá kópia SK zóny v EUR) je zdokumentovaný nižšie len ako historická
+referencia — neplatí už.
+
+<details>
+<summary>Pôvodný nález (2026-08-22, už neaktuálny)</summary>
 
 ```
 zóna "Domestic":      SK              → Štandardná 3,99 EUR, Expresná 6,99 EUR
@@ -40,15 +72,7 @@ zóna "International": 28 krajín       → International 16–17 EUR
                       (obsahuje PL a CZ, neobsahuje RO ani HU)
 ```
 
-Pre každý obchod:
-
-1. Vytvoriť domácu zónu pre cieľovú krajinu (RO / PL / HU).
-2. Sadzby zadať **v mene obchodu** — RON / PLN / HUF. Sadzba v EUR na
-   nie-eurovom obchode je zdroj chýb v prepočte aj v účtovníctve.
-3. Doplniť lokálneho dopravcu a odberné miesta — konkrétny výber a ceny nižšie.
-4. Zvážiť prah pre dopravu zadarmo v miestnej mene.
-5. Zo zóny „International" vyňať krajinu, ktorá dostala vlastnú domácu zónu,
-   nech nevznikne dvojaká sadzba.
+</details>
 
 #### Výber dopravcov a ceny (podľa Packeta ceníka z 22.8.2026 + benchmark Notino v danej krajine)
 
@@ -86,25 +110,24 @@ Fulfillment: overiť, či je na tieto tri obchody nainštalovaná Packeta appka
 v Shopify na generovanie štítkov, alebo sa štítky riešia manuálne cez Packeta
 klient zónu — z Admin API to nebolo vidieť.
 
-### 2. Platobná brána (všetky tri)
+### 2. Platobná brána — PL hotové, RO a HU nie
 
-Žiadny z troch obchodov nehlási podporu digitálnych peňaženiek, kým CZ hlási
-Apple Pay aj Google Pay. To takmer isto znamená, že platobná brána nie je
-aktivovaná. Admin API neumožňuje vyčítať zoznam brán priamo — over ručne
-v **Settings → Payments**:
+**PL** hlási Apple Pay aj Google Pay aktívne — brána je zapnutá. **RO a HU
+stále nehlásia žiadnu digitálnu peňaženku** — pravdepodobne platobná brána
+ešte nie je aktivovaná. Admin API neumožňuje vyčítať zoznam brán priamo — over
+ručne v **Settings → Payments**:
 
-- Shopify Payments je dostupné v RO, PL aj HU — over, či je krajina účtu
+- Shopify Payments je dostupné v RO aj HU — over, či je krajina účtu
   a bankový účet v správnej mene.
 - Doplniť lokálne metódy, na ktoré sú zákazníci zvyknutí: **PL** BLIK a
-  Przelewy24 (bez BLIK-u je konverzia v Poľsku výrazne nižšia), **RO** dobierka
-  je stále bežná, **HU** prevod a dobierka.
-- Zapnúť Apple/Google Pay.
+  Przelewy24 (bez BLIK-u je konverzia v Poľsku výrazne nižšia — over, či sú
+  zapnuté aj keď Apple/Google Pay už fungujú, keďže Admin API BLIK/Przelewy24
+  nevidí), **RO** dobierka je stále bežná, **HU** prevod a dobierka.
 
-### 3. HU: chýbajúce obrázky produktov
+### 3. HU: obrázky produktov — ✅ vyriešené
 
-**Všetkých 28 aktívnych produktov na HU nemá ani jeden obrázok** (`mediaCount`
-je 0). Obchod je v tomto stave nepredajný. Obrázky treba nahrať — dajú sa
-prebrať z CZ/RO/PL, kde sú kompletné.
+Predtým všetkých 28 aktívnych produktov bez obrázka (`mediaCount` 0), teraz
+majú obrázky doplnené.
 
 ### 4. HU: doména
 
@@ -129,31 +152,20 @@ Market má web presence `perperuna.hu`, ale `primaryDomain` obchodu je stále
   produkt, takže zákazník ju nevidí — ale v okamihu, keď na ňu nejaký produkt
   prepneš, začne sa zobrazovať slovenský text. Buď doplniť vetvy pre ro/pl/hu,
   alebo prepísať fallback na miestny jazyk.
-- **Mena v košíkovom JS (RO, HU)** — `sections/main-cart.liquid` vykreslí ceny
-  Liquidom správne, ale skript sekcie ich hneď po načítaní prepočíta a prepíše
-  vlastným formátovačom `mon()`, ktorý mal menu zapísanú natvrdo zo SK témy.
-  Zákazník tak v súhrne košíka, na riadkoch a na progress baroch (doprava
-  zdarma, darček) videl **€ namiesto miestnej meny**, kým staticky vykreslené
-  ceny služieb zostali správne — čísla boli pritom v miestnej mene, len
-  označené eurom. **PL opravené 22.8.** (`mon()` si formát berie zo
-  `shop.money_format`), RO a HU majú stále pôvodnú verziu:
-
-  ```
-  node scripts/fix-cart-money-format.mjs ro hu          # dry-run
-  node scripts/fix-cart-money-format.mjs ro hu --apply  # oprava + záložná téma
-  ```
-
+- **Mena v košíkovom JS — ✅ vyriešené na PL, RO aj HU.** `sections/main-cart.liquid`
+  vykreslí ceny Liquidom správne, ale skript sekcie ich hneď po načítaní
+  prepočíta a prepíše vlastným formátovačom `mon()`, ktorý mal menu zapísanú
+  natvrdo zo SK témy — zákazník tak videl € namiesto miestnej meny v súhrne
+  košíka aj na progress baroch. Opravené `mon()` si teraz berie formát zo
+  `shop.money_format` na všetkých troch (`scripts/fix-cart-money-format.mjs`).
   CZ má vlastnú variantu `mon()`, ktorá zaokrúhľuje na celé Kč, no
   `shop.money_format` na CZ je s desatinnými miestami (bez desatinných je len
   `money_with_currency_format`). Oprava by tam teda pridala haliere — pred
   spustením skriptu na CZ najprv zjednotiť formát v nastaveniach obchodu.
-- **Vypredané produkty** — PL má 2 aktívne produkty vypredané a bez povolenia
-  objednávky na sklad, CZ jeden. Pred spustením buď doskladniť, alebo stiahnuť
-  z ponuky.
-- **Produkty bez popisu** — na každom obchode jeden (`nedokonale-*` /
-  `cuburi-imperfecte` / `tokeletlen-*`). Popis týchto produktov žije v šablóne
-  `product.nedokonale-kocky.json`, ktorá **je** správne preložená, takže
-  zákazník text vidí. Nie je to chyba, len upozornenie auditu.
+- **Vypredané produkty** — na PL má „Kompletná kolekcia" (The Ritual/Sweet
+  Dreams/Rise & Shine) a „Love" kocka nulový sklad s DENY politikou — presne
+  ako ich SK náprotivky, nie chyba synchronizácie. Pred spustením buď
+  doskladniť, alebo stiahnuť z ponuky (na oboch backendoch).
 - **Prázdne kolekcie a nepublikovaná stránka Kontakt** (CZ) — kozmetika,
   ale pred spustením kampane to stojí za prejdenie.
 
@@ -161,17 +173,19 @@ Market má web presence `perperuna.hu`, ale `primaryDomain` obchodu je stále
 
 ## Poradie krokov
 
-Pre každý obchod zvlášť, RO a PL sú bližšie k cieľu než HU.
+PL je najbližšie k cieľu, RO druhé, HU má navyše doménu.
 
-1. **Platby** — bez brány nemá zmysel riešiť nič ďalšie.
-2. **Doprava** — domáca zóna, sadzby v miestnej mene, lokálny dopravca.
-3. **HU: obrázky + doména** — dva veľké samostatné bloky práce.
-4. **Váhy** na RO (a 3 produkty na PL).
+1. **Vypnúť heslo na obchode** (RO, PL, HU) — bez toho je jedno, čo je
+   pripravené inde, zákazník sa tam nedostane.
+2. **Platby** — RO a HU ešte potrebujú aktivovať bránu (PL má Apple/Google Pay).
+3. **HU: doména** — jediný zostávajúci veľký blok práce na HU.
+4. **Váhy** na RO (a 3 produkty na PL) — neoverované od 22.8., overiť znova.
 5. **Testovacia objednávka** cez Shopify Payments test mode: prejsť celý tok od
    košíka po potvrdzovací e-mail a skontrolovať, že checkout, potvrdzovací
    e-mail aj faktúra sú v miestnom jazyku a mene. Toto je jediný krok, ktorý
    spoľahlivo odhalí problémy v checkoute a v notifikačných e-mailoch — ich
-   obsah som cez Admin API overiť nevedel.
+   obsah sa cez Admin API overiť nedá. Skús to hneď po vypnutí hesla na PL,
+   keďže tam už nič iné neblokuje.
 6. Až potom marketing a sales kanály (CZ má navyše FB/IG, Google/YouTube,
    Inbox; RO/PL/HU majú len Online Store + POS).
 
@@ -181,4 +195,5 @@ Pre každý obchod zvlášť, RO a PL sú bližšie k cieľu než HU.
 node scripts/audit-launch.mjs ro pl hu
 ```
 
-Cieľ je nula 🔴 riadkov.
+Cieľ je nula 🔴 riadkov — od tejto verzie audit kontroluje aj heslo na
+obchode naživo, nielen dáta z Admin API.

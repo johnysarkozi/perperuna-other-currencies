@@ -1,6 +1,197 @@
 {
-  "generatedAt": "2026-08-30T22:00:24.336Z",
+  "generatedAt": "2026-09-01T18:59:23.554Z",
   "results": [
+    {
+      "key": "sk",
+      "locale": "sk",
+      "country": "AT",
+      "shop": "PERPERUNA.SK",
+      "domain": "perperuna-store.myshopify.com",
+      "marketDomain": "perperuna.at",
+      "theme": "LIVE final + oprava carouselu",
+      "stats": {
+        "products": 51,
+        "active": 26,
+        "drafts": 3,
+        "collections": 11,
+        "pages": 13,
+        "menus": 5,
+        "shippingZones": 4,
+        "activeRates": 10,
+        "shipsTo": [
+          "AT",
+          "BG",
+          "SK",
+          "DE"
+        ],
+        "wallets": [
+          "APPLE_PAY",
+          "GOOGLE_PAY"
+        ],
+        "taxesIncluded": true,
+        "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
+      },
+      "findings": [
+        {
+          "sev": "blocker",
+          "area": "domain",
+          "msg": "Primárna doména je stále perperuna-store.myshopify.com — vlastná doména nie je dokončená",
+          "detail": {
+            "marketDomain": "perperuna.at"
+          }
+        },
+        {
+          "sev": "blocker",
+          "area": "policy",
+          "msg": "Doprava: len 164 znakov — pravdepodobne prázdne"
+        },
+        {
+          "sev": "info",
+          "area": "catalog",
+          "msg": "3 produktov v DRAFT stave"
+        },
+        {
+          "sev": "info",
+          "area": "collection",
+          "msg": "Kolekcia „PERPERUNA\" nemá popis"
+        },
+        {
+          "sev": "warn",
+          "area": "page",
+          "msg": "Stránka „Mix and Match\" nie je publikovaná"
+        },
+        {
+          "sev": "warn",
+          "area": "page",
+          "msg": "Stránka „My Quotes\" nie je publikovaná"
+        },
+        {
+          "sev": "warn",
+          "area": "page",
+          "msg": "Stránka „Request a Quote\" nie je publikovaná"
+        }
+      ]
+    },
+    {
+      "key": "cz",
+      "locale": "cs",
+      "country": "CZ",
+      "shop": "PERPERUNA.CZ",
+      "domain": "cz.perperuna.com",
+      "marketDomain": "cz.perperuna.com",
+      "theme": "Hranatý popup 31.8.",
+      "stats": {
+        "products": 58,
+        "active": 26,
+        "drafts": 3,
+        "collections": 10,
+        "pages": 9,
+        "menus": 5,
+        "shippingZones": 1,
+        "activeRates": 3,
+        "shipsTo": [
+          "CZ"
+        ],
+        "wallets": [
+          "APPLE_PAY",
+          "GOOGLE_PAY"
+        ],
+        "taxesIncluded": true,
+        "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
+      },
+      "findings": [
+        {
+          "sev": "blocker",
+          "area": "policy",
+          "msg": "Doprava: len 159 znakov — pravdepodobne prázdne"
+        },
+        {
+          "sev": "info",
+          "area": "catalog",
+          "msg": "3 produktov v DRAFT stave"
+        },
+        {
+          "sev": "info",
+          "area": "seo",
+          "msg": "1 aktívnych produktov nemá SEO popis"
+        },
+        {
+          "sev": "info",
+          "area": "collection",
+          "msg": "Kolekcia „Home page\" nemá popis"
+        },
+        {
+          "sev": "warn",
+          "area": "page",
+          "msg": "Stránka „Kontakt\" nie je publikovaná"
+        }
+      ]
+    },
+    {
+      "key": "ro",
+      "locale": "ro",
+      "country": "RO",
+      "shop": "PERPERUNA.RO",
+      "domain": "perperuna.ro",
+      "marketDomain": "perperuna.ro",
+      "theme": "PERPERUNA.RO – živá 18.8.",
+      "stats": {
+        "products": 34,
+        "active": 26,
+        "drafts": 3,
+        "collections": 9,
+        "pages": 9,
+        "menus": 5,
+        "shippingZones": 1,
+        "activeRates": 3,
+        "shipsTo": [
+          "RO"
+        ],
+        "wallets": [],
+        "taxesIncluded": true,
+        "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
+      },
+      "findings": [
+        {
+          "sev": "blocker",
+          "area": "storefront",
+          "msg": "Obchod je chránený heslom (Online Store → Preferences) — nijaký zákazník sa nedostane ďalej ako na stránku s heslom"
+        },
+        {
+          "sev": "blocker",
+          "area": "payments",
+          "msg": "Žiadne digitálne peňaženky — pravdepodobne nie je aktivovaná platobná brána; over v Settings → Payments"
+        },
+        {
+          "sev": "info",
+          "area": "catalog",
+          "msg": "3 produktov v DRAFT stave"
+        },
+        {
+          "sev": "info",
+          "area": "seo",
+          "msg": "3 aktívnych produktov nemá SEO popis"
+        },
+        {
+          "sev": "info",
+          "area": "collection",
+          "msg": "Kolekcia „PERPERUNA\" nemá popis"
+        },
+        {
+          "sev": "warn",
+          "area": "theme",
+          "msg": "1× text v téme vyzerá ako SK namiesto RO — šablónu nepoužíva žiadny aktívny produkt",
+          "detail": {
+            "subory": [
+              "templates/product.sety-a-doypacky.json"
+            ],
+            "ukazky": [
+              "pp-inline-info\"> i След всеки душ остави торбичката да изсъхне свободно. {%- endcapture -%}{%- else -%}{%- capture b -%}"
+            ]
+          }
+        }
+      ]
+    },
     {
       "key": "pl",
       "locale": "pl",
@@ -8,12 +199,12 @@
       "shop": "PERPERUNA.PL",
       "domain": "www.perperuna.pl",
       "marketDomain": "www.perperuna.pl",
-      "theme": "PERPERUNA.PL – živá 18.8.",
+      "theme": "PERPERUNA.PL – živá 18.8. + upsell popup",
       "stats": {
-        "products": 53,
-        "active": 28,
+        "products": 34,
+        "active": 26,
         "drafts": 3,
-        "collections": 8,
+        "collections": 10,
         "pages": 9,
         "menus": 5,
         "shippingZones": 1,
@@ -30,40 +221,14 @@
       },
       "findings": [
         {
+          "sev": "blocker",
+          "area": "storefront",
+          "msg": "Obchod je chránený heslom (Online Store → Preferences) — nijaký zákazník sa nedostane ďalej ako na stránku s heslom"
+        },
+        {
           "sev": "info",
           "area": "catalog",
           "msg": "3 produktov v DRAFT stave"
-        },
-        {
-          "sev": "blocker",
-          "area": "catalog",
-          "msg": "1 aktívnych produktov nie je publikovaných v Online Store",
-          "detail": {
-            "priklady": [
-              "kompletna-kolekcja-the-ritual-sweet-dreams-rise-shine"
-            ]
-          }
-        },
-        {
-          "sev": "warn",
-          "area": "catalog",
-          "msg": "1 variantov s nulovou cenou — over, či je to zámer (darček) alebo chyba",
-          "detail": {
-            "varianty": [
-              "bawelniana-saszetka-do-rytualu [Prezent]"
-            ]
-          }
-        },
-        {
-          "sev": "blocker",
-          "area": "catalog",
-          "msg": "2 produktov je vypredaných a nedovoľuje objednávku",
-          "detail": {
-            "priklady": [
-              "kompletna-kolekcja-the-ritual-sweet-dreams-rise-shine",
-              "kostka-pod-prysznic-love"
-            ]
-          }
         },
         {
           "sev": "info",
@@ -72,8 +237,91 @@
         },
         {
           "sev": "warn",
+          "area": "collection",
+          "msg": "1 prázdnych kolekcií",
+          "detail": {
+            "kolekcie": [
+              "saszetka"
+            ]
+          }
+        },
+        {
+          "sev": "warn",
           "area": "theme",
           "msg": "1× text v téme vyzerá ako SK namiesto PL — šablónu nepoužíva žiadny aktívny produkt",
+          "detail": {
+            "subory": [
+              "templates/product.sety-a-doypacky.json"
+            ],
+            "ukazky": [
+              "pp-inline-info\"> i След всеки душ остави торбичката да изсъхне свободно. {%- endcapture -%}{%- else -%}{%- capture b -%}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "hu",
+      "locale": "hu",
+      "country": "HU",
+      "shop": "PERPERUNA.HU",
+      "domain": "perperuna-hu.myshopify.com",
+      "marketDomain": "perperuna.hu",
+      "theme": "PERPERUNA.HU – živá 18.8. (jazyk)",
+      "stats": {
+        "products": 34,
+        "active": 26,
+        "drafts": 3,
+        "collections": 11,
+        "pages": 9,
+        "menus": 5,
+        "shippingZones": 1,
+        "activeRates": 2,
+        "shipsTo": [
+          "HU"
+        ],
+        "wallets": [],
+        "taxesIncluded": true,
+        "customerAccounts": "NEW_CUSTOMER_ACCOUNTS"
+      },
+      "findings": [
+        {
+          "sev": "blocker",
+          "area": "domain",
+          "msg": "Primárna doména je stále perperuna-hu.myshopify.com — vlastná doména nie je dokončená",
+          "detail": {
+            "marketDomain": "perperuna.hu"
+          }
+        },
+        {
+          "sev": "blocker",
+          "area": "storefront",
+          "msg": "Obchod je chránený heslom (Online Store → Preferences) — nijaký zákazník sa nedostane ďalej ako na stránku s heslom"
+        },
+        {
+          "sev": "blocker",
+          "area": "payments",
+          "msg": "Žiadne digitálne peňaženky — pravdepodobne nie je aktivovaná platobná brána; over v Settings → Payments"
+        },
+        {
+          "sev": "info",
+          "area": "catalog",
+          "msg": "3 produktov v DRAFT stave"
+        },
+        {
+          "sev": "info",
+          "area": "seo",
+          "msg": "3 aktívnych produktov nemá SEO popis"
+        },
+        {
+          "sev": "info",
+          "area": "collection",
+          "msg": "Kolekcia „Home page\" nemá popis"
+        },
+        {
+          "sev": "warn",
+          "area": "theme",
+          "msg": "1× text v téme vyzerá ako SK namiesto HU — šablónu nepoužíva žiadny aktívny produkt",
           "detail": {
             "subory": [
               "templates/product.sety-a-doypacky.json"

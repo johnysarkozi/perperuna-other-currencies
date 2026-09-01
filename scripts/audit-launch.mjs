@@ -5,6 +5,9 @@
  * Checks storefront settings, legal policies, shipping and payments, catalog
  * completeness, navigation and content — and runs every customer-visible string
  * through a language check to catch text left untranslated from another store.
+ * Also does one live, unauthenticated fetch of the storefront home page to
+ * catch a password-protected store — the one blocker that makes everything
+ * else on this list moot, and the one Admin API data alone can't see.
  *
  * Read-only. Writes docs/launch-audit.json and prints findings grouped by
  * severity.
@@ -142,6 +145,16 @@ async function audit(key) {
   if (wp?.domain && !wp.domain.sslEnabled) {
     push(finding('blocker', 'domain', `SSL nie je aktívne na ${wp.domain.host}`));
   }
+  try {
+    const res = await fetch(`https://${shop.primaryDomain.host}/`, { redirect: 'manual' });
+    if (res.status >= 300 && res.status < 400 && /\/password(\?|$)/.test(res.headers.get('location') ?? '')) {
+      push(finding('blocker', 'storefront',
+        'Obchod je chránený heslom (Online Store → Preferences) — nijaký zákazník sa nedostane ďalej ako na stránku s heslom'));
+    }
+  } catch (e) {
+    push(finding('warn', 'storefront', `Nepodarilo sa overiť dostupnosť obchodu naživo: ${e.message}`));
+  }
+
   if (shop.setupRequired) {
     push(finding('blocker', 'setup', 'Obchod má nedokončené kroky nastavenia (setupRequired = true)'));
   }
