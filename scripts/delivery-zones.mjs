@@ -52,11 +52,20 @@ const AT_RENAME = { from: 'Kurier', to: 'DPD kuriér', price: 4.90 };
  * Zóny, ktoré vznikli skôr a nulovú sadzbu od 60 € nemajú. Doplní sa
  * existujúcej sadzbe strop 59,99 € a vytvorí sa k nej nulová sadzba.
  * Kuriér zostáva za jednu cenu vždy, rovnako ako na Slovensku.
+ *
+ * DE a BG majú náklad na najlacnejšiu službu (5,77 € / 3,98–4,75 €) blízko
+ * SI (5,14 €), preto rovnaký prah 60 € ako lacná skupina.
  */
 const FREE_TIER_FOR = {
   DE: ['Hermes PaketShop'],
   BG: ['Офис на Еконт', 'Офис на Спиди', 'Еконтомат'],
 };
+
+/**
+ * IT/FR/ES majú náklad na najlacnejšiu službu 6,58–7,05 € — draho na to,
+ * aby sa dávala zdarma už od 60 €. Prah sa tam zdvíha na 90 €.
+ */
+const RAISE_THRESHOLD_FOR = { IT: 90.0, FR: 90.0, ES: 90.0 };
 
 const money = (amount) => ({ amount, currencyCode: CURRENCY });
 
@@ -81,7 +90,9 @@ console.log(apply ? '*** APPLY — zapisuje sa do obchodu ***\n' : 'dry run — 
 const PROFILE = `{ deliveryProfiles(first:5){ nodes { id default
   profileLocationGroups { locationGroup { id }
     locationGroupZones(first:50){ nodes { zone { id name countries { code { countryCode } } }
-      methodDefinitions(first:20){ nodes { id name } } } } } } } }`;
+      methodDefinitions(first:20){ nodes { id name
+        rateProvider { ... on DeliveryRateDefinition { price { amount } } }
+        methodConditions { id operator conditionCriteria { ... on MoneyV2 { amount } } } } } } } } } } }`;
 
 const d = await graphql(STORE, PROFILE);
 const profile = d.deliveryProfiles.nodes.find((p) => p.default) ?? d.deliveryProfiles.nodes[0];
@@ -118,25 +129,54 @@ if (atMethod) {
   console.log(`\n! AT: sadzba "${AT_RENAME.from}" sa nenašla, Rakúsko nechávam tak`);
 }
 
-// Doplnenie nulovej sadzby do zón, ktoré vznikli skôr
+const isFree = (m) => +(m.rateProvider?.price?.amount ?? -1) === 0;
+
+// Doplnenie nulovej sadzby do zón, ktoré vznikli skôr (DE, BG). Pôvodná
+// platená sadzba nemá žiadny strop, takže ju treba zároveň obmedziť na
+// do 59,99 € — inak by sa pri objednávke nad prahom ukázali obe naraz.
 const freeTierWork = [];
 for (const [country, methodNames] of Object.entries(FREE_TIER_FOR)) {
   const z = group.locationGroupZones.nodes.find((x) => x.zone.countries.some((c) => c.code.countryCode === country));
   if (!z) { console.log(`\n! ${country}: zóna sa nenašla`); continue; }
-  const already = new Set(z.methodDefinitions.nodes.filter((m) => m.free).map((m) => m.name));
+  const freeNames = new Set(z.methodDefinitions.nodes.filter(isFree).map((m) => m.name));
   const toCap = [], toCreate = [];
   for (const name of methodNames) {
-    const paid = z.methodDefinitions.nodes.find((m) => m.name === name && !m.free);
+    const paid = z.methodDefinitions.nodes.find((m) => m.name === name && !isFree(m));
     if (!paid) { console.log(`\n! ${country}: sadzba "${name}" sa nenašla`); continue; }
-    if (already.has(name)) { console.log(`\n! ${country}: "${name}" už nulovú sadzbu má — preskakujem`); continue; }
-    toCap.push({ id: paid.id, name, price: paid.price });
+    if (freeNames.has(name)) { console.log(`\n! ${country}: "${name}" už nulovú sadzbu má — preskakujem`); continue; }
+    if (paid.methodConditions.length === 0) {
+      toCap.push({ id: paid.id, priceConditionsToCreate: [{ operator: 'LESS_THAN_OR_EQUAL_TO', criteria: money(FREE_FROM - 0.01) }] });
+    }
     toCreate.push({ name, active: true, rateDefinition: { price: money(0) },
       priceConditionsToCreate: [{ operator: 'GREATER_THAN_OR_EQUAL_TO', criteria: money(FREE_FROM) }] });
   }
   if (!toCreate.length) continue;
-  freeTierWork.push({ country, zoneId: z.zone.id, toCap, toCreate });
+  freeTierWork.push({ zoneId: z.zone.id, toCap, toCreate });
   console.log(`\n${country} — doprava zdarma od ${FREE_FROM} €`);
-  for (const c of toCap) console.log(`   ${c.name}: ${c.price} € do 59.99 €, potom 0 €`);
+  for (const name of methodNames) console.log(`   ${name}: do 59.99 € platená, potom 0 €`);
+}
+
+// Zdvihnutie prahu 60 € → 90 € na existujúcich zónach (IT, FR, ES)
+const raiseWork = [];
+for (const [country, newThreshold] of Object.entries(RAISE_THRESHOLD_FOR)) {
+  const z = group.locationGroupZones.nodes.find((x) => x.zone.countries.some((c) => c.code.countryCode === country));
+  if (!z) { console.log(`\n! ${country}: zóna sa nenašla`); continue; }
+  const methodsToUpdate = [];
+  for (const m of z.methodDefinitions.nodes) {
+    const conditionsToUpdate = [];
+    for (const c of m.methodConditions) {
+      const at60 = Math.abs(+c.conditionCriteria.amount - (c.operator === 'LESS_THAN_OR_EQUAL_TO' ? FREE_FROM - 0.01 : FREE_FROM)) < 0.02;
+      if (!at60) continue;
+      const newAmount = c.operator === 'LESS_THAN_OR_EQUAL_TO' ? newThreshold - 0.01 : newThreshold;
+      conditionsToUpdate.push({ id: c.id, criteria: newAmount, criteriaUnit: CURRENCY, field: 'TOTAL_PRICE', operator: c.operator });
+    }
+    if (conditionsToUpdate.length) methodsToUpdate.push({ id: m.id, name: m.name, conditionsToUpdate });
+  }
+  if (!methodsToUpdate.length) { console.log(`\n! ${country}: podmienky pri 60 € sa nenašli`); continue; }
+  raiseWork.push({ zoneId: z.zone.id, methodsToUpdate });
+  console.log(`\n${country} — prah 60 € → ${newThreshold} €`);
+  for (const m of methodsToUpdate) for (const c of m.conditionsToUpdate)
+    console.log(`   ${m.name}: ${c.operator === 'LESS_THAN_OR_EQUAL_TO' ? 'do' : 'od'} ${c.criteria} €`);
 }
 
 if (!apply) { console.log('\nDry run hotový. Spusti znova s --apply.'); process.exit(0); }
@@ -172,6 +212,33 @@ if (atMethod) {
   const errs = res.deliveryProfileUpdate.userErrors;
   if (errs.length) console.log(`✗ AT: ${JSON.stringify(errs)}`);
   else console.log(`✓ AT upravené`);
+}
+
+for (const w of freeTierWork) {
+  const res = await graphql(STORE, UPDATE, {
+    id: profile.id,
+    profile: { locationGroupsToUpdate: [{ id: group.locationGroup.id, zonesToUpdate: [{
+      id: w.zoneId,
+      methodDefinitionsToUpdate: w.toCap,
+      methodDefinitionsToCreate: w.toCreate,
+    }] }] },
+  });
+  const errs = res.deliveryProfileUpdate.userErrors;
+  if (errs.length) console.log(`✗ ${w.zoneId}: ${JSON.stringify(errs)}`);
+  else console.log(`✓ doprava zdarma pridaná (${w.zoneId})`);
+}
+
+for (const w of raiseWork) {
+  const res = await graphql(STORE, UPDATE, {
+    id: profile.id,
+    profile: { locationGroupsToUpdate: [{ id: group.locationGroup.id, zonesToUpdate: [{
+      id: w.zoneId,
+      methodDefinitionsToUpdate: w.methodsToUpdate.map(({ id, conditionsToUpdate }) => ({ id, conditionsToUpdate })),
+    }] }] },
+  });
+  const errs = res.deliveryProfileUpdate.userErrors;
+  if (errs.length) console.log(`✗ ${w.zoneId}: ${JSON.stringify(errs)}`);
+  else console.log(`✓ prah zdvihnutý (${w.zoneId})`);
 }
 
 console.log('\nHotovo.');
