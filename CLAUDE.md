@@ -71,8 +71,10 @@ scripts/audit-launch.mjs       audit pripravenosti → docs/launch-audit.json
 scripts/catalog-pull.mjs       lokálny náhľad katalógu (vypíše SQL, nič nezapisuje)
 app/index.html               dashboard katalógu (matica SKU × obchod)
 supabase/functions/catalog-sync/     Edge Function — sync Shopify → katalóg
-supabase/functions/inventory-mirror/ Edge Function — zrkadlí sklady zo SK (cron á 15 min)
+supabase/functions/inventory-mirror/ Edge Function — zrkadlí sklady a zapnutie zo SK (cron á 15 min)
 supabase/functions/inventory-set/    Edge Function — nastaví sklad SKU vo všetkých obchodoch
+supabase/functions/price-set/        Edge Function — cena a cena pred zľavou, per trh
+supabase/functions/product-status/   Edge Function — zapne/vypne SKU, zo SK do všetkých
 scripts/inventory-mirror.mjs   lokálne zrkadlenie skladov (dry-run, --apply)
 scripts/figma-scan.mjs         read-only strom Figma súboru (názvy a geometria framov)
 scripts/gallery-hash.py        perceptuálne párovanie médium ↔ Figma fram (jediný Python v repe)
