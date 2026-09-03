@@ -81,6 +81,7 @@ scripts/gallery-from-figma.mjs jazykové galérie z Figmy → custom.<locale>_im
 scripts/media-from-figma.mjs   médiá produktov na RO/HU (tam je jazyk primárny)
 scripts/delivery-zones.mjs     dopravné zóny a sadzby (dry-run, --apply)
 scripts/delivery-names.mjs     názvy dopravcov v jazykoch trhov (dry-run, --apply)
+scripts/fix-cart-you-marker.mjs  oprava natvrdo zapísaného textu v košíku (dry-run, --apply)
 plan/<locale>-figma.json       plány galérií na eurovom backende
 plan/ro-media.json, hu-media.json  plány médií pre RO a HU
 docs/galerie.md                ako fungujú jazykové galérie a odkiaľ sa berú obrázky
