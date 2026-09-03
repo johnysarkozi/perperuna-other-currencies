@@ -59,6 +59,10 @@ const AT_RENAME = { from: 'Kurier', to: 'DPD kuriér', price: 4.90 };
 const FREE_TIER_FOR = {
   DE: ['Hermes PaketShop'],
   BG: ['Офис на Еконт', 'Офис на Спиди', 'Еконтомат'],
+  // AT má len kuriéra, žiadne výdajné miesto — zadarmo od 60 € tu teda
+  // platí pre kuriér samotný, nie pre lacnejšiu alternatívu vedľa neho.
+  // Subvencia je preto vyššia než inde (náklad 5,82 € na balík).
+  AT: ['DPD kuriér'],
 };
 
 /**
