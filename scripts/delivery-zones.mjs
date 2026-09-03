@@ -48,6 +48,16 @@ const ZONES = [
 const AT_ZONE = 'gid://shopify/DeliveryZone/683487002951';
 const AT_RENAME = { from: 'Kurier', to: 'DPD kuriér', price: 4.90 };
 
+/**
+ * Zóny, ktoré vznikli skôr a nulovú sadzbu od 60 € nemajú. Doplní sa
+ * existujúcej sadzbe strop 59,99 € a vytvorí sa k nej nulová sadzba.
+ * Kuriér zostáva za jednu cenu vždy, rovnako ako na Slovensku.
+ */
+const FREE_TIER_FOR = {
+  DE: ['Hermes PaketShop'],
+  BG: ['Офис на Еконт', 'Офис на Спиди', 'Еконтомат'],
+};
+
 const money = (amount) => ({ amount, currencyCode: CURRENCY });
 
 /** Sadzba pre výdajné miesto sa delí na platenú do 59,99 € a nulovú od 60 €. */
@@ -106,6 +116,27 @@ if (atMethod) {
   console.log(`\nAT — premenovanie sadzby "${AT_RENAME.from}" → "${AT_RENAME.to}" a cena ${AT_RENAME.price} €`);
 } else {
   console.log(`\n! AT: sadzba "${AT_RENAME.from}" sa nenašla, Rakúsko nechávam tak`);
+}
+
+// Doplnenie nulovej sadzby do zón, ktoré vznikli skôr
+const freeTierWork = [];
+for (const [country, methodNames] of Object.entries(FREE_TIER_FOR)) {
+  const z = group.locationGroupZones.nodes.find((x) => x.zone.countries.some((c) => c.code.countryCode === country));
+  if (!z) { console.log(`\n! ${country}: zóna sa nenašla`); continue; }
+  const already = new Set(z.methodDefinitions.nodes.filter((m) => m.free).map((m) => m.name));
+  const toCap = [], toCreate = [];
+  for (const name of methodNames) {
+    const paid = z.methodDefinitions.nodes.find((m) => m.name === name && !m.free);
+    if (!paid) { console.log(`\n! ${country}: sadzba "${name}" sa nenašla`); continue; }
+    if (already.has(name)) { console.log(`\n! ${country}: "${name}" už nulovú sadzbu má — preskakujem`); continue; }
+    toCap.push({ id: paid.id, name, price: paid.price });
+    toCreate.push({ name, active: true, rateDefinition: { price: money(0) },
+      priceConditionsToCreate: [{ operator: 'GREATER_THAN_OR_EQUAL_TO', criteria: money(FREE_FROM) }] });
+  }
+  if (!toCreate.length) continue;
+  freeTierWork.push({ country, zoneId: z.zone.id, toCap, toCreate });
+  console.log(`\n${country} — doprava zdarma od ${FREE_FROM} €`);
+  for (const c of toCap) console.log(`   ${c.name}: ${c.price} € do 59.99 €, potom 0 €`);
 }
 
 if (!apply) { console.log('\nDry run hotový. Spusti znova s --apply.'); process.exit(0); }
