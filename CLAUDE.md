@@ -84,7 +84,7 @@ scripts/media-from-figma.mjs   médiá produktov na RO/HU (tam je jazyk primárn
 scripts/delivery-zones.mjs     dopravné zóny a sadzby (dry-run, --apply)
 scripts/delivery-names.mjs     názvy dopravcov v jazykoch trhov (dry-run, --apply)
 scripts/fix-cart-you-marker.mjs  oprava natvrdo zapísaného textu v košíku (dry-run, --apply)
-scripts/openai-pixel.mjs       OpenAI ads pixel do témy (dry-run, --apply, --print-pixel)
+scripts/openai-pixel.mjs       OpenAI ads pixel do témy (dry-run, --apply, --check)
 pixel/openai-pixel.liquid      snippet do <head> témy — page_viewed, contents_viewed
 pixel/openai-custom-pixel.js   custom pixel (Customer events) — košík a checkout
 plan/<locale>-figma.json       plány galérií na eurovom backende

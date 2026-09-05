@@ -10,10 +10,17 @@
  *      Admin API, vkladá sa ručne v Settings → Customer events. Skript ho
  *      vypíše s doplneným pixel ID.
  *
- *   node scripts/openai-pixel.mjs cz                  # dry run
- *   node scripts/openai-pixel.mjs cz --apply          # zapíše snippet do témy
- *   node scripts/openai-pixel.mjs cz --print-pixel    # JS na vloženie do admina
- *   node scripts/openai-pixel.mjs cz --remove --apply # odinštaluje snippet
+ *   node scripts/openai-pixel.mjs cz                   # dry run
+ *   node scripts/openai-pixel.mjs cz --apply           # zapíše snippet do živej témy
+ *   node scripts/openai-pixel.mjs cz --all-themes --apply   # do všetkých tém obchodu
+ *   node scripts/openai-pixel.mjs cz --check           # je snippet v živej téme?
+ *   node scripts/openai-pixel.mjs cz --print-pixel     # JS na vloženie do admina
+ *   node scripts/openai-pixel.mjs cz --remove --apply  # odinštaluje snippet
+ *
+ * Snippet žije v téme, takže **publikovanie inej témy meranie vypne**. Preto
+ * `--all-themes` (zapíše ho do všetkých tém obchodu, aby prežil aj rollback)
+ * a `--check`, ktorý sa dá púšťať pravidelne — končí s kódom 1, keď v živej
+ * téme niečo chýba.
  *
  * Pixel ID sa berie z `--pixel-id <id>`, inak z premennej
  * OPENAI_PIXEL_ID_<KEY> (napr. OPENAI_PIXEL_ID_CZ), inak z OPENAI_PIXEL_ID.
@@ -40,17 +47,20 @@ const value = (name) => {
 
 const apply = flag('--apply');
 const remove = flag('--remove');
+const check = flag('--check');
+const allThemes = flag('--all-themes');
 const printPixel = flag('--print-pixel');
 const themeArg = value('--theme');
-const keys = argv.filter((a) => !a.startsWith('--') && a !== themeArg && a !== value('--pixel-id'));
+const idArg = value('--pixel-id');
+const mode = check ? 'check' : remove ? 'remove' : 'install';
+
+const keys = argv.filter((a) => !a.startsWith('--') && a !== themeArg && a !== idArg);
 const shops = keys.length ? keys : ['cz'];
 
-function pixelId(key) {
-  const id =
-    value('--pixel-id') ??
-    process.env[`OPENAI_PIXEL_ID_${key.toUpperCase()}`] ??
-    process.env.OPENAI_PIXEL_ID;
+function pixelId(key, { required = true } = {}) {
+  const id = idArg ?? process.env[`OPENAI_PIXEL_ID_${key.toUpperCase()}`] ?? process.env.OPENAI_PIXEL_ID;
   if (!id) {
+    if (!required) return null;
     throw new Error(
       `chýba pixel ID pre "${key}" — nastav OPENAI_PIXEL_ID_${key.toUpperCase()} alebo použi --pixel-id`,
     );
@@ -74,17 +84,22 @@ function withRenderTag(layout) {
 }
 
 function withoutRenderTag(layout) {
-  const stripped = layout.replace(new RegExp(`\\n?[ \\t]*${RENDER_TAG.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[ \\t]*\\r?\\n`), '\n');
+  const escaped = RENDER_TAG.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const stripped = layout.replace(new RegExp(`\\n?[ \\t]*${escaped}[ \\t]*\\r?\\n`), '\n');
   return stripped === layout ? null : stripped;
 }
 
-async function mainTheme(key) {
-  if (themeArg) return themeArg.startsWith('gid://') ? themeArg : `gid://shopify/OnlineStoreTheme/${themeArg}`;
+async function targetThemes(key) {
+  if (themeArg) {
+    const id = themeArg.startsWith('gid://') ? themeArg : `gid://shopify/OnlineStoreTheme/${themeArg}`;
+    return [{ id, name: themeArg, role: 'ZADANÁ' }];
+  }
   const data = await graphql(key, '{ themes(first: 50) { nodes { id name role } } }');
-  const main = data.themes.nodes.find((t) => t.role === 'MAIN');
+  const themes = data.themes.nodes;
+  if (allThemes) return themes;
+  const main = themes.find((t) => t.role === 'MAIN');
   if (!main) throw new Error(`[${key}] žiadna publikovaná téma`);
-  console.log(`  téma: ${main.name} (${main.id.split('/').pop()})`);
-  return main.id;
+  return [main];
 }
 
 const READ = `query($id: ID!, $files: [String!]!) {
@@ -109,94 +124,118 @@ const DELETE = `mutation($id: ID!, $files: [String!]!) {
   }
 }`;
 
-async function run(key) {
-  console.log(`\n=== ${key} ===`);
-  const id = pixelId(key);
-  const themeId = await mainTheme(key);
-
-  const read = await graphql(key, READ, { id: themeId, files: [LAYOUT_FILE, SNIPPET_FILE] });
+/** Vráti true, keď je v tejto téme všetko tak, ako má byť (pre --check). */
+async function processTheme(key, theme, wanted) {
+  const label = `${theme.name}${theme.role === 'MAIN' ? ' [ŽIVÁ]' : ''}`;
+  const read = await graphql(key, READ, { id: theme.id, files: [LAYOUT_FILE, SNIPPET_FILE] });
   const files = new Map(read.theme.files.nodes.map((n) => [n.filename, n.body.content]));
   const layout = files.get(LAYOUT_FILE);
-  if (!layout) throw new Error(`[${key}] ${LAYOUT_FILE} sa nedá prečítať`);
+  if (!layout) throw new Error(`[${key}] ${LAYOUT_FILE} sa v téme "${theme.name}" nedá prečítať`);
+
+  const hasSnippet = files.has(SNIPPET_FILE);
+  const hasTag = layout.includes(RENDER_TAG);
+
+  if (mode === 'check') {
+    const state = !hasSnippet
+      ? 'snippet chýba'
+      : !hasTag
+        ? 'snippet je, ale <head> ho nevolá'
+        : wanted && files.get(SNIPPET_FILE) !== wanted
+          ? 'snippet je, ale líši sa od repa (iné ID alebo staršia verzia)'
+          : 'v poriadku';
+    console.log(`  ${state === 'v poriadku' ? '✓' : '✗'} ${label}: ${state}`);
+    return state === 'v poriadku';
+  }
 
   const updates = [];
   const deletes = [];
 
-  if (remove) {
-    if (files.has(SNIPPET_FILE)) {
-      deletes.push(SNIPPET_FILE);
-      console.log(`  − ${SNIPPET_FILE}`);
-    } else {
-      console.log(`  ${SNIPPET_FILE} v téme nie je`);
-    }
+  if (mode === 'remove') {
+    if (hasSnippet) deletes.push(SNIPPET_FILE);
     const cleaned = withoutRenderTag(layout);
-    if (cleaned) {
-      updates.push({ filename: LAYOUT_FILE, body: cleaned });
-      console.log(`  − render tag z ${LAYOUT_FILE}`);
-    } else {
-      console.log(`  render tag v ${LAYOUT_FILE} nie je`);
-    }
+    if (cleaned) updates.push({ filename: LAYOUT_FILE, body: cleaned });
+    console.log(
+      `  ${label}: ${[hasSnippet && `− ${SNIPPET_FILE}`, cleaned && '− render tag'].filter(Boolean).join(', ') || 'nič na odstránenie'}`,
+    );
   } else {
-    const wanted = source('openai-pixel.liquid').replaceAll(PLACEHOLDER, id);
-    if (files.get(SNIPPET_FILE) === wanted) {
-      console.log(`  ${SNIPPET_FILE} je aktuálny`);
-    } else {
-      updates.push({ filename: SNIPPET_FILE, body: wanted });
-      console.log(`  ${files.has(SNIPPET_FILE) ? '~' : '+'} ${SNIPPET_FILE} (pixel ID …${id.slice(-4)})`);
-    }
-
+    if (files.get(SNIPPET_FILE) !== wanted) updates.push({ filename: SNIPPET_FILE, body: wanted });
     const patched = withRenderTag(layout);
-    if (patched) {
-      updates.push({ filename: LAYOUT_FILE, body: patched });
-      console.log(`  + ${RENDER_TAG} do <head> v ${LAYOUT_FILE}`);
-    } else {
-      console.log(`  render tag v ${LAYOUT_FILE} už je`);
-    }
+    if (patched) updates.push({ filename: LAYOUT_FILE, body: patched });
+    console.log(
+      `  ${label}: ${
+        [
+          files.get(SNIPPET_FILE) !== wanted && `${hasSnippet ? '~' : '+'} ${SNIPPET_FILE}`,
+          patched && '+ render tag do <head>',
+        ]
+          .filter(Boolean)
+          .join(', ') || 'už je aktuálny'
+      }`,
+    );
   }
+
+  if (!apply || (!updates.length && !deletes.length)) return true;
+
+  if (updates.length) {
+    const res = await graphql(key, UPSERT, {
+      id: theme.id,
+      files: updates.map((u) => ({ filename: u.filename, body: { type: 'TEXT', value: u.body } })),
+    });
+    const errs = res.themeFilesUpsert.userErrors;
+    if (errs.length) throw new Error(`[${key}] upsert: ${JSON.stringify(errs)}`);
+    console.log(`    ✓ zapísané: ${res.themeFilesUpsert.upsertedThemeFiles.map((f) => f.filename).join(', ')}`);
+  }
+  if (deletes.length) {
+    const res = await graphql(key, DELETE, { id: theme.id, files: deletes });
+    const errs = res.themeFilesDelete.userErrors;
+    if (errs.length) throw new Error(`[${key}] delete: ${JSON.stringify(errs)}`);
+    console.log(`    ✓ zmazané: ${res.themeFilesDelete.deletedThemeFiles.map((f) => f.filename).join(', ')}`);
+  }
+  return true;
+}
+
+async function run(key) {
+  console.log(`\n=== ${key} ===`);
+  const id = pixelId(key, { required: mode === 'install' || printPixel });
+  const wanted = id ? source('openai-pixel.liquid').replaceAll(PLACEHOLDER, id) : null;
+  const themes = await targetThemes(key);
+
+  let ok = true;
+  for (const theme of themes) ok = (await processTheme(key, theme, wanted)) && ok;
 
   if (printPixel) {
     console.log(`\n--- custom pixel pre Settings → Customer events (${key}) ---`);
     console.log(source('openai-custom-pixel.js').replaceAll(PLACEHOLDER, id));
     console.log('--- koniec ---');
   }
-
-  if (!updates.length && !deletes.length) return;
-  if (!apply) return;
-
-  if (updates.length) {
-    const res = await graphql(key, UPSERT, {
-      id: themeId,
-      files: updates.map((u) => ({ filename: u.filename, body: { type: 'TEXT', value: u.body } })),
-    });
-    const errs = res.themeFilesUpsert.userErrors;
-    if (errs.length) throw new Error(`[${key}] upsert: ${JSON.stringify(errs)}`);
-    console.log(`  ✓ zapísané: ${res.themeFilesUpsert.upsertedThemeFiles.map((f) => f.filename).join(', ')}`);
-  }
-  if (deletes.length) {
-    const res = await graphql(key, DELETE, { id: themeId, files: deletes });
-    const errs = res.themeFilesDelete.userErrors;
-    if (errs.length) throw new Error(`[${key}] delete: ${JSON.stringify(errs)}`);
-    console.log(`  ✓ zmazané: ${res.themeFilesDelete.deletedThemeFiles.map((f) => f.filename).join(', ')}`);
-  }
+  return ok;
 }
 
-console.log(apply ? '*** APPLY — zapisuje sa do témy ***' : 'dry run — nič sa nezapíše');
+console.log(
+  mode === 'check'
+    ? 'kontrola — nič sa nezapíše'
+    : apply
+      ? '*** APPLY — zapisuje sa do témy ***'
+      : 'dry run — nič sa nezapíše',
+);
 
 let failed = false;
 for (const key of shops) {
   try {
-    await run(key);
+    if (!(await run(key))) failed = true;
   } catch (err) {
     failed = true;
     console.log(`\n=== ${key} ===\n  ✗ ${err.message}`);
   }
 }
 
-if (!apply) console.log('\nDry run hotový. Spusti znova s --apply.');
-console.log(
-  '\nCustom pixel (košík + checkout) sa cez API nedá vytvoriť — vlož ho ručne:\n' +
-    '  Shopify admin → Settings → Customer events → Add custom pixel,\n' +
-    '  Permission: „Marketing", Data sale: podľa nastavenia obchodu,\n' +
-    '  telo z `node scripts/openai-pixel.mjs <key> --print-pixel`.',
-);
+if (mode !== 'check' && !apply) console.log('\nDry run hotový. Spusti znova s --apply.');
+if (mode === 'install') {
+  console.log(
+    '\nCustom pixel (košík + checkout) sa cez API nedá vytvoriť — vlož ho ručne:\n' +
+      '  Shopify admin → Settings → Customer events → Add custom pixel,\n' +
+      '  Permission: „Marketing", Data sale: podľa nastavenia obchodu,\n' +
+      '  telo z `node scripts/openai-pixel.mjs <key> --print-pixel`.\n' +
+      '\nPo publikovaní novej témy spusti `node scripts/openai-pixel.mjs <key> --check`.',
+  );
+}
 process.exit(failed ? 1 : 0);
