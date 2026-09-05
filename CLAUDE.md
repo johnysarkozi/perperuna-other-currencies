@@ -58,6 +58,8 @@ za posledných 90 dní nula objednávok.
   CZ navyše `shopify--color-pattern`, `shopify--skin-care-effect`;
   PL navyše `doran_shoppable_videos_translation`.
 - **Kontaktný e-mail** — CZ/PL `info@perperuna.sk`, RO/HU `sarkozi.jan@gmail.com`.
+- **Reklamy** — OpenAI (ChatGPT) ads bežia len na CZ; merací pixel je v téme
+  a v Customer events, viď [`docs/openai-ads-pixel.md`](docs/openai-ads-pixel.md).
 - **Formát ceny** — HU je bez desatinných miest (`{{amount_no_decimals_with_comma_separator}} Ft`).
 
 ## Štruktúra
@@ -82,10 +84,14 @@ scripts/media-from-figma.mjs   médiá produktov na RO/HU (tam je jazyk primárn
 scripts/delivery-zones.mjs     dopravné zóny a sadzby (dry-run, --apply)
 scripts/delivery-names.mjs     názvy dopravcov v jazykoch trhov (dry-run, --apply)
 scripts/fix-cart-you-marker.mjs  oprava natvrdo zapísaného textu v košíku (dry-run, --apply)
+scripts/openai-pixel.mjs       OpenAI ads pixel do témy (dry-run, --apply, --print-pixel)
+pixel/openai-pixel.liquid      snippet do <head> témy — page_viewed, contents_viewed
+pixel/openai-custom-pixel.js   custom pixel (Customer events) — košík a checkout
 plan/<locale>-figma.json       plány galérií na eurovom backende
 plan/ro-media.json, hu-media.json  plány médií pre RO a HU
 docs/galerie.md                ako fungujú jazykové galérie a odkiaľ sa berú obrázky
 docs/credentials.md            ako sa nastavujú prístupy
+docs/openai-ads-pixel.md       OpenAI (ChatGPT) ads pixel na CZ
 docs/launch-plan.md            plán spustenia RO/PL/HU
 docs/catalog.md                cross-backend katalóg — dátový model, stav, ďalšie fázy
 docs/sku.md                    kľúč k SKU kódom (aj ako modál v appke)
