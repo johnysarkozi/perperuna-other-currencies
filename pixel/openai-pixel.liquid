@@ -1,0 +1,172 @@
+{%- comment -%}
+  OpenAI (ChatGPT) ads — measurement pixel, storefrontová časť.
+
+  Zdroj je `pixel/openai-pixel.liquid` v repe perperuna-other-currencies.
+  Needituj tento súbor priamo v téme — prepíše ho `node scripts/openai-pixel.mjs`.
+
+  Prečo je pixel rozdelený na dve časti:
+
+  - Tento snippet beží na reálnej doméne obchodu, takže ako jediný vidí
+    `oppref` z pristávacej URL a vie ho uložiť do first-party cookie
+    `__oppref`. Bez neho by kliky z ChatGPT nemali čo priradiť.
+  - Košík a checkout téma nevidí (checkout extensibility), tie rieši custom
+    pixel v Settings → Customer events (`pixel/openai-custom-pixel.js`).
+
+  Delenie eventov je preto podľa toho, kde sa vôbec dajú zachytiť, a nikde sa
+  neprekrýva:
+
+    tu (téma)      page_viewed, contents_viewed
+    custom pixel   items_added, checkout_started, order_created
+
+  Sumy: Liquid vracia peniaze v halieroch (`product.price` = 34900 pre 349 Kč),
+  a OpenAI chce `amount` ako celé číslo v minor units — takže sa nič neprepočítava.
+{%- endcomment -%}
+
+{%- liquid
+  assign oai_variant = product.selected_or_first_available_variant
+  assign oai_item_id = oai_variant.sku | default: oai_variant.id
+-%}
+<script>
+  (function (w, d, s, u) {
+    if (w.oaiq) return;
+    var q = function () { q.q.push(arguments); };
+    q.q = [];
+    w.oaiq = q;
+    var js = d.createElement(s);
+    js.async = true;
+    js.src = u;
+    var f = d.getElementsByTagName(s)[0];
+    f.parentNode.insertBefore(js, f);
+  })(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
+
+  (function () {
+    var PIXEL_ID = {{ '__OPENAI_PIXEL_ID__' | json }};
+    var CURRENCY = {{ cart.currency.iso_code | json }};
+
+    /* Súhlas: default pixelu je `true`, my ho zapíname až po marketingovom
+       súhlase z cookie lišty. Zablokované eventy sa neprehrávajú, takže
+       page_viewed odosielame až v momente, keď súhlas naozaj je. */
+    oaiq("consent", false);
+    oaiq("init", { pixelId: PIXEL_ID });
+
+    var consented = false;
+    var pageEventsSent = false;
+
+    function marketingAllowed() {
+      try {
+        var p = window.Shopify && window.Shopify.customerPrivacy;
+        return !!(p && typeof p.marketingAllowed === "function" && p.marketingAllowed());
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function sendPageEvents() {
+      if (pageEventsSent) return;
+      pageEventsSent = true;
+
+      oaiq("measure", "page_viewed", {
+        type: "contents",
+        contents: [{
+          id: {{ request.page_type | json }},
+          name: {{ page_title | default: shop.name | json }},
+          content_type: "page"
+        }]
+      });
+
+      {%- if request.page_type == 'product' and oai_variant %}
+      oaiq("measure", "contents_viewed", {
+        type: "contents",
+        amount: {{ oai_variant.price | json }},
+        currency: CURRENCY,
+        contents: [{
+          id: {{ oai_item_id | json }},
+          name: {{ product.title | json }},
+          content_type: "product",
+          quantity: 1,
+          amount: {{ oai_variant.price | json }},
+          currency: CURRENCY
+        }]
+      });
+      {%- endif %}
+    }
+
+    function applyConsent() {
+      if (consented || !marketingAllowed()) return;
+      consented = true;
+      oaiq("consent", true);
+      sendPageEvents();
+    }
+
+    document.addEventListener("visitorConsentCollected", applyConsent);
+
+    /* `window.Shopify` definuje až content_for_header, ktorý je v <head> nižšie
+       ako tento snippet — súhlas preto kontrolujeme až po načítaní dokumentu. */
+    function whenReady(fn) {
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
+      else fn();
+    }
+    whenReady(function () {
+      if (window.Shopify && window.Shopify.loadFeatures) {
+        window.Shopify.loadFeatures([{ name: "consent-tracking-api", version: "0.1" }], function () {
+          applyConsent();
+        });
+      } else {
+        applyConsent();
+      }
+    });
+
+    {%- if customer %}
+    /* Advanced matching pre prihláseného zákazníka. Hashuje sa v prehliadači,
+       OpenAI nikdy nedostane hodnotu v čitateľnej podobe. Normalizácia podľa
+       https://developers.openai.com/ads/measurement-pixel. */
+    (function () {
+      var PUNCT = /[\s!-\/:-@[-`{-~]/g;
+
+      function sha256(value) {
+        if (!value || !window.crypto || !window.crypto.subtle) return Promise.resolve(null);
+        return window.crypto.subtle
+          .digest("SHA-256", new TextEncoder().encode(value))
+          .then(function (buf) {
+            return Array.prototype.map
+              .call(new Uint8Array(buf), function (b) { return ("0" + b.toString(16)).slice(-2); })
+              .join("");
+          })
+          .catch(function () { return null; });
+      }
+
+      var raw = {
+        email: {{ customer.email | default: '' | json }},
+        phone: {{ customer.phone | default: customer.default_address.phone | default: '' | json }},
+        first: {{ customer.first_name | default: '' | json }},
+        last: {{ customer.last_name | default: '' | json }},
+        external: {{ customer.id | json }}
+      };
+
+      var email = String(raw.email).trim().toLowerCase();
+      var phone = String(raw.phone).replace(/[\s().-]/g, "").replace(/^\+/, "").replace(/^0+/, "");
+      if (!/^\d{8,15}$/.test(phone)) phone = "";
+      var first = String(raw.first).toLowerCase().replace(PUNCT, "");
+      var last = String(raw.last).toLowerCase().replace(PUNCT, "");
+      var external = String(raw.external || "").trim();
+
+      Promise.all([sha256(email), sha256(phone), sha256(first), sha256(last), sha256(external)])
+        .then(function (h) {
+          var user = {
+            country: {{ customer.default_address.country_code | default: localization.country.iso_code | default: '' | json }},
+            city: {{ customer.default_address.city | default: '' | json }},
+            region: {{ customer.default_address.province | default: '' | json }},
+            postal_code: {{ customer.default_address.zip | default: '' | json }}
+          };
+          if (h[0]) user.email_sha256 = h[0];
+          if (h[1]) user.phone_number_sha256 = h[1];
+          if (h[2]) user.first_name_sha256 = h[2];
+          if (h[3]) user.last_name_sha256 = h[3];
+          if (h[4]) user.external_id_sha256 = h[4];
+          for (var k in user) if (!user[k]) delete user[k];
+          oaiq("init", { pixelId: PIXEL_ID, user: user });
+        });
+    })();
+    {%- endif %}
+  })();
+</script>
