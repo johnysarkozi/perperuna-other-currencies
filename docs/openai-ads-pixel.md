@@ -1,5 +1,13 @@
 # OpenAI (ChatGPT) ads — measurement pixel
 
+> **POZOR — na CZ už pixel beží cez appku, tento snippet nasadený nie je.**
+> Obchod má nainštalovanú appku **OpenAI ChatGPTs Ads Pixel CAPI** (Comercio
+> Services), ktorej app embed block vkladá do každej stránky `oaiq("init", ...)`
+> s tým istým pixel ID. Snippet z tohto repa by sa s ňou bil: SDK je na stránke
+> jedno (`if (w.oaiq) return`), takže by si delili aj stav súhlasu, a
+> `page_viewed` by mohol odchádzať dvakrát. Stav a rozhodnutie, čo z tohto
+> zostane, je nižšie v „Čo appka pokrýva".
+
 Kampane bežia zatiaľ len na **CZ**. Tento dokument popisuje, ako sa na CZ
 backend dostane merací pixel z
 [developers.openai.com/ads/measurement-pixel](https://developers.openai.com/ads/measurement-pixel),
@@ -126,6 +134,23 @@ súhlasom, podrží vo fronte a odošle ich, keď súhlas príde.
 - **`event_id`** je `order_<ID objednávky>` pri `order_created` a
   `checkout_<token>` pri `checkout_started`, aby sa event zdedupoval, keď
   pribudne server-side odosielanie.
+
+## Čo appka pokrýva
+
+Zistené z live storefrontu a zo zoznamu nainštalovaných appiek:
+
+- **App embed block `openai_init`** vkladá do stránky loader SDK a
+  `oaiq("init", { pixelId: ... })`. Beží v reálnej stránke, takže `oppref`
+  z pristávacej URL a first-party cookie `__oppref` fungujú.
+- **Žiadny web pixel** appka registrovaný nemá (`webPixelsConfigList` na
+  storefronte ju neobsahuje), takže z prehliadača neposiela nákupné eventy —
+  názov appky napovedá, že objednávky idú server-side cez CAPI.
+- **Súhlas neriadi**: init sa volá bez `oaiq("consent", false)`, takže pixel
+  meria bez ohľadu na cookie lištu. To je vec na overenie v nastaveniach appky.
+
+Čo teda z tohto repa má ešte zmysel, závisí od toho, či appka posiela
+`items_added`/`checkout_started` a či rieši súhlas. Kým to nie je overené,
+snippet ani custom pixel nasadené nie sú.
 
 ## Čo zatiaľ chýba
 

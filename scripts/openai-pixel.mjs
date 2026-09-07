@@ -79,8 +79,10 @@ function withRenderTag(layout) {
   const anchor = viewport ? viewport[0] : layout.match(/<head>[ \t]*\r?\n/)?.[0];
   if (!anchor) throw new Error(`v ${LAYOUT_FILE} sa nenašlo, kam vložiť render tag`);
 
+  /* Presne jeden riadok, aby `withoutRenderTag` vrátil súbor bajt na bajt
+     do pôvodného stavu — regex tam zje aj predchádzajúci koniec riadku. */
   const indent = (anchor.match(/^[ \t]*/) ?? [''])[0];
-  return layout.replace(anchor, `${anchor}\n${indent}${RENDER_TAG}\n`);
+  return layout.replace(anchor, `${anchor}${indent}${RENDER_TAG}\n`);
 }
 
 function withoutRenderTag(layout) {
