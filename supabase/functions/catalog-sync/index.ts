@@ -182,6 +182,42 @@ async function upsert(table: string, rows: unknown[], onConflict: string, key: s
   }
 }
 
+/**
+ * Drop rows for listings the store no longer has.
+ *
+ * The upsert alone only ever adds and updates, so a product deleted in Shopify
+ * would linger in the catalog forever and the dashboard would keep offering it.
+ * Renames are not affected: a row is keyed by its variant, so a changed SKU
+ * updates that row rather than leaving a second one behind.
+ *
+ * A read that came back empty is treated as suspect rather than as "the store
+ * is empty" — a fluke there would otherwise wipe a whole backend's catalog.
+ */
+async function prune(store: string, variantIds: string[], key: string): Promise<number> {
+  if (!variantIds.length) return 0;
+
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/catalog_listings?store=eq.${encodeURIComponent(store)}&select=id,shopify_variant_id`,
+    { headers: { apikey: key, Authorization: `Bearer ${key}` } },
+  );
+  if (!res.ok) throw new Error(`prune read failed: HTTP ${res.status}`);
+
+  const live = new Set(variantIds);
+  const gone = (await res.json())
+    .filter((row: { shopify_variant_id: string }) => !live.has(row.shopify_variant_id))
+    .map((row: { id: number }) => row.id);
+  if (!gone.length) return 0;
+
+  for (let i = 0; i < gone.length; i += UPSERT_CHUNK) {
+    const del = await fetch(
+      `${SUPABASE_URL}/rest/v1/catalog_listings?id=in.(${gone.slice(i, i + UPSERT_CHUNK).join(',')})`,
+      { method: 'DELETE', headers: { apikey: key, Authorization: `Bearer ${key}`, Prefer: 'return=minimal' } },
+    );
+    if (!del.ok) throw new Error(`prune delete failed: HTTP ${del.status} ${(await del.text()).slice(0, 200)}`);
+  }
+  return gone.length;
+}
+
 Deno.serve(async (req) => {
   const headers = cors(req);
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers });
@@ -210,9 +246,11 @@ Deno.serve(async (req) => {
 
     const perStore: Record<string, number> = {};
     const all: Listing[] = [];
+    const seen: Record<string, string[]> = {};
     for (const store of stores) {
       const rows = await readStore(store);
       perStore[store] = rows.length;
+      seen[store] = rows.map((r) => r.shopify_variant_id as string);
       all.push(...rows);
     }
 
@@ -221,7 +259,21 @@ Deno.serve(async (req) => {
     await upsert('catalog_products', skus.map((sku) => ({ sku })), 'sku', key);
     await upsert('catalog_listings', all, 'store,shopify_variant_id', key);
 
-    return Response.json({ ok: true, stores: perStore, skus: skus.length, listings: all.length }, { headers });
+    // Written first, pruned after: a row is only ever dropped once the store's
+    // current listings are safely in the table.
+    const removed: Record<string, number> = {};
+    for (const store of stores) {
+      const count = await prune(store, seen[store], key);
+      if (count) removed[store] = count;
+    }
+
+    return Response.json({
+      ok: true,
+      stores: perStore,
+      skus: skus.length,
+      listings: all.length,
+      removed,
+    }, { headers });
   } catch (err) {
     return Response.json({ ok: false, error: String(err) }, { status: 500, headers });
   }

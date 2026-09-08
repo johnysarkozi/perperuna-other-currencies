@@ -1,11 +1,17 @@
 /**
- * inventory-mirror — copies stock from SK onto the other backends, matched by
- * SKU. Server-side twin of scripts/inventory-mirror.mjs, so it can run on a
- * schedule without anything on a laptop.
+ * inventory-mirror — copies stock *and* on/off state from SK onto the other
+ * backends, matched by SKU. Server-side twin of scripts/inventory-mirror.mjs,
+ * so it can run on a schedule without anything on a laptop.
  *
  *   {}                      -> mirror every backend in SHOPIFY_SHOPS except sk
  *   { "stores": ["pl"] }    -> just these
  *   { "dryRun": true }      -> report what would change, write nothing
+ *
+ * Status mirroring only ever moves a product between ACTIVE and DRAFT, on both
+ * ends: an SK product that is UNLISTED or ARCHIVED says nothing about the other
+ * markets, and a foreign product in one of those states is a deliberate
+ * decision about that listing (the "-25 %" discount copies live there), not a
+ * switch this may flip.
  *
  * Every write is recorded in catalog_sync_log, so the history of what this
  * changed is queryable after the fact.
@@ -15,6 +21,9 @@ const API_VERSION = '2025-07';
 const PAGE_SIZE = 100;
 const BATCH = 100;
 const SOURCE = 'sk';
+
+/** The two states that count as "switched on / switched off" — see above. */
+const MIRRORED = new Set(['ACTIVE', 'DRAFT']);
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 
@@ -109,6 +118,9 @@ type Row = {
   handle: string; status: string; variantTitle: string; available: number | null;
 };
 
+/** A product as the status mirror sees it: one state, and the SKUs under it. */
+type Listing = { id: string; handle: string; status: string; skus: Set<string> };
+
 async function readStore(store: string) {
   const token = await accessToken(store);
 
@@ -119,6 +131,10 @@ async function readStore(store: string) {
 
   const rows: Row[] = [];
   const untracked: Row[] = [];
+  // Status lives on the product, so it is collected per product rather than per
+  // variant — and unlike stock it applies to untracked variants (FEE-* and the
+  // like) just as much.
+  const listings = new Map<string, Listing>();
   let after: string | null = null;
 
   for (;;) {
@@ -139,12 +155,19 @@ async function readStore(store: string) {
         available: level?.quantities?.find((q: { name: string }) => q.name === 'available')?.quantity ?? null,
       };
       (v.inventoryItem.tracked ? rows : untracked).push(row);
+
+      let listing = listings.get(v.product.id);
+      if (!listing) {
+        listing = { id: v.product.id, handle: v.product.handle, status: v.product.status, skus: new Set() };
+        listings.set(v.product.id, listing);
+      }
+      listing.skus.add(sku);
     }
     if (!data.productVariants.pageInfo.hasNextPage) break;
     after = data.productVariants.pageInfo.endCursor;
   }
 
-  return { token, location, rows, untracked };
+  return { token, location, rows, untracked, listings };
 }
 
 const SET = `mutation Set($input: InventorySetQuantitiesInput!) {
@@ -152,6 +175,58 @@ const SET = `mutation Set($input: InventorySetQuantitiesInput!) {
     userErrors { field message code }
   }
 }`;
+
+const UPDATE_STATUS = `mutation P($input: ProductInput!) {
+  productUpdate(input: $input) {
+    product { id status }
+    userErrors { field message }
+  }
+}`;
+
+/**
+ * What SK says each SKU's on/off state is. A SKU can sit on several SK products
+ * — typically the live one plus an archived discount copy — so the ACTIVE one
+ * wins, exactly as it does for stock.
+ */
+function statusTruthOf(source: { listings: Map<string, Listing> }) {
+  const truth = new Map<string, string>();
+  for (const listing of source.listings.values()) {
+    if (!MIRRORED.has(listing.status)) continue;
+    for (const sku of listing.skus) {
+      if (truth.get(sku) === undefined || listing.status === 'ACTIVE') truth.set(sku, listing.status);
+    }
+  }
+  return truth;
+}
+
+type StatusChange = { id: string; handle: string; sku: string; from: string; to: string };
+
+/** Products in one store whose state disagrees with SK and may be flipped. */
+function statusChanges(listings: Map<string, Listing>, truth: Map<string, string>) {
+  const changes: StatusChange[] = [];
+  let conflicts = 0;
+
+  for (const listing of listings.values()) {
+    if (!MIRRORED.has(listing.status)) continue;
+    const wanted = new Set([...listing.skus].map((sku) => truth.get(sku)).filter(Boolean));
+    // Either SK knows nothing about this product, or its variants carry SKUs
+    // that SK switches differently — flipping a guessed one would be worse than
+    // leaving it alone, so it is only counted.
+    if (wanted.size > 1) { conflicts++; continue; }
+    if (wanted.size !== 1) continue;
+    const [want] = wanted as Set<string>;
+    if (want === listing.status) continue;
+    changes.push({
+      id: listing.id,
+      handle: listing.handle,
+      sku: [...listing.skus].sort()[0],
+      from: listing.status,
+      to: want,
+    });
+  }
+
+  return { changes, conflicts };
+}
 
 async function logChanges(rows: unknown[]) {
   if (!rows.length) return;
@@ -192,14 +267,18 @@ Deno.serve(async (req) => {
       if (prev === undefined || r.status === 'ACTIVE') truth.set(r.sku, r.available);
     }
 
+    const statusTruth = statusTruthOf(source);
+
     const report: Record<string, unknown> = {};
     const logRows: unknown[] = [];
     let totalWritten = 0;
+    let totalStatusWritten = 0;
 
     for (const store of stores) {
       const target = await readStore(store);
       const changes = target.rows.filter((r) => truth.has(r.sku) && truth.get(r.sku) !== r.available);
       const untrackedOnSk = target.untracked.filter((r) => truth.has(r.sku)).length;
+      const status = statusChanges(target.listings, statusTruth);
 
       let written = 0;
       if (!dryRun && changes.length) {
@@ -235,12 +314,42 @@ Deno.serve(async (req) => {
         }
       }
 
+      // Status goes product by product; there is no bulk equivalent of
+      // inventorySetQuantities, but only the products that actually differ are
+      // touched, which in a steady state is none.
+      let statusWritten = 0;
+      if (!dryRun) {
+        for (const change of status.changes) {
+          const res = await gql(store, target.token, UPDATE_STATUS, {
+            input: { id: change.id, status: change.to },
+          });
+          const errs = res.productUpdate.userErrors;
+          if (errs.length) {
+            throw new Error(`[${store}] status update failed for ${change.handle}: ${JSON.stringify(errs).slice(0, 300)}`);
+          }
+          statusWritten++;
+          logRows.push({
+            direction: 'push',
+            store,
+            sku: change.sku,
+            field: 'status',
+            old_value: change.from,
+            new_value: change.to,
+            actor: 'inventory-mirror',
+          });
+        }
+      }
+
       totalWritten += written;
+      totalStatusWritten += statusWritten;
       report[store] = {
         tracked: target.rows.length,
         changed: changes.length,
         written,
         untrackedButOnSk: untrackedOnSk,
+        statusChanged: status.changes.length,
+        statusWritten,
+        statusConflicts: status.conflicts,
       };
     }
 
@@ -249,9 +358,10 @@ Deno.serve(async (req) => {
     return Response.json({
       ok: true,
       dryRun,
-      source: { skus: truth.size, variants: source.rows.length },
+      source: { skus: truth.size, variants: source.rows.length, statusSkus: statusTruth.size },
       stores: report,
       written: totalWritten,
+      statusWritten: totalStatusWritten,
     }, { headers });
   } catch (err) {
     return Response.json({ ok: false, error: String(err) }, { status: 500, headers });
