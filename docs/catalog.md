@@ -23,11 +23,20 @@ backendmi (`PP-XXXX-YYY-NNN`), 57 SKU celkovo, 238 listingov.
 - `catalog_listings` — jeden riadok = jeden variant v jednom obchode (cena,
   mena, sklad, stav, obrázok, Shopify `gid`). Unique na
   `(store, shopify_variant_id)`.
-- `catalog_sync_log` — audit trail pre budúce zápisy späť do Shopify.
+- `catalog_sync_log` — audit trail všetkých zápisov do Shopify; zároveň slúži
+  ako **história cien** (`field = price | compare_at_price`, staré aj nové
+  hodnoty), ktorú appka vypisuje v editore cien.
+- `catalog_price_books` — pomenované cenníky (ceny odfotené v jednom momente).
+  Názov je unique bez ohľadu na veľkosť písmen.
+- `catalog_price_book_items` — položky cenníka, jeden riadok = jeden listing
+  (cena, cena pred zľavou, mena, Shopify `gid`). Unique na
+  `(book_id, store, shopify_variant_id)`, mazanie kaskáduje z cenníka.
 
-RLS je zapnuté na všetkých troch tabuľkách. `anon` rola (appka v prehliadači)
-má povolené **iba čítanie** `catalog_products` a `catalog_listings`; zapisovať
-môžu len Edge Functions cez secret kľúč. Podrobnosti nižšie v *Prístup*.
+RLS je zapnuté na všetkých tabuľkách. `anon` rola (appka v prehliadači) má
+povolené **iba čítanie** — `catalog_products`, `catalog_listings`,
+`catalog_sync_log`, `catalog_price_books`, `catalog_price_book_items`;
+zapisovať môžu len Edge Functions cez secret kľúč. Podrobnosti nižšie
+v *Prístup*.
 
 ## Ako beží sync
 
@@ -311,6 +320,56 @@ zostane v poli.
 - Zapisuje sa len to, čo sa naozaj líši; každé pole ide do `catalog_sync_log`
   ako `price` alebo `compare_at_price` s `actor = 'price-set'` a rovno sa
   premietne do `catalog_listings`.
+
+## Cenníky a história cien
+
+Shopify si staré ceny nepamätá — po zápise je pôvodná cena preč. Preto má
+katalóg **cenníky**: odfotenú cenu každého listingu v jednom momente, uloženú
+pod menom (`Bežné ceny`, `Vianočná akcia`). Zapisuje Edge Function
+**`price-book`**.
+
+```
+POST /functions/v1/price-book
+{ "action": "save",   "name": "Bežné ceny", "note": "pred BF", "password": "…" }
+{ "action": "delete", "id": 3, "password": "…" }
+```
+
+Čísla do cenníka číta funkcia z `catalog_listings`, nie z prehliadača — fotka
+musí byť celá a filter zapnutý v appke ju nesmie potichu okresať. `price-set`
+tú tabuľku pri každom zápise dorovnáva, takže je aktuálna aj medzi syncmi.
+
+**Vrátenie cenníka nie je v tejto funkcii.** Appka porovná cenník so súčasným
+stavom, vypíše len to, čo sa medzitým rozišlo, a zapíše to cez `price-set` —
+teda cez tie isté poistky ako ručná úprava. Praktické dôsledky:
+
+- Vracia sa **diff**, nie celý cenník; čo sedí, sa neprepisuje zbytočne.
+- Ak cenník nemá cenu pred zľavou a teraz tam je, vrátenie pošle
+  `compareAtPrice: null` — **zruší zľavu**. Takto sa akcia korektne ukončí.
+- Listing, ktorý medzitým pribudol, cenník nepozná a nechá ho na pokoji;
+  listing, ktorý zmizol (zmazaný variant), sa preskočí.
+- Zaškrtnutie *len vyfiltrované riadky* zúži vrátenie na to, čo je v tabuľke,
+  takže sa dá vrátiť napr. len jedna kategória.
+
+Hromadné precenenie má voľbu **pred zápisom odfotiť súčasné ceny** (zapnutá).
+Cenník sa uloží pod `Pred precenením <dátum a čas>` a keď sa fotka nepodarí,
+precenenie sa **nespustí** — inak by nebolo kam sa vrátiť.
+
+### Poistky
+
+- Heslo je to isté ako pri sklade (`catalog_settings.edit_password_sha256`).
+- Prázdny čítaný katalóg sa odmietne — inak by vznikol cenník, ktorý nič
+  nevráti a v zozname vyzerá ako dobrý.
+- Ak sa položky nezapíšu celé, funkcia hlavičku cenníka zmaže; cenník bez
+  čísel je horší než žiadny.
+- Názov je unique case-insensitive: dva cenníky `Bežné ceny` a `bežné ceny` by
+  sa v zozname nedali odlíšiť a vrátenie musí byť jednoznačné.
+
+### História cien
+
+`catalog_sync_log` už nesie každý zápis ceny so starou aj novou hodnotou, takže
+editor cien (tlačidlo **€**) pod poliami vypíše posledných 40 zmien pre to SKU
+— kedy, na ktorom trhu, z čoho na čo. Šípka vráti starú hodnotu do políčka;
+zapíše sa až tlačidlom *Uložiť*. Na jednu cenu teda cenník netreba vôbec.
 
 ## Prepočet zahraničných cien do €
 

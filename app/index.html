@@ -126,6 +126,9 @@
     border: 1px solid var(--line); border-radius: 6px;
     background: var(--edit-bg); color: var(--text);
   }
+  /* Names and notes read left to right and need room; only money is a narrow
+     right-aligned field. */
+  .grid-prices input[type=text] { width: 220px; text-align: left; }
   .grid-prices input:focus { border-color: var(--accent); outline: none; }
   .grid-prices input.touched { border-color: var(--accent); }
   .grid-prices .cur { color: var(--muted); font-size: 12px; }
@@ -259,6 +262,7 @@
     <button id="howHelp" title="Ako to celé funguje">Ako to funguje</button>
     <button id="skuHelp" title="Ako sa tvoria SKU kódy">SKU kľúč</button>
     <button id="bulk" title="Nastaviť jednu cenu celej skupine produktov naraz">Preceniť</button>
+    <button id="books" title="Odfotiť súčasné ceny a kedykoľvek ich vrátiť">Cenníky</button>
     <button id="mirror" title="Prepíše sklady aj zapnutie na CZ/RO/PL/HU podľa SK">Zrkadliť zo SK</button>
     <button id="sync">Načítať zo Shopify</button>
   </header>
@@ -341,6 +345,33 @@
   <p>Zapisuje sa len to, čo naozaj zmeníš, a mení sa <strong>ten listing, ktorý
      vidíš v tabuľke</strong> — nie prípadná „(-50%)“ kópia toho istého SKU.
      Pýta si to isté heslo ako sklad.</p>
+
+  <h3>Cenníky — vrátiť precenenie</h3>
+  <p>Shopify si staré ceny nepamätá: keď sa nová cena zapíše, tá pôvodná je
+     preč. Preto má appka <strong>cenníky</strong> — odfotenú cenu každého
+     listingu v jednom momente, uloženú pod menom.</p>
+  <p>Tlačidlo <strong>Cenníky</strong> otvorí zoznam. Napíšeš názov („Bežné
+     ceny“, „Vianočná akcia“) a <em>Uložiť cenník</em> odfotí celý katalóg —
+     všetky trhy, cenu aj cenu pred zľavou. Cenníkov môže byť koľko treba,
+     takže sezóny sa nechajú pripravené: jeden bez zľavy, jeden zľavový.</p>
+  <p><strong>Vrátiť…</strong> pri cenníku porovná uložené čísla s tým, čo je
+     v obchodoch teraz, a vypíše len to, čo sa medzitým zmenilo. Ak sa cenník
+     nezľavňoval a teraz je zľava, vrátenie zľavu <em>zruší</em> — prečiarknutá
+     cena zmizne. Krížikom vyhodíš riadok, ktorý sa vrátiť nemá; zaškrtnutím
+     <em>len vyfiltrované riadky</em> sa vrátenie zúži na to, čo máš v tabuľke,
+     takže sa dá vrátiť napr. len čaje.</p>
+  <p>Precenenie skupiny má voľbu <strong>pred zápisom odfotiť súčasné ceny do
+     cenníka</strong> a je zapnutá. Vďaka nej je každé hromadné precenenie
+     vratné aj vtedy, keď si na to nikto nespomenul dopredu — cenník sa uloží
+     pod <em>Pred precenením</em> a časom. Keď sa fotka nepodarí, precenenie sa
+     nespustí; inak by nebolo kam sa vrátiť.</p>
+  <p>Zmazanie cenníka ceny v obchodoch nemení, len sa k nim už nedá vrátiť.
+     Listing, ktorý medzitým pribudol, cenník nepozná a nechá ho na pokoji;
+     ktorý zmizol, sa preskočí.</p>
+  <p>V editore <strong>€</strong> je pod cenami <strong>História cien</strong> —
+     posledných 40 zápisov pre to SKU, kedy, na ktorom trhu a z čoho na čo.
+     Šípka <span class="mono">↩</span> vráti starú hodnotu do políčka; zapíše sa
+     až tlačidlom Uložiť. Takže jednu cenu netreba hľadať v cenníku vôbec.</p>
 
   <h3>Tlačidlá</h3>
   <table>
@@ -511,7 +542,8 @@
       <td></td>
       <td colspan="3">
         <label class="check"><input type="checkbox" id="bulkConvert" checked> prepočítať aj zahraničné trhy</label><br>
-        <label class="check"><input type="checkbox" id="bulkSale"> pôvodnú cenu nastaviť ako cenu pred zľavou (spustí zľavu)</label>
+        <label class="check"><input type="checkbox" id="bulkSale"> pôvodnú cenu nastaviť ako cenu pred zľavou (spustí zľavu)</label><br>
+        <label class="check"><input type="checkbox" id="bulkBackup" checked> pred zápisom odfotiť súčasné ceny do cenníka (dá sa vrátiť)</label>
       </td>
     </tr>
   </table>
@@ -528,6 +560,51 @@
     <span class="grow"></span>
     <button id="bulkCancel">Zrušiť</button>
     <button id="bulkSave">Uložiť</button>
+  </div>
+</div></dialog>
+
+<dialog id="bookDialog"><div class="sheet">
+  <div class="closebar">
+    <h2>Cenníky</h2>
+    <button id="bookClose">Zavrieť</button>
+  </div>
+  <p class="meta">Cenník je odfotená cena každého listingu v jednom momente —
+     „bežné ceny“, „vianočná akcia“. Uložený sa dá kedykoľvek vrátiť, na všetkých
+     trhoch naraz a aj s cenou pred zľavou. Vracia sa len to, čo sa medzitým
+     naozaj zmenilo, a až po náhľade.</p>
+
+  <table class="grid-prices">
+    <tr>
+      <td><strong>Odfotiť teraz</strong></td>
+      <td><input id="bookName" type="text" maxlength="80" placeholder="napr. Bežné ceny"></td>
+      <td><input id="bookNote" type="text" maxlength="200" placeholder="poznámka (nepovinná)"></td>
+      <td><button id="bookSave">Uložiť cenník</button></td>
+    </tr>
+  </table>
+
+  <h3>Uložené cenníky</h3>
+  <div class="bulk-preview"><table class="grid-store">
+    <thead><tr><th>Názov</th><th>Uložený</th><th class="num">Listingov</th><th></th></tr></thead>
+    <tbody id="bookList"></tbody>
+  </table></div>
+  <p class="meta" id="bookEmpty" hidden>Žiadny cenník ešte nie je uložený. Odfoť
+     súčasné ceny — je to jediná vec, ktorá dovolí precenenie vrátiť.</p>
+
+  <div id="bookRestore" hidden>
+    <h3 id="bookCount">Náhľad vrátenia</h3>
+    <label class="check"><input type="checkbox" id="bookOnlyFiltered"> len vyfiltrované riadky v tabuľke</label>
+    <div class="bulk-preview"><table class="grid-store">
+      <thead><tr><th>SKU</th><th>Trh</th><th class="num">Teraz</th><th class="num">Z cenníka</th><th class="num">≈ €</th><th></th></tr></thead>
+      <tbody id="bookRows"></tbody>
+    </table></div>
+    <p class="meta" id="bookNoDiff" hidden>Ceny sedia s cenníkom — nič sa nemení.</p>
+  </div>
+
+  <div class="actions">
+    <span class="meta" id="bookProgress"></span>
+    <span class="grow"></span>
+    <button id="bookCancel">Zrušiť</button>
+    <button id="bookApply" hidden>Vrátiť ceny</button>
   </div>
 </div></dialog>
 
@@ -549,6 +626,14 @@
 
   <p class="meta" id="priceNote">Prázdna „cena pred zľavou“ ju zruší — produkt sa
      prestane tváriť ako zľavnený. Zapisuje sa len to, čo naozaj zmeníš.</p>
+
+  <h3 id="histTitle" hidden>História cien</h3>
+  <div class="bulk-preview" id="histWrap" hidden><table class="grid-store">
+    <thead><tr><th>Kedy</th><th>Trh</th><th>Čo</th><th class="num">Z</th><th class="num">Na</th><th></th></tr></thead>
+    <tbody id="histRows"></tbody>
+  </table></div>
+  <p class="meta" id="histNote" hidden>Šípka vráti starú hodnotu do políčka nad
+     tým — zapíše sa až tlačidlom Uložiť.</p>
 
   <div class="actions">
     <button id="priceFill" title="Predvyplní zahraničné trhy zo slovenskej ceny cez kurz ECB">Prepočítať zo SK</button>
@@ -1387,11 +1472,15 @@ function bulkPlan() {
       } else continue;
       if (next === null || next === cell.price) continue;
 
+      const compareTo = sale && next < cell.price ? cell.price : undefined;
       changes.push({
-        sku: row.sku, store, variantId: cell.shopify_variant_id, currency: cell.currency,
-        from: cell.price, to: next,
-        compareTo: sale && next < cell.price ? cell.price : undefined,
+        sku: row.sku, store, currency: cell.currency,
+        from: cell.price, to: next, compareTo,
         skip: bulkSkipped.has(`${row.sku}|${store}`),
+        write: {
+          store, variantId: cell.shopify_variant_id, price: next,
+          ...(compareTo === undefined ? {} : { compareAtPrice: compareTo }),
+        },
       });
     }
   }
@@ -1433,51 +1522,41 @@ function paintBulk() {
   }).join('');
 }
 
-async function saveBulk() {
-  const live = bulkRows.filter((c) => !c.skip);
-  if (!live.length) { toast('Nič na uloženie.'); return; }
-
+/**
+ * Write a planned set of price changes, one request per SKU — price-set edits
+ * every market of one SKU in a single plan, so a request either lands on all
+ * of them or on none. Shared by the group repricing and by putting a price
+ * book back on, which keeps both on exactly the same checks.
+ */
+async function writePlan(changes, password, progressEl) {
   const bySku = new Map();
-  for (const c of live) {
+  for (const c of changes) {
     if (!bySku.has(c.sku)) bySku.set(c.sku, []);
     bySku.get(c.sku).push(c);
   }
-  if (!confirm(`Preceniť ${bySku.size} SKU (${live.length} zmien na trhoch)?\n\n` +
-    [...bySku].slice(0, 8).map(([sku, cs]) => `${sku}: ${cs.map((c) => `${c.store.toUpperCase()} ${money(c.to, c.currency)}`).join(', ')}`).join('\n') +
-    (bySku.size > 8 ? `\n… a ďalších ${bySku.size - 8}` : ''))) return;
 
-  const password = editPassword();
-  if (!password) return;
-
-  const btn = $('bulkSave');
-  btn.disabled = true;
   let done = 0;
   const failed = [];
   for (const [sku, cs] of bySku) {
-    $('bulkProgress').textContent = `ukladám ${done + 1}/${bySku.size}…`;
+    if (progressEl) progressEl.textContent = `ukladám ${done + 1}/${bySku.size}…`;
     try {
       const res = await fetch(`${SUPABASE_URL}/functions/v1/price-set`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          sku,
-          changes: cs.map((c) => ({
-            store: c.store, variantId: c.variantId, price: c.to,
-            ...(c.compareTo === undefined ? {} : { compareAtPrice: c.compareTo }),
-          })),
-          password,
-        }),
+        body: JSON.stringify({ sku, changes: cs.map((c) => c.write), password }),
       });
       const out = await res.json();
       if (!out.ok) {
         if (res.status === 403) sessionStorage.removeItem('editpw');
         throw new Error(out.error ?? 'zápis zlyhal');
       }
+      // The catalog copy only refreshes on the next sync, so reflect what was
+      // written rather than showing stale figures until then.
       for (const c of cs) {
         for (const l of listings) {
-          if (l.shopify_variant_id !== c.variantId) continue;
-          l.price = c.to;
-          if (c.compareTo !== undefined) l.compare_at_price = c.compareTo;
+          if (l.shopify_variant_id !== c.write.variantId) continue;
+          if (c.write.price !== undefined) l.price = c.write.price;
+          if (c.write.compareAtPrice !== undefined) l.compare_at_price = c.write.compareAtPrice;
         }
       }
       done++;
@@ -1486,11 +1565,50 @@ async function saveBulk() {
     }
   }
 
-  $('bulkProgress').textContent = '';
+  if (progressEl) progressEl.textContent = '';
+  return { done, total: bySku.size, failed };
+}
+
+async function saveBulk() {
+  const live = bulkRows.filter((c) => !c.skip);
+  if (!live.length) { toast('Nič na uloženie.'); return; }
+
+  const skus = new Set(live.map((c) => c.sku));
+  const bySku = new Map();
+  for (const c of live) {
+    if (!bySku.has(c.sku)) bySku.set(c.sku, []);
+    bySku.get(c.sku).push(c);
+  }
+  if (!confirm(`Preceniť ${skus.size} SKU (${live.length} zmien na trhoch)?\n\n` +
+    [...bySku].slice(0, 8).map(([sku, cs]) => `${sku}: ${cs.map((c) => `${c.store.toUpperCase()} ${money(c.to, c.currency)}`).join(', ')}`).join('\n') +
+    (skus.size > 8 ? `\n… a ďalších ${skus.size - 8}` : ''))) return;
+
+  const password = editPassword();
+  if (!password) return;
+
+  const btn = $('bulkSave');
+  btn.disabled = true;
+
+  // Taken before the first write, so the book holds what the prices were and
+  // not a half-repriced catalogue. A failed snapshot stops the run: without it
+  // there is nothing to come back to, which is the one thing the person ticking
+  // that box was asking for.
+  if ($('bulkBackup').checked) {
+    $('bulkProgress').textContent = 'odfotím súčasné ceny…';
+    const name = `Pred precenením ${new Date().toLocaleString('sk-SK', { dateStyle: 'short', timeStyle: 'medium' })}`;
+    const saved = await saveBook(name, `automaticky, ${skus.size} SKU`, password);
+    if (!saved) {
+      $('bulkProgress').textContent = '';
+      btn.disabled = false;
+      return;
+    }
+  }
+
+  const { done, total, failed } = await writePlan(live, password, $('bulkProgress'));
   btn.disabled = false;
   render();
   paintBulk();
-  if (failed.length) toast(`Precenené ${done}/${bySku.size}. Neprešlo: ${failed.slice(0, 3).join(' | ')}`, true);
+  if (failed.length) toast(`Precenené ${done}/${total}. Neprešlo: ${failed.slice(0, 3).join(' | ')}`, true);
   else { toast(`Precenených ${done} SKU`); $('bulkDialog').close(); }
 }
 
@@ -1511,6 +1629,269 @@ $('bulkSave').addEventListener('click', saveBulk);
 $('bulkCancel').addEventListener('click', () => $('bulkDialog').close());
 $('bulkClose').addEventListener('click', () => $('bulkDialog').close());
 $('bulkDialog').addEventListener('click', (e) => { if (e.target === $('bulkDialog')) $('bulkDialog').close(); });
+
+// ---- price books ---------------------------------------------------------
+
+/**
+ * A price book is what every listing cost at one moment, saved under a name.
+ * It is the only thing that makes a repricing reversible: prices live in
+ * Shopify, which keeps no versions of them, so unless the old figures were
+ * written down somewhere they are gone the moment the new ones land.
+ *
+ * Putting one back on is a diff, not a bulk overwrite: only listings whose
+ * price or compare-at actually drifted from the book get written, and they go
+ * through price-set like any hand edit. A listing the book does not know
+ * (added since) is left alone rather than guessed at.
+ */
+let books = [];
+let restoring = null;
+let bookRows = [];
+let bookSkipped = new Set();
+
+async function loadBooks() {
+  const { data, error } = await sb
+    .from('catalog_price_books')
+    .select('id, name, note, created_at, catalog_price_book_items(count)')
+    .order('created_at', { ascending: false });
+  if (error) { toast(`Cenníky sa nenačítali: ${error.message}`, true); return; }
+
+  books = (data ?? []).map((b) => ({ ...b, items: b.catalog_price_book_items?.[0]?.count ?? null }));
+  $('bookEmpty').hidden = books.length > 0;
+  $('bookList').innerHTML = books.map((b) => `<tr data-id="${b.id}">
+    <td><strong>${escapeHtml(b.name)}</strong>${b.note ? `<br><span class="meta">${escapeHtml(b.note)}</span>` : ''}</td>
+    <td>${new Date(b.created_at).toLocaleString('sk-SK', { dateStyle: 'short', timeStyle: 'short' })}</td>
+    <td class="num">${b.items ?? '—'}</td>
+    <td>
+      <button type="button" data-use="${b.id}" title="Porovnať so súčasnými cenami a vrátiť">Vrátiť…</button>
+      <button type="button" class="rowprices" data-drop="${b.id}" title="Zmazať cenník">✕</button>
+    </td>
+  </tr>`).join('');
+}
+
+/** A price book carries names a person typed, so it is never trusted as markup. */
+function escapeHtml(text) {
+  return String(text).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+}
+
+async function openBooks() {
+  restoring = null;
+  bookSkipped.clear();
+  $('bookRestore').hidden = true;
+  $('bookApply').hidden = true;
+  $('bookProgress').textContent = '';
+  $('bookName').value = '';
+  $('bookNote').value = '';
+  $('bookOnlyFiltered').checked = false;
+  $('bookDialog').showModal();
+  await loadBooks();
+}
+
+/** Returns the saved book, or null when it did not get written. */
+async function saveBook(name, note, password) {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/price-book`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'save', name, note, password }),
+    });
+    const out = await res.json();
+    if (!out.ok) {
+      if (res.status === 403) sessionStorage.removeItem('editpw');
+      throw new Error(out.error ?? 'zápis zlyhal');
+    }
+    return out;
+  } catch (err) {
+    toast(`Cenník sa neuložil: ${err.message}`, true);
+    return null;
+  }
+}
+
+async function saveBookFromDialog() {
+  const name = $('bookName').value.trim();
+  if (!name) { toast('Cenník potrebuje názov.', true); return; }
+  if (books.some((b) => b.name.toLowerCase() === name.toLowerCase())) {
+    toast('Cenník s týmto názvom už existuje — daj mu iný.', true);
+    return;
+  }
+
+  const password = editPassword();
+  if (!password) return;
+
+  const btn = $('bookSave');
+  btn.disabled = true;
+  $('bookProgress').textContent = 'odfotím ceny…';
+  const out = await saveBook(name, $('bookNote').value.trim(), password);
+  $('bookProgress').textContent = '';
+  btn.disabled = false;
+  if (!out) return;
+
+  $('bookName').value = '';
+  $('bookNote').value = '';
+  toast(`Cenník „${name}“ uložený — ${out.items} listingov`);
+  await loadBooks();
+}
+
+async function dropBook(id) {
+  const book = books.find((b) => b.id === id);
+  if (!book) return;
+  if (!confirm(`Zmazať cenník „${book.name}“? Ceny v obchodoch to nezmení, len sa k nim už nebude dať vrátiť.`)) return;
+
+  const password = editPassword();
+  if (!password) return;
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/price-book`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'delete', id, password }),
+    });
+    const out = await res.json();
+    if (!out.ok) {
+      if (res.status === 403) sessionStorage.removeItem('editpw');
+      throw new Error(out.error ?? 'zmazanie zlyhalo');
+    }
+    if (restoring?.book.id === id) { restoring = null; $('bookRestore').hidden = true; $('bookApply').hidden = true; }
+    toast(`Cenník „${book.name}“ zmazaný`);
+    await loadBooks();
+  } catch (err) {
+    toast(`Chyba: ${err.message}`, true);
+  }
+}
+
+async function pickBook(id) {
+  const book = books.find((b) => b.id === id);
+  if (!book) return;
+
+  $('bookProgress').textContent = 'čítam cenník…';
+  const { data, error } = await sb
+    .from('catalog_price_book_items')
+    .select('sku, store, shopify_variant_id, currency, price, compare_at_price')
+    .eq('book_id', id);
+  $('bookProgress').textContent = '';
+  if (error) { toast(`Cenník sa nenačítal: ${error.message}`, true); return; }
+
+  restoring = {
+    book,
+    items: (data ?? []).map((i) => ({
+      ...i,
+      price: i.price === null ? null : Number(i.price),
+      compare_at_price: i.compare_at_price === null ? null : Number(i.compare_at_price),
+    })),
+  };
+  bookSkipped.clear();
+  $('bookRestore').hidden = false;
+  paintBook();
+}
+
+/** What the book would change, listing by listing — nothing is written yet. */
+function bookPlan() {
+  if (!restoring) return [];
+  const scope = $('bookOnlyFiltered').checked ? new Set(renderedRows().map((r) => r.sku)) : null;
+  const byVariant = new Map(listings.map((l) => [l.shopify_variant_id, l]));
+
+  const changes = [];
+  for (const item of restoring.items) {
+    if (scope && !scope.has(item.sku)) continue;
+    const live = byVariant.get(item.shopify_variant_id);
+    // Sold off, deleted or renamed since the snapshot: there is no variant to
+    // write to, and inventing one would reprice the wrong product.
+    if (!live || item.price === null) continue;
+
+    const samePrice = live.price === item.price;
+    const sameCompare = (live.compare_at_price ?? null) === item.compare_at_price;
+    if (samePrice && sameCompare) continue;
+
+    changes.push({
+      sku: item.sku, store: item.store, currency: item.currency ?? live.currency,
+      from: live.price, to: item.price,
+      compareFrom: live.compare_at_price ?? null, compareTo: item.compare_at_price,
+      changedPrice: !samePrice, changedCompare: !sameCompare,
+      skip: bookSkipped.has(`${item.sku}|${item.store}`),
+      write: {
+        store: item.store, variantId: item.shopify_variant_id,
+        ...(samePrice ? {} : { price: item.price }),
+        // null clears the strikethrough — which is exactly how a sale ends.
+        ...(sameCompare ? {} : { compareAtPrice: item.compare_at_price }),
+      },
+    });
+  }
+
+  return changes.sort((a, b) =>
+    a.sku.localeCompare(b.sku) || STORES.indexOf(a.store) - STORES.indexOf(b.store));
+}
+
+function paintBook() {
+  bookRows = bookPlan();
+  const live = bookRows.filter((c) => !c.skip);
+  const out = bookRows.length - live.length;
+
+  $('bookCount').textContent = bookRows.length
+    ? `Vrátiť „${restoring.book.name}“ — ${live.length} ${live.length === 1 ? 'zmena' : 'zmien'} v ` +
+      `${new Set(live.map((c) => c.sku)).size} SKU${out ? ` · ${out} vynechaných` : ''}`
+    : `Vrátiť „${restoring.book.name}“`;
+  $('bookNoDiff').hidden = bookRows.length > 0;
+  $('bookApply').hidden = live.length === 0;
+
+  $('bookRows').innerHTML = bookRows.map((c, i) => {
+    const eur = toEur(c.to, c.currency);
+    const sale = c.compareTo !== null && c.compareTo > c.to;
+    return `<tr data-i="${i}"${c.skip ? ' class="skip"' : ''}>
+      <td class="sku">${c.sku}</td>
+      <td><strong>${c.store.toUpperCase()}</strong></td>
+      <td class="num">${money(c.from, c.currency)}${
+        c.compareFrom !== null && c.compareFrom > c.from ? ` <s class="was">${money(c.compareFrom, c.currency)}</s>` : ''}</td>
+      <td class="num"><strong>${money(c.to, c.currency)}</strong>${
+        sale ? ` <s class="was">${money(c.compareTo, c.currency)}</s>` : ''}</td>
+      <td class="num hint">${eur === null ? '' : `≈ ${money(eur, 'EUR')}`}${
+        c.changedCompare && !sale ? ' · zruší zľavu' : ''}</td>
+      <td><button type="button" class="rowprices" data-skip="${i}" title="Vynechať tento riadok">✕</button></td>
+    </tr>`;
+  }).join('');
+}
+
+async function applyBook() {
+  const live = bookRows.filter((c) => !c.skip);
+  if (!live.length) { toast('Nič na vrátenie.'); return; }
+
+  const skus = new Set(live.map((c) => c.sku));
+  if (!confirm(`Vrátiť ceny z cenníka „${restoring.book.name}“?\n\n` +
+    `${skus.size} SKU, ${live.length} zmien na trhoch.`)) return;
+
+  const password = editPassword();
+  if (!password) return;
+
+  const btn = $('bookApply');
+  btn.disabled = true;
+  const { done, total, failed } = await writePlan(live, password, $('bookProgress'));
+  btn.disabled = false;
+  render();
+  paintBook();
+  if (failed.length) toast(`Vrátené ${done}/${total}. Neprešlo: ${failed.slice(0, 3).join(' | ')}`, true);
+  else { toast(`Vrátených ${done} SKU z cenníka „${restoring.book.name}“`); $('bookDialog').close(); }
+}
+
+$('books').addEventListener('click', openBooks);
+$('bookSave').addEventListener('click', saveBookFromDialog);
+$('bookApply').addEventListener('click', applyBook);
+$('bookOnlyFiltered').addEventListener('change', () => { bookSkipped.clear(); paintBook(); });
+$('bookList').addEventListener('click', (e) => {
+  const use = e.target.closest('button[data-use]');
+  if (use) { pickBook(Number(use.dataset.use)); return; }
+  const drop = e.target.closest('button[data-drop]');
+  if (drop) dropBook(Number(drop.dataset.drop));
+});
+$('bookRows').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-skip]');
+  if (!btn) return;
+  const change = bookRows[Number(btn.dataset.skip)];
+  if (!change) return;
+  const key = `${change.sku}|${change.store}`;
+  if (bookSkipped.has(key)) bookSkipped.delete(key); else bookSkipped.add(key);
+  paintBook();
+});
+$('bookCancel').addEventListener('click', () => $('bookDialog').close());
+$('bookClose').addEventListener('click', () => $('bookDialog').close());
+$('bookDialog').addEventListener('click', (e) => { if (e.target === $('bookDialog')) $('bookDialog').close(); });
 
 // ---- one store, listing by listing ---------------------------------------
 
@@ -1643,7 +2024,57 @@ function openPrices(sku) {
 
   paintPriceHints();
   $('priceDialog').showModal();
+  loadHistory(sku);
 }
+
+/**
+ * Every price write is logged with its old and new value, so the dialog can
+ * show where this SKU's prices have been. The arrow puts an old figure back
+ * into the field above rather than writing it straight away — a history row is
+ * a suggestion, and the Save button stays the one place a price gets changed.
+ */
+async function loadHistory(sku) {
+  $('histRows').innerHTML = '';
+  for (const id of ['histTitle', 'histWrap', 'histNote']) $(id).hidden = true;
+
+  const { data, error } = await sb
+    .from('catalog_sync_log')
+    .select('store, field, old_value, new_value, actor, created_at')
+    .eq('sku', sku)
+    .in('field', ['price', 'compare_at_price'])
+    .order('created_at', { ascending: false })
+    .limit(40);
+  // A missing history is not worth an error toast on top of an open dialog.
+  if (error || !data?.length || editing?.sku !== sku) return;
+
+  const label = { price: 'cena', compare_at_price: 'pred zľavou' };
+  $('histRows').innerHTML = data.map((r) => {
+    const currency = editing.cells[r.store]?.currency;
+    const show = (v) => (v === null || v === '' ? '—' : money(Number(v), currency));
+    const revertable = r.old_value !== null && r.old_value !== '' && editing.cells[r.store];
+    return `<tr>
+      <td>${new Date(r.created_at).toLocaleString('sk-SK', { dateStyle: 'short', timeStyle: 'short' })}</td>
+      <td><strong>${r.store.toUpperCase()}</strong></td>
+      <td>${label[r.field] ?? r.field}</td>
+      <td class="num">${show(r.old_value)}</td>
+      <td class="num"><strong>${show(r.new_value)}</strong></td>
+      <td>${revertable
+        ? `<button type="button" class="rowprices" data-store="${r.store}" data-field="${r.field}"
+             data-value="${r.old_value}" title="Vrátiť ${show(r.old_value)} do políčka">↩</button>`
+        : ''}</td>
+    </tr>`;
+  }).join('');
+  for (const id of ['histTitle', 'histWrap', 'histNote']) $(id).hidden = false;
+}
+
+$('histRows').addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-store]');
+  if (!btn) return;
+  const row = $('priceRows').querySelector(`tr[data-store="${btn.dataset.store}"]`);
+  if (!row) return;
+  row.querySelector(btn.dataset.field === 'price' ? 'input.p' : 'input.c').value = btn.dataset.value;
+  paintPriceHints();
+});
 
 /** Live euro value and distance from the SK price, as the fields are typed. */
 function paintPriceHints() {

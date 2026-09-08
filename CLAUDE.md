@@ -74,6 +74,7 @@ supabase/functions/catalog-sync/     Edge Function — sync Shopify → katalóg
 supabase/functions/inventory-mirror/ Edge Function — zrkadlí sklady a zapnutie zo SK (cron á 15 min)
 supabase/functions/inventory-set/    Edge Function — nastaví sklad SKU vo všetkých obchodoch
 supabase/functions/price-set/        Edge Function — cena a cena pred zľavou, per trh
+supabase/functions/price-book/       Edge Function — pomenované cenníky (odfotenie cien, mazanie)
 supabase/functions/product-status/   Edge Function — zapne/vypne SKU, zo SK do všetkých
 scripts/inventory-mirror.mjs   lokálne zrkadlenie skladov (dry-run, --apply)
 docs/credentials.md            ako sa nastavujú prístupy
